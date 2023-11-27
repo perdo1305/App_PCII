@@ -1,4 +1,8 @@
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 public class Cliente {
+    static DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 
     protected String nome;
     protected int nif;

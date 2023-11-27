@@ -14,7 +14,17 @@ public class Main {
         do {
             opcaoMenu = menu();
             switch (opcaoMenu) {
+                //System.out.println("_________________________________");
                 case 1://Registar Veiculo
+                    int choice;
+                    System.out.println("\nMarca: ");
+                    System.out.println("Modelo: ");
+                    System.out.println("Matricula: ");
+                    System.out.println("Data de Registo do veiculo: ");
+                    System.out.println("Potencia do veiculo(cv): ");
+                    System.out.println("Capacidade da bateria(kwh): ");
+                    System.out.println("Autonomia: ");
+                    choice = Consola.lerInt("", 1, 6);
 
                     break;
                 case 2://Consultar Veiculo
@@ -22,18 +32,34 @@ public class Main {
                     break;
                 case 3://Registar Cliente
 
+                    System.out.println("Nome: ");
+                    System.out.println("NIF(unico): ");
+                    System.out.println("Morada: ");
+                    System.out.println("Telefone: ");
+                    System.out.println("Email: ");
+                    System.out.println("Data de nascimento: ");
+
                     break;
                 case 4://Consultar Cliente
 
                     break;
                 case 5://Registar posto de carregamento
+                    System.out.println("Codigo de posto: ");
+                    System.out.println("Localização(morada): ");
+                    System.out.println("Tipo de posto: ");
+                    System.out.println("Custo por kWh(E): ");
+                    System.out.println("Numero de veiculos que podem carregar em simultaneo: ");
 
                     break;
                 case 6://Consultar posto de carregamento
 
                     break;
                 case 7://Registar sessao de carregamento
-
+                    System.out.println("Codigo de posto: ");
+                    System.out.println("Localização(morada): ");
+                    System.out.println("Tipo de posto: ");
+                    System.out.println("Custo por kWh(E): ");
+                    System.out.println("Numero de veiculos que podem carregar em simultaneo: ");
                     break;
                 case 8://Consultar sessao de carregamento
 
