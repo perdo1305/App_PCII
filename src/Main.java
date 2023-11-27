@@ -1,5 +1,10 @@
 import java.util.Scanner;
 
+/**
+ * @author Pedro Ferreira
+ * @author Bernardo Santos
+ */
+
 public class Main {
     public static void main(String[] args) {
 
