@@ -1,4 +1,3 @@
-import java.util.Scanner;
 
 /**
  * @author Pedro Ferreira
@@ -14,10 +13,9 @@ public class Main {
         do {
             opcaoMenu = menu();
             switch (opcaoMenu) {
-                //System.out.println("_________________________________");
                 case 1://Registar Veiculo
                     int choice;
-                    System.out.println("\nMarca: ");
+                    System.out.println("Marca: ");
                     System.out.println("Modelo: ");
                     System.out.println("Matricula: ");
                     System.out.println("Data de Registo do veiculo: ");
@@ -33,6 +31,7 @@ public class Main {
                 case 3://Registar Cliente
 
                     System.out.println("Nome: ");
+                    
                     System.out.println("NIF(unico): ");
                     System.out.println("Morada: ");
                     System.out.println("Telefone: ");
