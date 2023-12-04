@@ -1,19 +1,18 @@
-
-/**
- * @author Pedro Ferreira
- * @author Bernardo Santos
- */
+import java.text.DateFormat;
+import java.util.Date;
+import java.text.SimpleDateFormat;
 
 public class Main {
+
     public static void main(String[] args) {
 
         int opcaoMenu;
 
-
         do {
             opcaoMenu = menu();
+
             switch (opcaoMenu) {
-                case 1://Registar Veiculo
+                case 1:// Registar Veiculo
                     int choice;
                     System.out.println("Marca: ");
                     System.out.println("Modelo: ");
@@ -25,24 +24,26 @@ public class Main {
                     choice = Consola.lerInt("", 1, 6);
 
                     break;
-                case 2://Consultar Veiculo
+                case 2:// Consultar Veiculo
+                System.out.println("\n***************************************\n");
+                System.out.println("\tMenu Consultar Veiculo\n");
+                    break;
+                case 3:// Registar Cliente
+                System.out.println("\n***************************************\n");
+                System.out.println("\tMenu Registar Cleinte\n");
+                    Gestao.criarCliente();
 
                     break;
-                case 3://Registar Cliente
-
-                    System.out.println("Nome: ");
-                    
-                    System.out.println("NIF(unico): ");
-                    System.out.println("Morada: ");
-                    System.out.println("Telefone: ");
-                    System.out.println("Email: ");
-                    System.out.println("Data de nascimento: ");
-
+                case 4:// Consultar Cliente
+                    Gestao.consultarCliente();
+                System.out.println("\n***************************************\n");
+                System.out.println("\tMenu Consultar Cliente\n");
                     break;
-                case 4://Consultar Cliente
+                case 5:// Registar posto de carregamento
 
-                    break;
-                case 5://Registar posto de carregamento
+                System.out.println("\n***************************************\n");
+                System.out.println("\tMenu Registar posto de carregamento\n");
+
                     System.out.println("Codigo de posto: ");
                     System.out.println("Localização(morada): ");
                     System.out.println("Tipo de posto: ");
@@ -50,29 +51,33 @@ public class Main {
                     System.out.println("Numero de veiculos que podem carregar em simultaneo: ");
 
                     break;
-                case 6://Consultar posto de carregamento
-
+                case 6:// Consultar posto de carregamento
+                System.out.println("\n***************************************\n");
+                System.out.println("\tMenu Consultar posto de carregamento\n");
                     break;
-                case 7://Registar sessao de carregamento
-                    System.out.println("Codigo de posto: ");
-                    System.out.println("Localização(morada): ");
-                    System.out.println("Tipo de posto: ");
-                    System.out.println("Custo por kWh(E): ");
-                    System.out.println("Numero de veiculos que podem carregar em simultaneo: ");
+                case 7:// Registar sessao de carregamento
+                    System.out.println("Matricula: ");
+                    System.out.println("Hora de inicio: ");
+                    System.out.println("Hora de fim: ");
+                    System.out.println("");
+                    System.out.println("Matricula:");
+                case 8:// Consultar sessao de carregamento
+                System.out.println("\n***************************************\n");
+                System.out.println("\tMenu Consultar sessao de carregamento\n");
                     break;
-                case 8://Consultar sessao de carregamento
-
+                case 9:// Registar pagamento de sessao
+                System.out.println("\n***************************************\n");
+                System.out.println("\tMenu Registar pagamento de sessao\n");
                     break;
-                case 9://Registar pagamento de sessao
-
+                case 10:// Consultar pagamento de sessao
+                System.out.println("\n***************************************\n");
+                System.out.println("\tMenu Consultar pagamento de sessao\n");
                     break;
-                case 10://Consultar pagamento de sessao
-
+                case 11:// Consultar estatisticas
+                System.out.println("\n***************************************\n");
+                System.out.println("\tMenu Consultar estatisticas\n");
                     break;
-                case 11://Consultar estatisticas
-
-                    break;
-                case 0://Sair
+                case 0:// Sair
                     System.out.println("Sair");
                     break;
                 default:
@@ -80,13 +85,13 @@ public class Main {
                     break;
             }
         } while (menu() != 0);
-        //ola
+        // ola
 
     }
 
     public static int menu() {
 
-        System.out.println("\n_________________________________");
+        System.out.println("\n_______________________________________\n");
         System.out.println("1  -> Registar Veiculo");
         System.out.println("2  -> Consultar Veiculo");
         System.out.println("3  -> Registar Cliente");
@@ -98,9 +103,10 @@ public class Main {
         System.out.println("9  -> Registar pagamento de sessao");
         System.out.println("10 -> Consultar pagamento de sessao");
         System.out.println("11 -> Consultar estatisticas");
-        System.out.println("0  -> Sair");
-        System.out.println("_________________________________");
+        System.out.println("\n0  -> Sair");
+        System.out.println("_______________________________________");
 
         return Consola.lerInt("Opcao: ", 0, 11);
     }
+
 }

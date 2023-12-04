@@ -1,6 +1,6 @@
-import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Veiculos {
 
@@ -10,11 +10,11 @@ public class Veiculos {
     protected String modelo;
     protected String matricula;
     protected Date data_registo;
-    protected int potencia; // cv
+    protected int potencia; // Cv
     protected int capacidade_bateria; // kw/h
     protected int autonomia;// km por carga
 
-    public Veiculos(String marca, String modelo, int ano, String matricula, int autonomia,
+    public Veiculos(String marca, String modelo, String matricula, Date data_registo, int autonomia,
             double velocidadeCarregamento, int potencia) {
         setMarca(marca);
         setModelo(modelo);

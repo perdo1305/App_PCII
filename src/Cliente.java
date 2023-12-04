@@ -1,17 +1,17 @@
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Cliente {
     static DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-
     protected String nome;
     protected int nif;
     protected String morada;
     protected int telemovel;
     protected String email;
-    protected String data_nascimento;
+    protected Date data_nascimento;
 
-    public Cliente(String nome, int nif, String morada,int telemovel,String email,String data_nascimento){
+    public Cliente(String nome, int nif, String morada, int telemovel, String email, Date data_nascimento) {
         setNome(nome);
         setNif(nif);
         setTelemovel(telemovel);
@@ -59,11 +59,23 @@ public class Cliente {
         this.email = email;
     }
 
-    public String getData_nascimento() {
+    public Date getData_nascimento() {
         return data_nascimento;
     }
 
-    public void setData_nascimento(String data_nascimento) {
+    public void setData_nascimento(Date data_nascimento) {
         this.data_nascimento = data_nascimento;
+    }
+
+    @Override
+    public String toString() {
+        String str = "";
+        str += "CLiente: " + getNome() + "\n"
+                + "NIF: " + getNif() + "\n"
+                + "Morada: " + getMorada() + "\n"
+                + "Telemovel: " + getTelemovel() + "\n"
+                + "Email: " + getEmail() + "\n"
+                + "Data de nascimento: " + dateFormat.format(getData_nascimento()) + "\n";
+    return  str;
     }
 }
