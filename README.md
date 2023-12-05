@@ -1,26 +1,37 @@
-#Objective: Develop a Java program for managing electric vehicle charging stations.
 
-#Key Components:
+# Electric Vehicle Charging Station Management System
 
-#Classes:
+## Overview
 
-Vehicle
-Customer
-ChargingStation
-ChargingSession
-Payment
-Attributes:
+This Java program is designed to manage electric vehicle charging stations. It allows users to perform various operations related to vehicles, customers, charging stations, charging sessions, and payments.
 
-Define specific attributes for each class, e.g., vehicle details, customer information, charging station properties, session details, and payment information.
-Operations:
+## Features
 
-Implement operations for entering and consulting vehicles, managing customer details, handling charging stations, recording charging sessions, and processing payments.
-Additional Features:
+1.**Enter and Consult Vehicles:**
 
-Implement queries and statistics features such as listing top charging stations by revenue, identifying high-cost charging sessions, calculating the total number of sessions per customer, and more.
-Menu System:
+- Search and view vehicle information by license plate.
 
-Create a user-friendly menu system to allow users to choose and execute different operations.
-Data Storage:
+2.**Manage Customer Details:**
 
-Utilize file storage to persist information between program runs.
+- Enter, check, and modify customer information using their VAT number.
+
+3.**Charging Station Operations:**
+
+- Insert and consult charging stations using the station code.
+
+4.**Charging Session Management:**
+
+- Register and check details of charging sessions.
+
+5.**Payment Handling:**
+
+- Register and verify payment for charging sessions.
+
+6.**Additional Queries and Statistics:**
+
+- List top 3 charging stations by revenue.
+- Identify charging sessions costing more than a user-defined amount.
+- Calculate the total number of charging sessions per customer.
+- Compute average energy consumed per charging station and per vehicle type.
+- List outstanding payments per customer.
+- Provide a history of charging sessions per charging station.
