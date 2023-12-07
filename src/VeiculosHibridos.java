@@ -1,9 +1,9 @@
-import java.sql.Date;
+import java.util.Date;
 
 public class VeiculosHibridos extends Veiculos {
-    private int cilindrada;
-    private double consumo;
-    private double emissao;
+    protected int cilindrada;
+    protected double consumo;
+    protected double emissao;
 
     public VeiculosHibridos(String marca, String modelo, String matricula, Date data_registo, int autonomia,
             double velocidadeCarregamento, int potencia, int cilindrada, double consumo, double emissao) {

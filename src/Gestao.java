@@ -52,10 +52,10 @@ public class Gestao {
         } while (autonomia == 0);
 
         int tempo_carregamento;
-        double velocidadeCarregamento;
+        double velocidadeCarregamento = 0;
         System.out.println("Veiculo criado com sucesso");
         if (tipo_veiculo.equalsIgnoreCase("E")) {
-            
+
             do {
                 tempo_carregamento = Consola.lerInt("Tempo de carregamento: ", 1, 999999999);
             } while (tempo_carregamento == 0);
@@ -69,8 +69,16 @@ public class Gestao {
             do {
                 consumo_combustivel = Consola.lerDouble("Consumo de combustivel: ", 1, 999999999);
             } while (consumo_combustivel == 0);
-            VeiculosHibridos veiculo = new VeiculosHibridos(marca, modelo, matricula, data_registo, autonomia,velocidadeCarregamento, potencia, cilindrada, consumo, emissao);
-            //TODO arranjar isto
+            int cilindrada;
+            do {
+                cilindrada = Consola.lerInt("Cilindrada: ", 1, 999999999);
+            } while (cilindrada == 0);
+            double emissao;
+            do {
+                emissao = Consola.lerDouble("Emissao: ", 1, 999999999);
+            } while (emissao == 0);
+
+            VeiculosHibridos veiculo = new VeiculosHibridos(marca, modelo, matricula, data_registo, autonomia, velocidadeCarregamento, potencia, cilindrada, consumo_combustivel, emissao);
             veiculos.add(veiculo);
         }
     }
@@ -241,7 +249,6 @@ public class Gestao {
         }
     }
 
-    // TODO inserir postos de carregamento
     public void criarPostoCarregamento() {
         int codigo_posto, numero_veiculos;
         String localizacao, tipo_posto;
@@ -272,7 +279,28 @@ public class Gestao {
         postos.add(posto);
     }
 
-    // TODO consultar postos de carregamento
+
+    public  static  void consultarPostoCarregamento(){
+        int codigo_posto;
+        if (postos.isEmpty()) {
+            System.out.println("Não existem postos de carregamento registados");
+            return;
+        }
+        do {
+            codigo_posto = Consola.lerInt("Codigo do posto: ", 1, 999999999);
+        } while (codigo_posto == 0);
+        // return posicao do cliente na arraylist
+        int posicao = procurarPosto(codigo_posto);
+        if (posicao == -1) {
+            System.out.println("Posto de carregamento não encontrado");
+        } else {
+
+            System.out.println("\n" + postos.get(posicao).toString());
+            // TODO carregue em qualquer tecla para voltar ao menu
+            System.out.println("Carregue no ENTER voltar ao menu");
+            Consola.lerString("\n");
+        }
+    }
     public static int procurarPosto(int codigo_posto) {
         for (int i = 0; i < postos.size(); i++) {
             if (postos.get(i).getCodigo_posto() == codigo_posto) {
