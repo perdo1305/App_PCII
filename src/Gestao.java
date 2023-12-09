@@ -1,6 +1,7 @@
 import java.lang.reflect.Array;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -9,6 +10,8 @@ public class Gestao {
     static ArrayList<Cliente> clientes = new ArrayList<Cliente>();
     static ArrayList<Veiculos> veiculos = new ArrayList<Veiculos>();
     static ArrayList<PostoCarregamento> postos = new ArrayList<PostoCarregamento>();
+    static ArrayList<SessaoCarregamento> sessoes = new ArrayList<SessaoCarregamento>();
+    static ArrayList<Pagamento> pagamentos = new ArrayList<Pagamento>();
 
     // Inserir e consultar (através de matrícula) os veículos registados;
     public static void criarVeiculo() {
@@ -34,13 +37,15 @@ public class Gestao {
         } while (matricula.isEmpty());
         boolean error = false;
         do {
+            error = false;
             try {
-                data_registo = dateFormat.parse(Consola.lerString("Data de registo do veiculo: "));
+                data_registo = dateFormat.parse(Consola.lerString("Data de registo do veiculo (dd-mm-yyyy): "));
             } catch (Exception e) {
                 System.out.println("Data invalida");
                 error = true;
             }
         } while (error);
+
         do {
             potencia = Consola.lerInt("Potencia do veiculo(cv): ", 1, 999999999);
         } while (potencia == 0);
@@ -53,7 +58,7 @@ public class Gestao {
 
         int tempo_carregamento;
         double velocidadeCarregamento = 0;
-        System.out.println("Veiculo criado com sucesso");
+
         if (tipo_veiculo.equalsIgnoreCase("E")) {
 
             do {
@@ -80,6 +85,7 @@ public class Gestao {
 
             VeiculosHibridos veiculo = new VeiculosHibridos(marca, modelo, matricula, data_registo, autonomia, velocidadeCarregamento, potencia, cilindrada, consumo_combustivel, emissao);
             veiculos.add(veiculo);
+            System.out.println("Veiculo criado com sucesso");
         }
     }
 
@@ -108,7 +114,6 @@ public class Gestao {
         } else {
 
             System.out.println("\n" + veiculos.get(posicao).toString());
-            // TODO carregue em qualquer tecla para voltar ao menu
             System.out.println("Carregue no ENTER voltar ao menu");
             Consola.lerString("\n");
         }
@@ -129,6 +134,11 @@ public class Gestao {
         } while (telemovel == 0);
         do {
             nif = Consola.lerInt("NIF: ", 100000000, 999999999);
+            // verificar se o nif ja existe
+            if (procurarCliente(nif) != -1) {
+                System.out.println("NIF já existe");
+                nif = 0;
+            }
         } while (nif == 0);
         do {
             morada = Consola.lerString("Morada: ");
@@ -167,7 +177,6 @@ public class Gestao {
         } else {
 
             System.out.println("\n" + clientes.get(posicao).toString());
-            // TODO carregue em qualquer tecla para voltar ao menu
             System.out.println("Carregue no ENTER voltar ao menu");
             Consola.lerString("\n");
         }
@@ -249,7 +258,7 @@ public class Gestao {
         }
     }
 
-    public void criarPostoCarregamento() {
+    public static void criarPostoCarregamento() {
         int codigo_posto, numero_veiculos;
         String localizacao, tipo_posto;
         double custo_kwh;
@@ -280,7 +289,7 @@ public class Gestao {
     }
 
 
-    public  static  void consultarPostoCarregamento(){
+    public static void consultarPostoCarregamento() {
         int codigo_posto;
         if (postos.isEmpty()) {
             System.out.println("Não existem postos de carregamento registados");
@@ -301,6 +310,7 @@ public class Gestao {
             Consola.lerString("\n");
         }
     }
+
     public static int procurarPosto(int codigo_posto) {
         for (int i = 0; i < postos.size(); i++) {
             if (postos.get(i).getCodigo_posto() == codigo_posto) {
@@ -310,8 +320,19 @@ public class Gestao {
         return -1;
     }
 
-    // TODO Registar e consultar (por sessão) o pagamento de serviço de
-    // carregamento;
+    public static void registrarPagamento(SessaoCarregamento sessao, String metodoPagamento, LocalDateTime dataTransacao, LocalDateTime horaTransacao, boolean pago) {
+        Pagamento pagamento = new Pagamento(sessao, metodoPagamento, dataTransacao, horaTransacao, pago);
+        pagamentos.add(pagamento);
+    }
+
+    public static Pagamento consultarPagamentoPorSessao(String codigoSessao) {
+        for (Pagamento pagamento : pagamentos) {
+            if (pagamento.getSessao().getCodigo_sessao().equals(codigoSessao)) {
+                return pagamento;
+            }
+        }
+        return null;
+    }
 
     // TODO Listagem dos 3 postos de carregamento com maior valor faturado
     // (liquidado);

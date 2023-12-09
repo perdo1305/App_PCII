@@ -1,21 +1,25 @@
+import java.time.LocalDateTime;
+
 public class SessaoCarregamento {
     protected int matricula;
     protected double custo_kwh;
-    protected int minutos;
-    protected int segundos;
-    protected int horas;
     protected String estado_pagamento;
     protected double custo_sessao;
+    protected Cliente cliente;
 
-    public SessaoCarregamento(int matricula, double custo_kwh, String estado_pagamento,
-            double custo_sessao, int minutos, int segundos, int horas) {
+    public SessaoCarregamento(int matricula, double custo_kwh, String estado_pagamento, double custo_sessao,
+                              Cliente cliente, Veiculos veiculo, String codigo_sessao, LocalDateTime data_inicio,
+                              LocalDateTime data_fim, double energia_consumida) {
         setMatricula(matricula);
         setCusto_kwh(custo_kwh);
-        setMinutos(minutos);
-        setSegundos(segundos);
-        setHoras(horas);
         setEstado_pagamento(estado_pagamento);
         setCusto_sessao(custo_sessao);
+        setCliente(cliente);
+        setVeiculo(veiculo);
+        setCodigo_sessao(codigo_sessao);
+        setData_inicio(data_inicio);
+        setData_fim(data_fim);
+        setEnergia_consumida(energia_consumida);
     }
 
     public int getMatricula() {
@@ -34,30 +38,6 @@ public class SessaoCarregamento {
         this.custo_kwh = custo_kwh;
     }
 
-    public int getMinutos() {
-        return minutos;
-    }
-
-    public void setMinutos(int minutos) {
-        this.minutos = minutos;
-    }
-
-    public int getSegundos() {
-        return segundos;
-    }
-
-    public void setSegundos(int segundos) {
-        this.segundos = segundos;
-    }
-
-    public int getHoras() {
-        return horas;
-    }
-
-    public void setHoras(int horas) {
-        this.horas = horas;
-    }
-
     public String getEstado_pagamento() {
         return estado_pagamento;
     }
@@ -73,5 +53,62 @@ public class SessaoCarregamento {
     public void setCusto_sessao(double custo_sessao) {
         this.custo_sessao = custo_sessao;
     }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public Veiculos getVeiculo() {
+        return veiculo;
+    }
+
+    public void setVeiculo(Veiculos veiculo) {
+        this.veiculo = veiculo;
+    }
+
+    public String getCodigo_sessao() {
+        return codigo_sessao;
+    }
+
+    public void setCodigo_sessao(String codigo_sessao) {
+        this.codigo_sessao = codigo_sessao;
+    }
+
+    public LocalDateTime getData_inicio() {
+        return data_inicio;
+    }
+
+    public void setData_inicio(LocalDateTime data_inicio) {
+        this.data_inicio = data_inicio;
+    }
+
+    public LocalDateTime getData_fim() {
+        return data_fim;
+    }
+
+    public void setData_fim(LocalDateTime data_fim) {
+        this.data_fim = data_fim;
+    }
+
+    public double getEnergia_consumida() {
+        return energia_consumida;
+    }
+
+    public void setEnergia_consumida(double energia_consumida) {
+        this.energia_consumida = energia_consumida;
+    }
+
+    protected Veiculos veiculo;
+    protected String codigo_sessao;
+    protected LocalDateTime data_inicio;
+    protected LocalDateTime data_fim;
+    protected double energia_consumida;
+
+
+
 
 }

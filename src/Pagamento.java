@@ -1,30 +1,57 @@
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class Pagamento {
-    static DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-    private String metodoDePagamento;
-    private Date dataTransacao;
+    protected SessaoCarregamento sessao;
+    protected String metodoPagamento;
+    protected LocalDateTime dataTransacao;
+    protected LocalDateTime horaTransacao;
+    protected boolean pago;
 
-    public Pagamento(String metodoDePagamento, Date dataTransacao) {
-        this.metodoDePagamento = metodoDePagamento;
+    public Pagamento(SessaoCarregamento sessao, String metodoPagamento, LocalDateTime dataTransacao, LocalDateTime horaTransacao, boolean pago) {
+        this.sessao = sessao;
+        this.metodoPagamento = metodoPagamento;
         this.dataTransacao = dataTransacao;
+        this.horaTransacao = horaTransacao;
+        this.pago = pago;
     }
 
-    public String getMetodoDePagamento() {
-        return metodoDePagamento;
+    public SessaoCarregamento getSessao() {
+        return sessao;
     }
 
-    public void setMetodoDePagamento(String metodoDePagamento) {
-        this.metodoDePagamento = metodoDePagamento;
+    public void setSessao(SessaoCarregamento sessao) {
+        this.sessao = sessao;
     }
 
-    public Date getDataTransacao() {
+    public String getMetodoPagamento() {
+        return metodoPagamento;
+    }
+
+    public void setMetodoPagamento(String metodoPagamento) {
+        this.metodoPagamento = metodoPagamento;
+    }
+
+    public LocalDateTime getDataTransacao() {
         return dataTransacao;
     }
 
-    public void setDataTransacao(Date dataTransacao) {
+    public void setDataTransacao(LocalDateTime dataTransacao) {
         this.dataTransacao = dataTransacao;
+    }
+
+    public LocalDateTime getHoraTransacao() {
+        return horaTransacao;
+    }
+
+    public void setHoraTransacao(LocalDateTime horaTransacao) {
+        this.horaTransacao = horaTransacao;
+    }
+
+    public boolean isPago() {
+        return pago;
+    }
+
+    public void setPago(boolean pago) {
+        this.pago = pago;
     }
 }
