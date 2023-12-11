@@ -2,7 +2,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Veiculos {
+public class Veiculo implements java.io.Serializable{
 
     static DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 
@@ -14,8 +14,8 @@ public class Veiculos {
     protected int capacidade_bateria; // kw/h
     protected int autonomia;// km por carga
 
-    public Veiculos(String marca, String modelo, String matricula, Date data_registo, int autonomia,
-            double velocidadeCarregamento, int potencia) {
+    public Veiculo(String marca, String modelo, String matricula, Date data_registo, int autonomia,
+                    double velocidadeCarregamento, int potencia) {
         setMarca(marca);
         setModelo(modelo);
         setMatricula(matricula);

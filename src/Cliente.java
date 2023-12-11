@@ -2,7 +2,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Cliente {
+public class Cliente implements java.io.Serializable {
     static DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
     protected String nome;
     protected int nif;
@@ -76,6 +76,7 @@ public class Cliente {
                 + "Telemovel: " + getTelemovel() + "\n"
                 + "Email: " + getEmail() + "\n"
                 + "Data de nascimento: " + dateFormat.format(getData_nascimento()) + "\n";
-    return  str;
+        return str;
     }
+
 }

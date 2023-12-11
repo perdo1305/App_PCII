@@ -6,9 +6,14 @@ public class SessaoCarregamento {
     protected String estado_pagamento;
     protected double custo_sessao;
     protected Cliente cliente;
+    protected Veiculo veiculo;
+    protected String codigo_sessao;
+    protected LocalDateTime data_inicio;
+    protected LocalDateTime data_fim;
+    protected double energia_consumida;
 
     public SessaoCarregamento(int matricula, double custo_kwh, String estado_pagamento, double custo_sessao,
-                              Cliente cliente, Veiculos veiculo, String codigo_sessao, LocalDateTime data_inicio,
+                              Cliente cliente, Veiculo veiculo, String codigo_sessao, LocalDateTime data_inicio,
                               LocalDateTime data_fim, double energia_consumida) {
         setMatricula(matricula);
         setCusto_kwh(custo_kwh);
@@ -21,6 +26,8 @@ public class SessaoCarregamento {
         setData_fim(data_fim);
         setEnergia_consumida(energia_consumida);
     }
+
+
 
     public int getMatricula() {
         return matricula;
@@ -62,11 +69,11 @@ public class SessaoCarregamento {
         this.cliente = cliente;
     }
 
-    public Veiculos getVeiculo() {
+    public Veiculo getVeiculo() {
         return veiculo;
     }
 
-    public void setVeiculo(Veiculos veiculo) {
+    public void setVeiculo(Veiculo veiculo) {
         this.veiculo = veiculo;
     }
 
@@ -101,12 +108,6 @@ public class SessaoCarregamento {
     public void setEnergia_consumida(double energia_consumida) {
         this.energia_consumida = energia_consumida;
     }
-
-    protected Veiculos veiculo;
-    protected String codigo_sessao;
-    protected LocalDateTime data_inicio;
-    protected LocalDateTime data_fim;
-    protected double energia_consumida;
 
 
 

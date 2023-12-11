@@ -1,6 +1,6 @@
 import java.util.Date;
 
-public class VeiculosHibridos extends Veiculos {
+public class VeiculosHibridos extends Veiculo {
     protected int cilindrada;
     protected double consumo;
     protected double emissao;

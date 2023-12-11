@@ -1,6 +1,6 @@
 import java.util.Date;
 
-public class VeiculosEletricos extends Veiculos {
+public class VeiculosEletricos extends Veiculo {
     protected int tempo_carregamento;
 
     public VeiculosEletricos(String marca, String modelo, String matricula, Date data_registo, int autonomia,

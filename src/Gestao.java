@@ -1,20 +1,23 @@
-import java.lang.reflect.Array;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Gestao {
-    static DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-    static ArrayList<Cliente> clientes = new ArrayList<Cliente>();
-    static ArrayList<Veiculos> veiculos = new ArrayList<Veiculos>();
-    static ArrayList<PostoCarregamento> postos = new ArrayList<PostoCarregamento>();
-    static ArrayList<SessaoCarregamento> sessoes = new ArrayList<SessaoCarregamento>();
-    static ArrayList<Pagamento> pagamentos = new ArrayList<Pagamento>();
+public class Gestao implements java.io.Serializable {
+    public DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+    private ArrayList<Cliente> clientes = new ArrayList<Cliente>();
+    private ArrayList<Veiculo> veiculos = new ArrayList<Veiculo>();
+    private ArrayList<PostoCarregamento> postos = new ArrayList<PostoCarregamento>();
+    private ArrayList<SessaoCarregamento> sessoes = new ArrayList<SessaoCarregamento>();
+    private ArrayList<Pagamento> pagamentos = new ArrayList<Pagamento>();
+
+    public Gestao() {
+    }
 
     // Inserir e consultar (através de matrícula) os veículos registados;
-    public static void criarVeiculo() {
+    public void criarVeiculo() {
         String marca, modelo, matricula, tipo_veiculo;
         Date data_registo = null;
         int potencia, capacidade_bateria, autonomia;
@@ -33,13 +36,38 @@ public class Gestao {
             modelo = Consola.lerString("Modelo: ");
         } while (modelo.isEmpty());
         do {
-            matricula = Consola.lerString("Matricula: ");
+            // verificar se o formato da matricula esta correto
+            matricula = Consola.lerString("Matricula (XX-XX-XX): ");
+
+            if (matricula.length() != 8) {
+                System.out.println("Matricula invalida");
+                matricula = "";
+            } else {
+                if (matricula.charAt(2) != '-' || matricula.charAt(5) != '-') {
+                    System.out.println("Matricula invalida");
+                    matricula = "";
+                }
+            }
+            // colocar a matricula em maiusculas
+            matricula = matricula.toUpperCase();
         } while (matricula.isEmpty());
         boolean error = false;
         do {
             error = false;
             try {
-                data_registo = dateFormat.parse(Consola.lerString("Data de registo do veiculo (dd-mm-yyyy): "));
+                String data = Consola.lerString("Data de registo do veiculo (dd-mm-yyyy): ");
+                // verificar se o o dia esta entre 1 e 31, o mes entre 1 e 12 e o ano entre 1900
+                // e 2024
+                if (Integer.parseInt(data.substring(0, 2)) < 1 || Integer.parseInt(data.substring(0, 2)) > 31
+                        || Integer.parseInt(data.substring(3, 5)) < 1 || Integer.parseInt(data.substring(3, 5)) > 12
+                        || Integer.parseInt(data.substring(6, 10)) < 1900
+                        || Integer.parseInt(data.substring(6, 10)) > 2024) {
+                    System.out.println("Data invalida");
+                    error = true;
+                } else {
+                    data_registo = dateFormat.parse(data);
+                }
+
             } catch (Exception e) {
                 System.out.println("Data invalida");
                 error = true;
@@ -47,13 +75,13 @@ public class Gestao {
         } while (error);
 
         do {
-            potencia = Consola.lerInt("Potencia do veiculo(cv): ", 1, 999999999);
+            potencia = Consola.lerInt("Potencia do veiculo (cv): ", 1, 999999999);
         } while (potencia == 0);
         do {
-            capacidade_bateria = Consola.lerInt("Capacidade da bateria(kwh): ", 1, 999999999);
+            capacidade_bateria = Consola.lerInt("Capacidade da bateria (kwh): ", 1, 999999999);
         } while (capacidade_bateria == 0);
         do {
-            autonomia = Consola.lerInt("Autonomia: ", 1, 999999999);
+            autonomia = Consola.lerInt("Autonomia (Km): ", 1, 999999999);
         } while (autonomia == 0);
 
         int tempo_carregamento;
@@ -62,12 +90,34 @@ public class Gestao {
         if (tipo_veiculo.equalsIgnoreCase("E")) {
 
             do {
-                tempo_carregamento = Consola.lerInt("Tempo de carregamento: ", 1, 999999999);
-            } while (tempo_carregamento == 0);
-            do {
-                velocidadeCarregamento = Consola.lerDouble("Velocidade de carregamento: ", 1, 999999999);
+                // switch case com os tipos de carregamento PCN (7.4kW), PCR (22kW),PCUR(100kw);
+                System.out.println("Tipo de carregamento: ");
+                System.out.println("1 - PCN (7.4kW)");
+                System.out.println("2 - PCR (22kW)");
+                System.out.println("3 - PCUR (100kW)");
+                System.out.println("Escolha uma opção: ");
+                int opcao = Consola.lerInt("", 1, 3);
+                switch (opcao) {
+                    case 1:
+                        velocidadeCarregamento = 7.4;
+                        break;
+                    case 2:
+                        velocidadeCarregamento = 22;
+                        break;
+                    case 3:
+                        velocidadeCarregamento = 100;
+                        break;
+                    default:
+                        break;
+                }
             } while (velocidadeCarregamento == 0);
-            VeiculosEletricos veiculo = new VeiculosEletricos(marca, modelo, matricula, data_registo, autonomia, velocidadeCarregamento, potencia, tempo_carregamento);
+
+            do {
+                tempo_carregamento = Consola.lerInt("Tempo de carregamento (H): ", 1, 9999);
+            } while (tempo_carregamento == 0);
+
+            VeiculosEletricos veiculo = new VeiculosEletricos(marca, modelo, matricula, data_registo, autonomia,
+                    velocidadeCarregamento, potencia, tempo_carregamento);
             veiculos.add(veiculo);
         } else {
             double consumo_combustivel;
@@ -83,29 +133,39 @@ public class Gestao {
                 emissao = Consola.lerDouble("Emissao: ", 1, 999999999);
             } while (emissao == 0);
 
-            VeiculosHibridos veiculo = new VeiculosHibridos(marca, modelo, matricula, data_registo, autonomia, velocidadeCarregamento, potencia, cilindrada, consumo_combustivel, emissao);
+            VeiculosHibridos veiculo = new VeiculosHibridos(marca, modelo, matricula, data_registo, autonomia,
+                    velocidadeCarregamento, potencia, cilindrada, consumo_combustivel, emissao);
             veiculos.add(veiculo);
             System.out.println("Veiculo criado com sucesso");
         }
     }
 
-    public static int procurarVeiculo(String matricula) {
+    public int procurarVeiculo(String matricula) {
         for (int i = 0; i < veiculos.size(); i++) {
-            if (veiculos.get(i).getMatricula().equals(matricula)) {
+            if (veiculos.get(i).getMatricula().equalsIgnoreCase(matricula)) {
                 return i;
             }
         }
         return -1;
     }
 
-    public static void consultarVeiculo() {
+    public void consultarVeiculo() {
         String matricula;
         if (veiculos.isEmpty()) {
             System.out.println("Não existem veiculos registados");
             return;
         }
         do {
-            matricula = Consola.lerString("Matricula: ");
+            matricula = Consola.lerString("Matricula (XX-XX-XX): ");
+            if (matricula.length() != 8) {
+                System.out.println("Matricula invalida");
+                matricula = "";
+            } else {
+                if (matricula.charAt(2) != '-' || matricula.charAt(5) != '-') {
+                    System.out.println("Matricula invalida");
+                    matricula = "";
+                }
+            }
         } while (matricula.isEmpty());
         // return posicao do veiculo na arraylist
         int posicao = procurarVeiculo(matricula);
@@ -119,7 +179,7 @@ public class Gestao {
         }
     }
 
-    public static void criarCliente() {
+    public void criarCliente() {
         String morada, email, nome;
         int nif, telemovel;
         Date data_nascimento = null;
@@ -148,6 +208,7 @@ public class Gestao {
         } while (email.isEmpty());
         boolean error = false;
         do {
+            error = false;
             try {
                 data_nascimento = dateFormat.parse(Consola.lerString("Data de nascimento: "));
             } catch (Exception e) {
@@ -161,7 +222,7 @@ public class Gestao {
         clientes.add(cliente);
     }
 
-    public static void consultarCliente() {
+    public void consultarCliente() {
         int nif;
         if (clientes.isEmpty()) {
             System.out.println("Não existem clientes registados");
@@ -182,7 +243,7 @@ public class Gestao {
         }
     }
 
-    public static int procurarCliente(int nif) {
+    public int procurarCliente(int nif) {
         for (int i = 0; i < clientes.size(); i++) {
             if (clientes.get(i).getNif() == nif) {
                 return i;
@@ -231,6 +292,7 @@ public class Gestao {
                     Date data_nascimento = null;
                     boolean error = false;
                     do {
+                        error = false;
                         try {
                             data_nascimento = dateFormat.parse(Consola.lerString("Data de nascimento: "));
                         } catch (Exception e) {
@@ -258,7 +320,7 @@ public class Gestao {
         }
     }
 
-    public static void criarPostoCarregamento() {
+    public void criarPostoCarregamento() {
         int codigo_posto, numero_veiculos;
         String localizacao, tipo_posto;
         double custo_kwh;
@@ -288,8 +350,7 @@ public class Gestao {
         postos.add(posto);
     }
 
-
-    public static void consultarPostoCarregamento() {
+    public void consultarPostoCarregamento() {
         int codigo_posto;
         if (postos.isEmpty()) {
             System.out.println("Não existem postos de carregamento registados");
@@ -305,13 +366,12 @@ public class Gestao {
         } else {
 
             System.out.println("\n" + postos.get(posicao).toString());
-            // TODO carregue em qualquer tecla para voltar ao menu
             System.out.println("Carregue no ENTER voltar ao menu");
             Consola.lerString("\n");
         }
     }
 
-    public static int procurarPosto(int codigo_posto) {
+    public int procurarPosto(int codigo_posto) {
         for (int i = 0; i < postos.size(); i++) {
             if (postos.get(i).getCodigo_posto() == codigo_posto) {
                 return i;
@@ -320,12 +380,13 @@ public class Gestao {
         return -1;
     }
 
-    public static void registrarPagamento(SessaoCarregamento sessao, String metodoPagamento, LocalDateTime dataTransacao, LocalDateTime horaTransacao, boolean pago) {
+    public void registrarPagamento(SessaoCarregamento sessao, String metodoPagamento,
+            LocalDateTime dataTransacao, LocalDateTime horaTransacao, boolean pago) {
         Pagamento pagamento = new Pagamento(sessao, metodoPagamento, dataTransacao, horaTransacao, pago);
         pagamentos.add(pagamento);
     }
 
-    public static Pagamento consultarPagamentoPorSessao(String codigoSessao) {
+    public Pagamento consultarPagamentoPorSessao(String codigoSessao) {
         for (Pagamento pagamento : pagamentos) {
             if (pagamento.getSessao().getCodigo_sessao().equals(codigoSessao)) {
                 return pagamento;
@@ -334,8 +395,7 @@ public class Gestao {
         return null;
     }
 
-    // TODO Listagem dos 3 postos de carregamento com maior valor faturado
-    // (liquidado);
+    // TODO Listagem dos 3 postos de carregamento com maior valor faturad (liquidado);
 
     // TODO Listagem de sessões de carregamento cujo custo é superior a n
     // euros.Sendo o valor de n solicitado ao utilizador;
