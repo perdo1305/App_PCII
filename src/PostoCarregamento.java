@@ -1,4 +1,4 @@
-public class PostoCarregamento {
+public class PostoCarregamento implements java.io.Serializable {
     protected int codigo_posto;
     protected String localizacao; // morada
     protected String tipo_posto; // PCN - Posto de Carregamento Normal, PCR - Posto de Carregamento Rapido , PCUR

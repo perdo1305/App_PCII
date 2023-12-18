@@ -1,6 +1,6 @@
 import java.time.LocalDateTime;
 
-public class Pagamento {
+public class Pagamento implements java.io.Serializable {
     protected SessaoCarregamento sessao;
     protected String metodoPagamento;
     protected LocalDateTime dataTransacao;

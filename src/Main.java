@@ -1,38 +1,32 @@
-import java.io.ObjectOutputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.FileInputStream;
 
 public class Main {
     public static void main(String[] args) {
-
         Gestao gestao = new Gestao();
-
+        Gestao.lerFicheiro(gestao);
         int opcaoMenu;
-        lerFicheiro(gestao);
+
         do {
             opcaoMenu = menu();
 
             switch (opcaoMenu) {
                 case 1:// Registar Veiculo
-                    Gestao.criarVeiculo();
+                    gestao.criarVeiculo();
                     break;
                 case 2:// Consultar Veiculo
-                    //TODO na primeira ve que iniciamos o menu conculta nao aparece nada
-                    Gestao.consultarVeiculo();
+                       // TODO na primeira ve que iniciamos o menu conculta nao aparece nada
+                    gestao.consultarVeiculo();
                     break;
                 case 3:// Registar Cliente
-                    Gestao.criarCliente();
+                    gestao.criarCliente();
                     break;
                 case 4:// Consultar Cliente
-                    Gestao.consultarCliente();
+                    gestao.consultarCliente();
                     break;
                 case 5:// Registar posto de carregamento
-                    Gestao.criarPostoCarregamento();
+                    gestao.criarPostoCarregamento();
                     break;
                 case 6:// Consultar posto de carregamento
-                    Gestao.consultarPostoCarregamento();
+                    gestao.consultarPostoCarregamento();
                     break;
                 case 7:// Registar sessao de carregamento
                     System.out.println("Matricula: ");
@@ -59,15 +53,15 @@ public class Main {
                 case 0:// Sair
                     System.out.println("FIM DO PROGRAMA");
                     System.out.println("TO BE CONTINUED...");
-                    
+
                     break;
                 default:
                     System.out.println("Opcao invalida");
                     break;
             }
         } while (menu() != 0);
-        gravarFicheiro(gestao);
 
+        Gestao.gravarFicheiro(gestao);
     }
 
     public static int menu() {
@@ -88,30 +82,6 @@ public class Main {
         System.out.println("_______________________________________");
 
         return Consola.lerInt("Opcao: ", 0, 11);
-    }
-
-    public static void gravarFicheiro(Gestao gestao) {
-        try {
-            ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("Gestao.dat"));
-            out.writeObject(gestao);
-            out.close();
-            System.out.println("Ficheiro gravado com sucesso!");
-        } catch (IOException ex) {
-            System.out.println(ex.getMessage());
-            System.out.println("Ficheiro nao encontrado!");
-        }
-    }
-
-    public static void lerFicheiro(Gestao gestao) {
-        try {
-            ObjectInputStream in = new ObjectInputStream(new FileInputStream("Gestao.dat"));
-            gestao = (Gestao) in.readObject();
-            in.close();
-            System.out.println("Ficheiro lido com sucesso!");
-        } catch (IOException | ClassNotFoundException ex) {
-            System.out.println(ex.getMessage());
-            System.out.println("Ficheiro nao encontrado!");
-        }
     }
 
 }

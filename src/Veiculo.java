@@ -2,7 +2,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Veiculo {
+public class Veiculo implements java.io.Serializable{
 
     static DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 

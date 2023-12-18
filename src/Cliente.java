@@ -1,8 +1,9 @@
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Cliente implements java.io.Serializable {
+public class Cliente implements Serializable {
     static DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
     protected String nome;
     protected int nif;

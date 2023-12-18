@@ -1,6 +1,6 @@
 import java.time.LocalDateTime;
 
-public class SessaoCarregamento {
+public class SessaoCarregamento implements java.io.Serializable {
     protected int matricula;
     protected double custo_kwh;
     protected String estado_pagamento;
