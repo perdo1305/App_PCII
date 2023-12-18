@@ -1,12 +1,10 @@
 import java.io.ObjectOutputStream;
-
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.FileInputStream;
 
 public class Main {
-
     public static void main(String[] args) {
 
         Gestao gestao = new Gestao();
@@ -18,23 +16,23 @@ public class Main {
 
             switch (opcaoMenu) {
                 case 1:// Registar Veiculo
-                    gestao.criarVeiculo();
+                    Gestao.criarVeiculo();
                     break;
                 case 2:// Consultar Veiculo
                     //TODO na primeira ve que iniciamos o menu conculta nao aparece nada
-                    gestao.consultarVeiculo();
+                    Gestao.consultarVeiculo();
                     break;
                 case 3:// Registar Cliente
-                    gestao.criarCliente();
+                    Gestao.criarCliente();
                     break;
                 case 4:// Consultar Cliente
-                    gestao.consultarCliente();
+                    Gestao.consultarCliente();
                     break;
                 case 5:// Registar posto de carregamento
-                    gestao.criarPostoCarregamento();
+                    Gestao.criarPostoCarregamento();
                     break;
                 case 6:// Consultar posto de carregamento
-                    gestao.consultarPostoCarregamento();
+                    Gestao.consultarPostoCarregamento();
                     break;
                 case 7:// Registar sessao de carregamento
                     System.out.println("Matricula: ");

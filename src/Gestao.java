@@ -1,4 +1,3 @@
-import java.lang.reflect.Array;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -8,7 +7,7 @@ import java.util.Date;
 public class Gestao {
     static DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
     static ArrayList<Cliente> clientes = new ArrayList<Cliente>();
-    static ArrayList<Veiculos> veiculos = new ArrayList<Veiculos>();
+    static ArrayList<Veiculo> veiculos = new ArrayList<Veiculo>();
     static ArrayList<PostoCarregamento> postos = new ArrayList<PostoCarregamento>();
     static ArrayList<SessaoCarregamento> sessoes = new ArrayList<SessaoCarregamento>();
     static ArrayList<Pagamento> pagamentos = new ArrayList<Pagamento>();
@@ -56,18 +55,46 @@ public class Gestao {
             autonomia = Consola.lerInt("Autonomia: ", 1, 999999999);
         } while (autonomia == 0);
 
-        int tempo_carregamento;
+        float tempo_carregamento;
         double velocidadeCarregamento = 0;
 
         if (tipo_veiculo.equalsIgnoreCase("E")) {
+            do {
+                System.out.println("Velocidade de carregamento (Kw/h): ");
+                System.out.println("1 - Normal(2.3Kw/h)");
+                System.out.println("2 - Rapido(7.4Kw/h)");
+                System.out.println("3 - Ultra-Rapido(160Kw/h)");
+                int opcao = Consola.lerInt("", 1, 3);
+                switch (opcao) {
+                    case 1:
+                        velocidadeCarregamento = 2.3;
+                        break;
+                    case 2:
+                        velocidadeCarregamento = 7.4;
+                        break;
+                    case 3:
+                        velocidadeCarregamento = 160;
+                        break;
+                    default:
+                        velocidadeCarregamento = 0;
+                        break;
+                }
+
+            } while (velocidadeCarregamento == 0);
 
             do {
-                tempo_carregamento = Consola.lerInt("Tempo de carregamento: ", 1, 999999999);
+                //valor da valocidade e capacidade da bateria
+                tempo_carregamento = (float) (capacidade_bateria / velocidadeCarregamento);                
+                System.out.println("Tempo de carregamento: " + tempo_carregamento + " horas");
+
             } while (tempo_carregamento == 0);
-            do {
-                velocidadeCarregamento = Consola.lerDouble("Velocidade de carregamento: ", 1, 999999999);
-            } while (velocidadeCarregamento == 0);
-            VeiculosEletricos veiculo = new VeiculosEletricos(marca, modelo, matricula, data_registo, autonomia, velocidadeCarregamento, potencia, tempo_carregamento);
+
+            VeiculosEletricos veiculo = new VeiculosEletricos(marca, modelo, matricula, data_registo, autonomia,
+                    velocidadeCarregamento, potencia, tempo_carregamento);
+            System.out.println("Veiculo criado com sucesso");
+            System.out.println("\n" + veiculo.toString());
+            System.out.println("Carregue no ENTER voltar ao menu");
+            Consola.lerString("\n");
             veiculos.add(veiculo);
         } else {
             double consumo_combustivel;
@@ -83,7 +110,8 @@ public class Gestao {
                 emissao = Consola.lerDouble("Emissao: ", 1, 999999999);
             } while (emissao == 0);
 
-            VeiculosHibridos veiculo = new VeiculosHibridos(marca, modelo, matricula, data_registo, autonomia, velocidadeCarregamento, potencia, cilindrada, consumo_combustivel, emissao);
+            VeiculosHibridos veiculo = new VeiculosHibridos(marca, modelo, matricula, data_registo, autonomia,
+                    velocidadeCarregamento, potencia, cilindrada, consumo_combustivel, emissao);
             veiculos.add(veiculo);
             System.out.println("Veiculo criado com sucesso");
         }
@@ -272,7 +300,25 @@ public class Gestao {
             localizacao = Consola.lerString("Localização(morada): ");
         } while (localizacao.isEmpty());
         do {
-            tipo_posto = Consola.lerString("Tipo de posto: ");
+            System.out.println("Tipo de posto de carregamento: ");
+            System.out.println("1 - Posto de Carregamento Normal (PCN)");
+            System.out.println("2 - Posto de Carregamento Rápido (PCR)");
+            System.out.println("3 - Posto de Carregamento Ultrarrápido (PCUR)");
+            int opcao = Consola.lerInt("", 1, 3);
+            switch (opcao) {
+                case 1:
+                    tipo_posto = "PCN";
+                    break;
+                case 2:
+                    tipo_posto = "PCR";
+                    break;
+                case 3:
+                    tipo_posto = "PCUR";
+                    break;
+                default:
+                    tipo_posto = "";
+                    break;
+            }
         } while (tipo_posto.isEmpty());
         do {
             custo_kwh = Consola.lerDouble("Custo por kWh(E): ", 0, 999999999);
@@ -287,7 +333,6 @@ public class Gestao {
                 numero_veiculos);
         postos.add(posto);
     }
-
 
     public static void consultarPostoCarregamento() {
         int codigo_posto;
@@ -305,7 +350,6 @@ public class Gestao {
         } else {
 
             System.out.println("\n" + postos.get(posicao).toString());
-            // TODO carregue em qualquer tecla para voltar ao menu
             System.out.println("Carregue no ENTER voltar ao menu");
             Consola.lerString("\n");
         }
@@ -320,7 +364,8 @@ public class Gestao {
         return -1;
     }
 
-    public static void registrarPagamento(SessaoCarregamento sessao, String metodoPagamento, LocalDateTime dataTransacao, LocalDateTime horaTransacao, boolean pago) {
+    public static void registrarPagamento(SessaoCarregamento sessao, String metodoPagamento,
+            LocalDateTime dataTransacao, LocalDateTime horaTransacao, boolean pago) {
         Pagamento pagamento = new Pagamento(sessao, metodoPagamento, dataTransacao, horaTransacao, pago);
         pagamentos.add(pagamento);
     }
