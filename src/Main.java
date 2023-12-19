@@ -1,8 +1,13 @@
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 public class Main {
     public static void main(String[] args) {
         Gestao gestao = new Gestao();
-        Gestao.lerFicheiro(gestao);
+        lerFicheiro(gestao);
         int opcaoMenu;
 
         do {
@@ -61,7 +66,7 @@ public class Main {
             }
         } while (menu() != 0);
 
-        Gestao.gravarFicheiro(gestao);
+        gravarFicheiro(gestao);
     }
 
     public static int menu() {
@@ -82,6 +87,30 @@ public class Main {
         System.out.println("_______________________________________");
 
         return Consola.lerInt("Opcao: ", 0, 11);
+    }
+
+    public static void gravarFicheiro(Gestao gestao) {
+        try {
+            ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("Gestao.dat"));
+            out.writeObject(gestao);
+            out.close();
+            System.out.println("Ficheiro gravado com sucesso!");
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+            System.out.println("Ficheiro nao encontrado!");
+        }
+    }
+
+    public static void lerFicheiro(Gestao gestao) {
+        try {
+            ObjectInputStream in = new ObjectInputStream(new FileInputStream("Gestao.dat"));
+            gestao = (Gestao) in.readObject();
+            in.close();
+            System.out.println("Ficheiro lido com sucesso!");
+        } catch (IOException | ClassNotFoundException ex) {
+            System.out.println(ex.getMessage());
+            System.out.println("Ficheiro nao encontrado!");
+        }
     }
 
 }

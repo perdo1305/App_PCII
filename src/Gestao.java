@@ -421,29 +421,7 @@ public class Gestao implements java.io.Serializable {
     }
 
 
-public static void gravarFicheiro(Gestao gestao) {
-        try {
-            ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("Gestao.dat"));
-            out.writeObject(gestao);
-            out.close();
-            System.out.println("Ficheiro gravado com sucesso!");
-        } catch (IOException ex) {
-            System.out.println(ex.getMessage());
-            System.out.println("Ficheiro nao encontrado!");
-        }
-    }
 
-    public static void lerFicheiro(Gestao gestao) {
-        try {
-            ObjectInputStream in = new ObjectInputStream(new FileInputStream("Gestao.dat"));
-            gestao = (Gestao) in.readObject();
-            in.close();
-            System.out.println("Ficheiro lido com sucesso!");
-        } catch (IOException | ClassNotFoundException ex) {
-            System.out.println(ex.getMessage());
-            System.out.println("Ficheiro nao encontrado!");
-        }
-    }
 
 
 
