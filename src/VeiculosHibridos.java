@@ -36,6 +36,4 @@ public class VeiculosHibridos extends Veiculo {
     public void setEmissao(double emissao) {
         this.emissao = emissao;
     }
-
-    
 }
