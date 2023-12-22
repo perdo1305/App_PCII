@@ -34,41 +34,34 @@ public class Gestao implements java.io.Serializable {
             modelo = Consola.lerString("Modelo: ");
         } while (modelo.isEmpty());
         do {
-            do {
-                matricula = Consola.lerString("Matricula: ");
-                // verificar se o formato da matricula esta correto
-                matricula = Consola.lerString("Matricula (XX-XX-XX): ");
+            // verificar se o formato da matricula esta correto
+            matricula = Consola.lerString("Matricula (XX-XX-XX): ");
 
-                if (matricula.length() != 8) {
+            if (matricula.length() != 8) {
+                System.out.println("Matricula invalida");
+                matricula = "";
+            } else {
+                if (matricula.charAt(2) != '-' || matricula.charAt(5) != '-') {
                     System.out.println("Matricula invalida");
                     matricula = "";
-                } else {
-                    if (matricula.charAt(2) != '-' || matricula.charAt(5) != '-') {
-                        System.out.println("Matricula invalida");
-                        matricula = "";
-                    }
                 }
-                // colocar a matricula em maiusculas
-                matricula = matricula.toUpperCase();
-            } while (matricula.isEmpty());
-
+            }
+            // colocar a matricula em maiusculas
+            matricula = matricula.toUpperCase();
         } while (matricula.isEmpty());
+
         boolean error = false;
         do {
             error = false;
             try {
-                data_registo = dateFormat.parse(Consola.lerString("Data de registo do veiculo (dd-mm-yyyy): "));
                 String data = Consola.lerString("Data de registo do veiculo (dd-mm-yyyy): ");
-                // verificar se o o dia esta entre 1 e 31, o mes entre 1 e 12 e o ano entre 1900
-                // e 2024
+                data_registo = dateFormat.parse(data);
                 if (Integer.parseInt(data.substring(0, 2)) < 1 || Integer.parseInt(data.substring(0, 2)) > 31
                         || Integer.parseInt(data.substring(3, 5)) < 1 || Integer.parseInt(data.substring(3, 5)) > 12
                         || Integer.parseInt(data.substring(6, 10)) < 1900
                         || Integer.parseInt(data.substring(6, 10)) > 2024) {
                     System.out.println("Data invalida");
                     error = true;
-                } else {
-                    data_registo = dateFormat.parse(data);
                 }
 
             } catch (Exception e) {
@@ -123,11 +116,8 @@ public class Gestao implements java.io.Serializable {
 
             VeiculosEletricos veiculo = new VeiculosEletricos(marca, modelo, matricula, data_registo, autonomia,
                     velocidadeCarregamento, potencia, tempo_carregamento);
-            System.out.println("Veiculo criado com sucesso");
-            System.out.println("\n" + veiculo.toString());
-            System.out.println("Carregue no ENTER voltar ao menu");
-            Consola.lerString("\n");
             veiculos.add(veiculo);
+            System.out.println("Veiculo criado com sucesso");
         } else {
             double consumo_combustivel;
             do {
@@ -181,8 +171,8 @@ public class Gestao implements java.io.Serializable {
         if (posicao == -1) {
             System.out.println("Veiculo não encontrado");
         } else {
-
             System.out.println("\n" + veiculos.get(posicao).toString());
+
             System.out.println("Carregue no ENTER voltar ao menu");
             Consola.lerString("\n");
         }
@@ -406,7 +396,7 @@ public class Gestao implements java.io.Serializable {
     }
 
     public void registrarPagamento(SessaoCarregamento sessao, String metodoPagamento,
-            LocalDateTime dataTransacao, LocalDateTime horaTransacao, boolean pago) {
+                                   LocalDateTime dataTransacao, LocalDateTime horaTransacao, boolean pago) {
         Pagamento pagamento = new Pagamento(sessao, metodoPagamento, dataTransacao, horaTransacao, pago);
         pagamentos.add(pagamento);
     }
@@ -421,9 +411,9 @@ public class Gestao implements java.io.Serializable {
     }
 
 
+    //TODO Registar e consultar sessão de carregamento;
 
-
-
+    //TODO Registar e consultar (por sessão) o pagamento de serviço de carregamento;
 
     // TODO Listagem dos 3 postos de carregamento com maior valor faturado
     // (liquidado);
@@ -434,7 +424,7 @@ public class Gestao implements java.io.Serializable {
     // TODO Total de sessões de carregamento realizados (por cliente);
 
     // TODO Média de energia consumida por posto de carregamento e por tipo
-    // deveículo (híbridos/elétricos);
+    // de veículo (híbridos/elétricos);
 
     // TODO Listagem de pagamentos por efetuar (por cliente);
 

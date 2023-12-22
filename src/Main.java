@@ -18,7 +18,7 @@ public class Main {
                     gestao.criarVeiculo();
                     break;
                 case 2:// Consultar Veiculo
-                       // TODO na primeira ve que iniciamos o menu conculta nao aparece nada
+                    // TODO na primeira ve que iniciamos o menu conculta nao aparece nada
                     gestao.consultarVeiculo();
                     break;
                 case 3:// Registar Cliente
@@ -64,13 +64,13 @@ public class Main {
                     System.out.println("Opcao invalida");
                     break;
             }
-        } while (menu() != 0);
+        } while (opcaoMenu != 0);
 
         gravarFicheiro(gestao);
     }
 
     public static int menu() {
-
+        int opcao;
         System.out.println("\n_______________________________________\n");
         System.out.println("1  -> Registar Veiculo");
         System.out.println("2  -> Consultar Veiculo");
@@ -86,7 +86,11 @@ public class Main {
         System.out.println("\n0  -> Sair");
         System.out.println("_______________________________________");
 
-        return Consola.lerInt("Opcao: ", 0, 11);
+
+        do {
+            opcao = Consola.lerInt("Opcao: ", 0, 11);
+        } while (opcao < 0 || opcao > 11);
+        return opcao;
     }
 
     public static void gravarFicheiro(Gestao gestao) {

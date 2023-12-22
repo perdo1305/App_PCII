@@ -17,4 +17,8 @@ public class VeiculosEletricos extends Veiculo {
     public void setTempo_carregamento(float tempo_carregamento) {
         this.tempo_carregamento = tempo_carregamento;
     }
+    @Override
+    public String toString() {
+        return super.toString() + "Tempo de carregamento: " + tempo_carregamento + "\n";
+    }
 }

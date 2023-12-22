@@ -81,4 +81,11 @@ public class Veiculo implements java.io.Serializable{
         this.autonomia = autonomia;
     }
 
+    @Override
+    public String toString() {
+        return "Marca: " + marca + "\nModelo: " + modelo + "\nMatricula: " + matricula + "\nData de registo: "
+                + dateFormat.format(data_registo) + "\nPotencia: " + potencia + "\nCapacidade da bateria: "
+                + capacidade_bateria + "\nAutonomia: " + autonomia + "\n";
+    }
+
 }
