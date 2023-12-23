@@ -6,6 +6,12 @@ import java.io.ObjectOutputStream;
 
 public class Main {
     public static void main(String[] args) {
+        System.out.println("█▀█ █▀▀ █▀▄ █▀█ █▀█   █▀▀ █▀▀ █▀█ █▀█ █▀▀ █ █▀█ ▄▀█");
+        System.out.println("█▀▀ ██▄ █▄▀ █▀▄ █▄█   █▀░ ██▄ █▀▄ █▀▄ ██▄ █ █▀▄ █▀█");
+        System.out.println();
+        System.out.println("█▄▄ █▀▀ █▀█ █▄░█ ▄▀█ █▀█ █▀▄ █▀█   █▀ ▄▀█ █▄░█ ▀█▀ █▀█ █▀");
+        System.out.println("█▄█ ██▄ █▀▄ █░▀█ █▀█ █▀▄ █▄▀ █▄█   ▄█ █▀█ █░▀█ ░█░ █▄█ ▄█\n");
+
         Gestao gestao = new Gestao();
         lerFicheiro(gestao);
         int opcaoMenu;
