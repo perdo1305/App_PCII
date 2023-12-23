@@ -79,5 +79,4 @@ public class Cliente implements Serializable {
                 + "Data de nascimento: " + dateFormat.format(getData_nascimento()) + "\n";
         return str;
     }
-
 }

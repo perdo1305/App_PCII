@@ -1,8 +1,4 @@
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -12,8 +8,8 @@ public class Main {
         System.out.println("█▄▄ █▀▀ █▀█ █▄░█ ▄▀█ █▀█ █▀▄ █▀█   █▀ ▄▀█ █▄░█ ▀█▀ █▀█ █▀");
         System.out.println("█▄█ ██▄ █▀▄ █░▀█ █▀█ █▀▄ █▄▀ █▄█   ▄█ █▀█ █░▀█ ░█░ █▄█ ▄█\n");
 
-        Gestao gestao = new Gestao();
-        lerFicheiro(gestao);
+        //Gestao gestao = new Gestao();
+        Gestao gestao = lerFicheiro();
         int opcaoMenu;
 
         do {
@@ -104,21 +100,24 @@ public class Main {
             out.writeObject(gestao);
             out.close();
             System.out.println("Ficheiro gravado com sucesso!");
-        } catch (IOException ex) {
-            System.out.println(ex.getMessage());
-            System.out.println("Ficheiro nao encontrado!");
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found");
+        } catch (IOException e) {
+            System.out.println("Error initializing stream");
         }
     }
 
-    public static void lerFicheiro(Gestao gestao) {
+    public static Gestao lerFicheiro() {
         try {
             ObjectInputStream in = new ObjectInputStream(new FileInputStream("Gestao.dat"));
-            gestao = (Gestao) in.readObject();
+            Gestao gestao = (Gestao) in.readObject();
             in.close();
             System.out.println("Ficheiro lido com sucesso!");
+            return gestao;
         } catch (IOException | ClassNotFoundException ex) {
             System.out.println(ex.getMessage());
             System.out.println("Ficheiro nao encontrado!");
+            return null;
         }
     }
 

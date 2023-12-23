@@ -3,8 +3,9 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
+import java.io.Serializable;
 
-public class Gestao implements java.io.Serializable {
+public class Gestao implements Serializable {
     static DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
     ArrayList<Cliente> clientes = new ArrayList<Cliente>();
     ArrayList<Veiculo> veiculos = new ArrayList<Veiculo>();
@@ -359,7 +360,7 @@ public class Gestao implements java.io.Serializable {
         System.out.println("Posto de carregamento criado com sucesso");
 
         PostoCarregamento posto = new PostoCarregamento(codigo_posto, localizacao, tipo_posto, custo_kwh,
-                numero_veiculos);
+                numero_veiculos,0);
         postos.add(posto);
     }
 
