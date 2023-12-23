@@ -2,7 +2,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 public class SessaoCarregamento implements Serializable {
-    protected int matricula;
+    protected String matricula;
     protected double custo_kwh;
     protected String estado_pagamento;
     protected double custo_sessao;
@@ -15,7 +15,7 @@ public class SessaoCarregamento implements Serializable {
 
     protected PostoCarregamento postoCarregamento;
 
-    public SessaoCarregamento(int matricula, double custo_kwh, String estado_pagamento, double custo_sessao,
+    public SessaoCarregamento(String matricula, double custo_kwh, String estado_pagamento, double custo_sessao,
                               Cliente cliente, Veiculo veiculo, String codigo_sessao, LocalDateTime data_inicio,
                               LocalDateTime data_fim, double energia_consumida, PostoCarregamento postoCarregamento) {
         setMatricula(matricula);
@@ -32,11 +32,11 @@ public class SessaoCarregamento implements Serializable {
     }
 
 
-    public int getMatricula() {
+    public String getMatricula() {
         return matricula;
     }
 
-    public void setMatricula(int matricula) {
+    public void setMatricula(String matricula) {
         this.matricula = matricula;
     }
 

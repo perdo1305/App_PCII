@@ -1,3 +1,8 @@
+/***
+ * @Author: Pedro Ferreira - 2222035
+ * @Author: Bernardo Santos -2222033
+ */
+
 import java.io.*;
 
 public class Main {
@@ -8,10 +13,10 @@ public class Main {
         System.out.println("█▄▄ █▀▀ █▀█ █▄░█ ▄▀█ █▀█ █▀▄ █▀█   █▀ ▄▀█ █▄░█ ▀█▀ █▀█ █▀");
         System.out.println("█▄█ ██▄ █▀▄ █░▀█ █▀█ █▀▄ █▄▀ █▄█   ▄█ █▀█ █░▀█ ░█░ █▄█ ▄█\n");
 
-        //Gestao gestao = new Gestao();
         Gestao gestao = lerFicheiro();
-        int opcaoMenu;
+        assert gestao != null;
 
+        int opcaoMenu;
         do {
             opcaoMenu = menu();
 
@@ -20,7 +25,6 @@ public class Main {
                     gestao.criarVeiculo();
                     break;
                 case 2:// Consultar Veiculo
-                    // TODO na primeira ve que iniciamos o menu conculta nao aparece nada
                     gestao.consultarVeiculo();
                     break;
                 case 3:// Registar Cliente
@@ -120,5 +124,4 @@ public class Main {
             return null;
         }
     }
-
 }
