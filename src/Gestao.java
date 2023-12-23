@@ -214,7 +214,7 @@ public class Gestao implements java.io.Serializable {
                 error = true;
             }
         } while (error);
-        System.out.println("Cliente criado com sucesso");
+        System.out.println("Cliente registado com sucesso");
 
         Cliente cliente = new Cliente(nome, nif, morada, telemovel, email, data_nascimento);
         clientes.add(cliente);
@@ -236,8 +236,6 @@ public class Gestao implements java.io.Serializable {
         } else {
 
             System.out.println("\n" + clientes.get(posicao).toString());
-            System.out.println("Carregue no ENTER voltar ao menu");
-            Consola.lerString("\n");
         }
     }
 

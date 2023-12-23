@@ -55,4 +55,10 @@ public class PostoCarregamento implements java.io.Serializable {
         this.numero_veiculos = numero_veiculos;
     }
 
+    @Override
+    public String toString() {
+        return "Codigo do posto: " + codigo_posto + "\n" + "Localizacao: " + localizacao + "\n" + "Tipo de posto: "
+                + tipo_posto + "\n" + "Custo por kWh: " + custo_kwh + "\n" + "Numero de veiculos: " + numero_veiculos
+                + "\n";
+    }
 }

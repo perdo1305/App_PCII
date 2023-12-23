@@ -37,7 +37,6 @@ public class Main {
                     System.out.println("Matricula: ");
                     System.out.println("Hora de inicio: ");
                     System.out.println("Hora de fim: ");
-                    System.out.println("");
                     System.out.println("Matricula:");
                 case 8:// Consultar sessao de carregamento
                     System.out.println("\n***************************************\n");
