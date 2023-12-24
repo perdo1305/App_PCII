@@ -1,4 +1,6 @@
-public class PostoCarregamento implements java.io.Serializable {
+import java.io.Serializable;
+
+public class PostoCarregamento implements Serializable {
     protected int codigo_posto;
     protected String localizacao; // morada
     protected String tipo_posto; // PCN - Posto de Carregamento Normal, PCR - Posto de Carregamento Rapido , PCUR
@@ -6,13 +8,15 @@ public class PostoCarregamento implements java.io.Serializable {
     protected double custo_kwh; // custo por kWh em euros
     protected int numero_veiculos; // numero de veiculos que podem carregar em simultaneo
 
+    protected double tempo_carregamento;
     public PostoCarregamento(int codigo_posto, String localizacao, String tipo_posto, double custo_kwh,
-            int numero_veiculos) {
+                             int numero_veiculos, double tempo_carregamento) {
         setCodigo_posto(codigo_posto);
         setLocalizacao(localizacao);
         setTipo_posto(tipo_posto);
         setCusto_kwh(custo_kwh);
         setNumero_veiculos(numero_veiculos);
+        setTempo_carregamento(tempo_carregamento);
     }
 
     public int getCodigo_posto() {
@@ -55,4 +59,18 @@ public class PostoCarregamento implements java.io.Serializable {
         this.numero_veiculos = numero_veiculos;
     }
 
+    public double getTempo_carregamento() {
+        return tempo_carregamento;
+    }
+
+    public void setTempo_carregamento(double tempo_carregamento) {
+        this.tempo_carregamento = tempo_carregamento;
+    }
+
+    @Override
+    public String toString() {
+        return "Codigo do posto: " + codigo_posto + "\n" + "Localizacao: " + localizacao + "\n" + "Tipo de posto: "
+                + tipo_posto + "\n" + "Custo por kWh: " + custo_kwh + "\n" + "Numero de veiculos: " + numero_veiculos
+                + "\n" + "Tempo de carregamento: " + tempo_carregamento + "\n"; // new line
+    }
 }

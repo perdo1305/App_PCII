@@ -36,4 +36,9 @@ public class VeiculosHibridos extends Veiculo {
     public void setEmissao(double emissao) {
         this.emissao = emissao;
     }
+
+    @Override
+    public String toString() {
+        return super.toString() + "Cilindrada: " + cilindrada + "\n" + "Consumo: " + consumo + "\n" + "Emissao: " + emissao + "\n";
+    }
 }

@@ -1,8 +1,9 @@
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Veiculo implements java.io.Serializable{
+public class Veiculo implements Serializable {
 
     static DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 
@@ -79,6 +80,13 @@ public class Veiculo implements java.io.Serializable{
 
     public void setAutonomia(int autonomia) {
         this.autonomia = autonomia;
+    }
+
+    @Override
+    public String toString() {
+        return "Marca: " + marca + "\nModelo: " + modelo + "\nMatricula: " + matricula + "\nData de registo: "
+                + dateFormat.format(data_registo) + "\nPotencia: " + potencia + "\nCapacidade da bateria: "
+                + capacidade_bateria + "\nAutonomia: " + autonomia + "\n";
     }
 
 }

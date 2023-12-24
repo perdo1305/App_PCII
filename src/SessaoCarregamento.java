@@ -1,7 +1,8 @@
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class SessaoCarregamento implements java.io.Serializable {
-    protected int matricula;
+public class SessaoCarregamento implements Serializable {
+    protected String matricula;
     protected double custo_kwh;
     protected String estado_pagamento;
     protected double custo_sessao;
@@ -12,9 +13,11 @@ public class SessaoCarregamento implements java.io.Serializable {
     protected LocalDateTime data_fim;
     protected double energia_consumida;
 
-    public SessaoCarregamento(int matricula, double custo_kwh, String estado_pagamento, double custo_sessao,
+    protected PostoCarregamento postoCarregamento;
+
+    public SessaoCarregamento(String matricula, double custo_kwh, String estado_pagamento, double custo_sessao,
                               Cliente cliente, Veiculo veiculo, String codigo_sessao, LocalDateTime data_inicio,
-                              LocalDateTime data_fim, double energia_consumida) {
+                              LocalDateTime data_fim, double energia_consumida, PostoCarregamento postoCarregamento) {
         setMatricula(matricula);
         setCusto_kwh(custo_kwh);
         setEstado_pagamento(estado_pagamento);
@@ -25,15 +28,15 @@ public class SessaoCarregamento implements java.io.Serializable {
         setData_inicio(data_inicio);
         setData_fim(data_fim);
         setEnergia_consumida(energia_consumida);
+        setPostoCarregamento(postoCarregamento);
     }
 
 
-
-    public int getMatricula() {
+    public String getMatricula() {
         return matricula;
     }
 
-    public void setMatricula(int matricula) {
+    public void setMatricula(String matricula) {
         this.matricula = matricula;
     }
 
@@ -109,7 +112,20 @@ public class SessaoCarregamento implements java.io.Serializable {
         this.energia_consumida = energia_consumida;
     }
 
+    public PostoCarregamento getPostoCarregamento() {
+        return postoCarregamento;
+    }
 
+    public void setPostoCarregamento(PostoCarregamento postoCarregamento) {
+        this.postoCarregamento = postoCarregamento;
+    }
 
-
+    @Override
+    public String toString() {
+        return "Matricula: " + matricula + "\n" + "Custo por kWh: " + custo_kwh + "\n" + "Estado de pagamento: "
+                + estado_pagamento + "\n" + "Custo da sessao: " + custo_sessao + "\n" + "Cliente: " + cliente + "\n"
+                + "Veiculo: " + veiculo + "\n" + "Codigo da sessao: " + codigo_sessao + "\n" + "Data de inicio: "
+                + data_inicio + "\n" + "Data de fim: " + data_fim + "\n" + "Energia consumida: " + energia_consumida
+                + "\n" + "Posto de Carregamento: " + postoCarregamento + "\n"; // new line
+    }
 }
