@@ -1,17 +1,17 @@
 import java.util.Date;
 
-public class VeiculosHibridos extends Veiculo {
+public class VeiculoHibrido extends Veiculo {
     protected int cilindrada;
     protected double consumo;
     protected double emissao;
 
-    public VeiculosHibridos(String marca, String modelo, String matricula, Date data_registo, int autonomia,
-            double velocidadeCarregamento, int potencia, int cilindrada, double consumo, double emissao) {
-                super(marca, modelo, matricula, data_registo, autonomia, velocidadeCarregamento, potencia);
-                setCilindrada(cilindrada);
-                setConsumo(consumo);
-                setEmissao(emissao);
-            }
+    public VeiculoHibrido(String marca, String modelo, String matricula, Date data_registo, int autonomia,
+                            double velocidadeCarregamento, int potencia, int cilindrada, double consumo, double emissao) {
+        super(marca, modelo, matricula, data_registo, autonomia, velocidadeCarregamento, potencia);
+        setCilindrada(cilindrada);
+        setConsumo(consumo);
+        setEmissao(emissao);
+    }
 
     public int getCilindrada() {
         return cilindrada;

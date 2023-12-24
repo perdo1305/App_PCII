@@ -98,7 +98,7 @@ public class Gestao implements Serializable {
 
             } while (tempo_carregamento == 0);
 
-            VeiculosEletricos veiculo = new VeiculosEletricos(marca, modelo, matricula, data_registo, autonomia,
+            VeiculoEletrico veiculo = new VeiculoEletrico(marca, modelo, matricula, data_registo, autonomia,
                     velocidadeCarregamento, potencia, tempo_carregamento);
             veiculos.add(veiculo);
             System.out.println("Veiculo criado com sucesso");
@@ -116,7 +116,7 @@ public class Gestao implements Serializable {
                 emissao = Consola.lerDouble("Emissao: ", 1, 999999999);
             } while (emissao == 0);
 
-            VeiculosHibridos veiculo = new VeiculosHibridos(marca, modelo, matricula, data_registo, autonomia,
+            VeiculoHibrido veiculo = new VeiculoHibrido(marca, modelo, matricula, data_registo, autonomia,
                     velocidadeCarregamento, potencia, cilindrada, consumo_combustivel, emissao);
             veiculos.add(veiculo);
             System.out.println("Veiculo criado com sucesso");
