@@ -33,30 +33,29 @@ public class Main {
                 case 4:// Consultar Cliente
                     gestao.consultarCliente();
                     break;
-                case 5:// Registar posto de carregamento
+                case 5:// Alterar Dados Cliente
+                    gestao.alterarDadosCliente();
+                    break;
+                case 6:// Registar posto de carregamento
                     gestao.criarPostoCarregamento();
                     break;
-                case 6:// Consultar posto de carregamento
+                case 7:// Consultar posto de carregamento
                     gestao.consultarPostoCarregamento();
                     break;
-                case 7:// Registar sessao de carregamento
-                    System.out.println("Matricula: ");
-                    System.out.println("Hora de inicio: ");
-                    System.out.println("Hora de fim: ");
-                    System.out.println("Matricula:");
-                case 8:// Consultar sessao de carregamento
-                    System.out.println("\n***************************************\n");
-                    System.out.println("\tMenu Consultar sessao de carregamento\n");
+                case 8:// Registar sessao de carregamento
+                    gestao.menuregistarSessaoCarregamento();
+                case 9:// Consultar sessao de carregamento
+                    gestao.menuConsultarSessaoCarregamento();
                     break;
-                case 9:// Registar pagamento de sessao
+                case 10:// Registar pagamento de sessao
                     System.out.println("\n***************************************\n");
                     System.out.println("\tMenu Registar pagamento de sessao\n");
                     break;
-                case 10:// Consultar pagamento de sessao
+                case 11:// Consultar pagamento de sessao
                     System.out.println("\n***************************************\n");
                     System.out.println("\tMenu Consultar pagamento de sessao\n");
                     break;
-                case 11:// Consultar estatisticas
+                case 12:// Consultar estatisticas
                     System.out.println("\n***************************************\n");
                     System.out.println("\tMenu Consultar estatisticas\n");
                     break;
@@ -81,20 +80,20 @@ public class Main {
         System.out.println("2  -> Consultar Veiculo");
         System.out.println("3  -> Registar Cliente");
         System.out.println("4  -> Consultar Cliente");
-        System.out.println("5  -> Registar posto de carregamento");
-        System.out.println("6  -> Consultar posto de carregamento");
-        System.out.println("7  -> Registar sessao de carregamento");
-        System.out.println("8  -> Consultar sessao de carregamento");
-        System.out.println("9  -> Registar pagamento de sessao");
-        System.out.println("10 -> Consultar pagamento de sessao");
-        System.out.println("11 -> Consultar estatisticas");
+        System.out.println("5  -> Alterar Dados Cliente");
+        System.out.println("6  -> Registar posto de carregamento");
+        System.out.println("7  -> Consultar posto de carregamento");
+        System.out.println("8  -> Registar sessao de carregamento");
+        System.out.println("9  -> Consultar sessao de carregamento");
+        System.out.println("10 -> Registar pagamento de sessao");
+        System.out.println("11 -> Consultar pagamento de sessao");
+        System.out.println("12 -> Consultar estatisticas");
         System.out.println("\n0  -> Sair");
         System.out.println("_______________________________________");
 
-
         do {
-            opcao = Consola.lerInt("Opcao: ", 0, 11);
-        } while (opcao < 0 || opcao > 11);
+            opcao = Consola.lerInt("Opcao: ", 0, 12);
+        } while (opcao < 0 || opcao > 12);
         return opcao;
     }
 

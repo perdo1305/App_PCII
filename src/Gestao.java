@@ -504,12 +504,24 @@ public class Gestao implements Serializable {
     public void registarSessaoCarregamento(SessaoCarregamento sessao) {
         sessoesCarregamento.put(sessao.getCodigo_sessao(), sessao);
     }
-
     public SessaoCarregamento consultarSessaoCarregamento(String codigo_sessao) {
         return sessoesCarregamento.get(codigo_sessao);
     }
 
     //TODO Registar e consultar (por sessão) o pagamento de serviço de carregamento;
+    public void registarPagamento(SessaoCarregamento sessao, String metodoPagamento,
+                                   LocalDateTime dataTransacao, LocalDateTime horaTransacao, boolean pago) {
+        Pagamento pagamento = new Pagamento(sessao, metodoPagamento, dataTransacao, horaTransacao, pago);
+        pagamentos.add(pagamento);
+    }
+    public Pagamento consultarPagamentoPorSessao(String codigoSessao) {
+        for (Pagamento pagamento : pagamentos) {
+            if (pagamento.getSessao().getCodigo_sessao().equals(codigoSessao)) {
+                return pagamento;
+            }
+        }
+        return null;
+    }
 
     // TODO Listagem dos 3 postos de carregamento com maior valor faturado
     // (liquidado);
