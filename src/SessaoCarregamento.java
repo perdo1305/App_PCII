@@ -126,6 +126,6 @@ public class SessaoCarregamento implements Serializable {
                 + estado_pagamento + "\n" + "Custo da sessao: " + custo_sessao + "\n" + "Cliente: " + cliente + "\n"
                 + "Veiculo: " + veiculo + "\n" + "Codigo da sessao: " + codigo_sessao + "\n" + "Data de inicio: "
                 + data_inicio + "\n" + "Data de fim: " + data_fim + "\n" + "Energia consumida: " + energia_consumida
-                + "\n" + "Posto de Carregamento: " + postoCarregamento + "\n"; // new line
+                + "\n" + "Posto de Carregamento: " + postoCarregamento + "\n";
     }
 }

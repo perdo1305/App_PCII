@@ -14,7 +14,9 @@ public class Main {
         System.out.println("█▄█ ██▄ █▀▄ █░▀█ █▀█ █▀▄ █▄▀ █▄█   ▄█ █▀█ █░▀█ ░█░ █▄█ ▄█\n");
 
         Gestao gestao = lerFicheiro();
-        assert gestao != null;
+        if (gestao == null) {
+            gestao = new Gestao();
+        }
 
         int opcaoMenu;
         do {
@@ -43,7 +45,8 @@ public class Main {
                     gestao.consultarPostoCarregamento();
                     break;
                 case 8:// Registar sessao de carregamento
-                    gestao.menuregistarSessaoCarregamento();
+                    gestao.menuRegistarSessaoCarregamento();
+                    break;
                 case 9:// Consultar sessao de carregamento
                     gestao.menuConsultarSessaoCarregamento();
                     break;
@@ -75,7 +78,8 @@ public class Main {
 
     public static int menu() {
         int opcao;
-        System.out.println("\n_______________________________________\n");
+        System.out.println("\n_______________________________________");
+        System.out.println("\tMenu Principal\n");
         System.out.println("1  -> Registar Veiculo");
         System.out.println("2  -> Consultar Veiculo");
         System.out.println("3  -> Registar Cliente");
@@ -89,7 +93,6 @@ public class Main {
         System.out.println("11 -> Consultar pagamento de sessao");
         System.out.println("12 -> Consultar estatisticas");
         System.out.println("\n0  -> Sair");
-        System.out.println("_______________________________________");
 
         do {
             opcao = Consola.lerInt("Opcao: ", 0, 12);

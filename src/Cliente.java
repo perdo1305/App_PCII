@@ -71,7 +71,7 @@ public class Cliente implements Serializable {
     @Override
     public String toString() {
         String str = "";
-        str += "CLiente: " + getNome() + "\n"
+        str += "Cliente: " + getNome() + "\n"
                 + "NIF: " + getNif() + "\n"
                 + "Morada: " + getMorada() + "\n"
                 + "Telemovel: " + getTelemovel() + "\n"

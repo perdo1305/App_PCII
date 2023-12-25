@@ -7,8 +7,8 @@ public class PostoCarregamento implements Serializable {
                                  // - Posto de Carregamento Ultra Rapido
     protected double custo_kwh; // custo por kWh em euros
     protected int numero_veiculos; // numero de veiculos que podem carregar em simultaneo
-
     protected double tempo_carregamento;
+
     public PostoCarregamento(int codigo_posto, String localizacao, String tipo_posto, double custo_kwh,
                              int numero_veiculos, double tempo_carregamento) {
         setCodigo_posto(codigo_posto);
@@ -71,6 +71,6 @@ public class PostoCarregamento implements Serializable {
     public String toString() {
         return "Codigo do posto: " + codigo_posto + "\n" + "Localizacao: " + localizacao + "\n" + "Tipo de posto: "
                 + tipo_posto + "\n" + "Custo por kWh: " + custo_kwh + "\n" + "Numero de veiculos: " + numero_veiculos
-                + "\n" + "Tempo de carregamento: " + tempo_carregamento + "\n"; // new line
+                + "\n" + "Tempo de carregamento: " + tempo_carregamento + "\n";
     }
 }

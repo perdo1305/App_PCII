@@ -15,8 +15,8 @@ public class Veiculo implements Serializable {
     protected int capacidade_bateria; // kw/h
     protected int autonomia;// km por carga
 
-    public Veiculo(String marca, String modelo, String matricula, Date data_registo, int autonomia,
-            double velocidadeCarregamento, int potencia) {
+    public Veiculo(String marca, String modelo, String matricula, Date data_registo, int potencia,
+            int capacidade_bateria, int autonomia) {
         setMarca(marca);
         setModelo(modelo);
         setMatricula(matricula);
@@ -85,8 +85,8 @@ public class Veiculo implements Serializable {
     @Override
     public String toString() {
         return "Marca: " + marca + "\nModelo: " + modelo + "\nMatricula: " + matricula + "\nData de registo: "
-                + dateFormat.format(data_registo) + "\nPotencia: " + potencia + "\nCapacidade da bateria: "
-                + capacidade_bateria + "\nAutonomia: " + autonomia + "\n";
+                + dateFormat.format(data_registo) + "\nPotencia (KWh): " + potencia + "\nCapacidade da bateria (Ah): "
+                + capacidade_bateria + "\nAutonomia (Km): " + autonomia + "\n";
     }
 
 }

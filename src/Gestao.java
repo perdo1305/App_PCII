@@ -81,7 +81,7 @@ public class Gestao implements Serializable {
                 System.out.println("1 - Normal(2.3Kw/h)");
                 System.out.println("2 - Rapido(7.4Kw/h)");
                 System.out.println("3 - Ultra-Rapido(160Kw/h)");
-                int opcao = Consola.lerInt("", 1, 3);
+                int opcao = Consola.lerInt("Opcao:", 1, 3);
                 velocidadeCarregamento = switch (opcao) {
                     case 1 -> 2.3;
                     case 2 -> 7.4;
@@ -99,7 +99,7 @@ public class Gestao implements Serializable {
             } while (tempo_carregamento == 0);
 
             VeiculoEletrico veiculo = new VeiculoEletrico(marca, modelo, matricula, data_registo, autonomia,
-                    velocidadeCarregamento, potencia, tempo_carregamento);
+                    velocidadeCarregamento, potencia, tempo_carregamento, capacidade_bateria);
             veiculos.add(veiculo);
             System.out.println("Veiculo criado com sucesso");
         } else {
@@ -146,10 +146,9 @@ public class Gestao implements Serializable {
         if (posicao == -1) {
             System.out.println("Veiculo não encontrado");
         } else {
+            System.out.println("\t | |");
+            System.out.println("\t V V"); 
             System.out.println("\n" + veiculos.get(posicao).toString());
-
-            System.out.println("Carregue no ENTER voltar ao menu");
-            Consola.lerString("\n");
         }
     }
 
@@ -212,12 +211,14 @@ public class Gestao implements Serializable {
 
     public void consultarCliente() {
         int nif;
+        System.out.println("\n***************************************\n");
+        System.out.println("\tMenu Consultar cliente\n");
         if (clientes.isEmpty()) {
             System.out.println("Não existem clientes registados");
             return;
         }
         do {
-            nif = Consola.lerInt("NIF: ", 100000000, 999999999);
+            nif = Consola.lerInt("NIF do cliente a procurar: ", 100000000, 999999999);
         } while (nif == 0);
         // return posicao do cliente na arraylist
         int posicao = procurarCliente(nif);
@@ -252,26 +253,26 @@ public class Gestao implements Serializable {
             System.out.println("4 - Morada");
             System.out.println("5 - Email");
             System.out.println("6 - Data de nascimento");
-            int opcao = Consola.lerInt("", 1, 6);
+            int opcao = Consola.lerInt("Opcao:", 1, 6);
             switch (opcao) {
                 case 1:
-                    String nome = Consola.lerString("Nome: ");
+                    String nome = Consola.lerString("Novo Nome: ");
                     clientes.get(posicao).setNome(nome);
                     break;
                 case 2:
-                    int telemovel = Consola.lerInt("Telemovel: ", 100000000, 999999999);
+                    int telemovel = Consola.lerInt("Novo Telemovel: ", 100000000, 999999999);
                     clientes.get(posicao).setTelemovel(telemovel);
                     break;
                 case 3:
-                    int nif2 = Consola.lerInt("NIF: ", 100000000, 999999999);
+                    int nif2 = Consola.lerInt("Novo NIF: ", 100000000, 999999999);
                     clientes.get(posicao).setNif(nif2);
                     break;
                 case 4:
-                    String morada = Consola.lerString("Morada: ");
+                    String morada = Consola.lerString("Nova Morada: ");
                     clientes.get(posicao).setMorada(morada);
                     break;
                 case 5:
-                    String email = Consola.lerString("Email: ");
+                    String email = Consola.lerString("Novo Email: ");
                     clientes.get(posicao).setEmail(email);
                     break;
                 case 6:
@@ -279,7 +280,7 @@ public class Gestao implements Serializable {
                     boolean error = false;
                     do {
                         try {
-                            data_nascimento = dateFormat.parse(Consola.lerString("Data de nascimento: "));
+                            data_nascimento = dateFormat.parse(Consola.lerString("Novas Data de nascimento: "));
                         } catch (Exception e) {
                             System.out.println("Data invalida");
                             error = true;
@@ -290,6 +291,7 @@ public class Gestao implements Serializable {
                 default:
                     break;
             }
+            System.out.println("Dados alterados com sucesso");
         }
     }
 
@@ -323,7 +325,7 @@ public class Gestao implements Serializable {
             System.out.println("1 - Posto de Carregamento Normal (PCN)");
             System.out.println("2 - Posto de Carregamento Rápido (PCR)");
             System.out.println("3 - Posto de Carregamento Ultrarrápido (PCUR)");
-            int opcao = Consola.lerInt("", 1, 3);
+            int opcao = Consola.lerInt("Opcao:", 1, 3);
             tipo_posto = switch (opcao) {
                 case 1 -> "PCN";
                 case 2 -> "PCR";
@@ -338,7 +340,7 @@ public class Gestao implements Serializable {
             numero_veiculos = Consola.lerInt("Numero de veiculos que podem carregar em simultaneo: ", 1, 999999999);
         } while (numero_veiculos == 0);
 
-        System.out.println("Posto de carregamento criado com sucesso");
+        System.out.println("Posto de carregamento criado com sucesso!");
 
         PostoCarregamento posto = new PostoCarregamento(codigo_posto, localizacao, tipo_posto, custo_kwh,
                 numero_veiculos, 0);
@@ -346,6 +348,8 @@ public class Gestao implements Serializable {
     }
 
     public void consultarPostoCarregamento() {
+        System.out.println("\n***************************************\n");
+        System.out.println("\tMenu Consultar posto de carregamento\n");
         int codigo_posto;
         if (postos.isEmpty()) {
             System.out.println("Não existem postos de carregamento registados");
@@ -361,8 +365,6 @@ public class Gestao implements Serializable {
         } else {
 
             System.out.println("\n" + postos.get(posicao).toString());
-            System.out.println("Carregue no ENTER voltar ao menu");
-            Consola.lerString("\n");
         }
     }
 
@@ -375,32 +377,15 @@ public class Gestao implements Serializable {
         return -1;
     }
 
-    public void registrarPagamento(SessaoCarregamento sessao, String metodoPagamento,
-                                   LocalDateTime dataTransacao, LocalDateTime horaTransacao, boolean pago) {
-        Pagamento pagamento = new Pagamento(sessao, metodoPagamento, dataTransacao, horaTransacao, pago);
-        pagamentos.add(pagamento);
-    }
-
-    public Pagamento consultarPagamentoPorSessao(String codigoSessao) {
-        for (Pagamento pagamento : pagamentos) {
-            if (pagamento.getSessao().getCodigo_sessao().equals(codigoSessao)) {
-                return pagamento;
-            }
-        }
-        return null;
-    }
-
-    public void menuregistarSessaoCarregamento() {
+    public void menuRegistarSessaoCarregamento() {
         System.out.println("\n***************************************\n");
         System.out.println("\tMenu Registar sessao de carregamento\n");
         Cliente cliente = null;
-        System.out.println("Inisira o NIF do cliente: ");
         if (clientes.isEmpty()) {
-            System.out.println("Não existem clientes registados");
             System.out.println("Não existem clientes registados");
             return;
         }
-        int nif = Consola.lerInt("", 100000000, 999999999);
+        int nif = Consola.lerInt("Inisira o NIF do cliente: ", 100000000, 999999999);
         int posicao = procurarCliente(nif);
         if (posicao == -1) {
             System.out.println("Cliente não encontrado");
@@ -408,7 +393,6 @@ public class Gestao implements Serializable {
             cliente = clientes.get(posicao);
         }
         Veiculo veiculo = null;
-        System.out.println("Inisira a matricula do veiculo: ");
         if (veiculos.isEmpty()) {
             System.out.println("Não existem veiculos registados");
             return;
@@ -421,13 +405,12 @@ public class Gestao implements Serializable {
             veiculo = veiculos.get(posicao);
         }
         PostoCarregamento posto = null;
-        System.out.println("Inisira o codigo do posto de carregamento: ");
         if (postos.isEmpty()) {
             System.out.println("Não existem postos de carregamento registados");
             return;
         }
         double custo_kwh = 0;
-        int codigo_posto = Consola.lerInt("", 1, 999999999);
+        int codigo_posto = Consola.lerInt("Inisira o codigo do posto de carregamento: ", 1, 999999999);
         posicao = procurarPosto(codigo_posto);
         if (posicao == -1) {
             System.out.println("Posto de carregamento não encontrado");
@@ -446,12 +429,14 @@ public class Gestao implements Serializable {
         do {
             try {
                 data_fim = LocalDateTime.parse(Consola.lerString("Data de fim (yyyy-MM-dd HH:mm): "));
+                if (data_fim.isBefore(data_inicio)) {
+                    System.out.println("Data de fim tem de ser superior a data de inicio");
+                    error = true;
+                } else {
+                    error = false;
+                }
             } catch (Exception e) {
                 System.out.println("Data invalida");
-                error = true;
-            }
-            if (Objects.requireNonNull(data_fim).isBefore(data_inicio)) {
-                System.out.println("Data de fim tem de ser superior a data de inicio");
                 error = true;
             }
         } while (error);
@@ -504,16 +489,18 @@ public class Gestao implements Serializable {
     public void registarSessaoCarregamento(SessaoCarregamento sessao) {
         sessoesCarregamento.put(sessao.getCodigo_sessao(), sessao);
     }
+
     public SessaoCarregamento consultarSessaoCarregamento(String codigo_sessao) {
         return sessoesCarregamento.get(codigo_sessao);
     }
 
     //TODO Registar e consultar (por sessão) o pagamento de serviço de carregamento;
     public void registarPagamento(SessaoCarregamento sessao, String metodoPagamento,
-                                   LocalDateTime dataTransacao, LocalDateTime horaTransacao, boolean pago) {
+                                  LocalDateTime dataTransacao, LocalDateTime horaTransacao, boolean pago) {
         Pagamento pagamento = new Pagamento(sessao, metodoPagamento, dataTransacao, horaTransacao, pago);
         pagamentos.add(pagamento);
     }
+
     public Pagamento consultarPagamentoPorSessao(String codigoSessao) {
         for (Pagamento pagamento : pagamentos) {
             if (pagamento.getSessao().getCodigo_sessao().equals(codigoSessao)) {
