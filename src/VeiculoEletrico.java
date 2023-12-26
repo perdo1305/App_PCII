@@ -19,6 +19,6 @@ public class VeiculoEletrico extends Veiculo {
     }
     @Override
     public String toString() {
-        return super.toString() + "Tempo de carregamento: " + tempo_carregamento + "\n";
+        return super.toString() + "Tempo de carregamento (H): " + tempo_carregamento + "\n";
     }
 }

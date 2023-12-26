@@ -63,7 +63,8 @@ public class Main {
                     System.out.println("\tMenu Consultar estatisticas\n");
                     break;
                 case 0:// Sair
-                    System.out.println("FIM DO PROGRAMA");
+
+                    System.out.println("############# FIM DO PROGRAMA #############\n");
                     System.out.println("TO BE CONTINUED...");
 
                     break;

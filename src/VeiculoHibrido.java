@@ -7,7 +7,8 @@ public class VeiculoHibrido extends Veiculo {
 
     public VeiculoHibrido(String marca, String modelo, String matricula, Date data_registo, int autonomia,
                             double velocidadeCarregamento, int potencia, int cilindrada, double consumo, double emissao) {
-        super(marca, modelo, matricula, data_registo, autonomia, velocidadeCarregamento, potencia);
+        super(marca, modelo, matricula, data_registo, autonomia, (int) velocidadeCarregamento, potencia);
+        //TODO velocidadeCarregamento esta mal feito, devia de ter tambem a capacidade da bateria
         setCilindrada(cilindrada);
         setConsumo(consumo);
         setEmissao(emissao);

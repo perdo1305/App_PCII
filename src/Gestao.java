@@ -26,7 +26,7 @@ public class Gestao implements Serializable {
         System.out.println("\tMenu Criar veiculo\n");
         // tipo de veiculo E (eletrico) ou H (hibrido)
         do {
-            tipo_veiculo = Consola.lerString("Tipo de veiculo(E/H): ");
+            tipo_veiculo = Consola.lerString("Tipo de veiculo (E/H): ");
         } while (!tipo_veiculo.equalsIgnoreCase("E") && !tipo_veiculo.equalsIgnoreCase("H"));
 
         do {
@@ -55,7 +55,6 @@ public class Gestao implements Serializable {
                     System.out.println("Data invalida");
                     error = true;
                 }
-
             } catch (Exception e) {
                 System.out.println("Data invalida");
                 error = true;
@@ -63,10 +62,10 @@ public class Gestao implements Serializable {
         } while (error);
 
         do {
-            potencia = Consola.lerInt("Potencia do veiculo(cv): ", 1, 999999999);
+            potencia = Consola.lerInt("Potencia do veiculo (Cv): ", 1, 999999999);
         } while (potencia == 0);
         do {
-            capacidade_bateria = Consola.lerInt("Capacidade da bateria(kwh): ", 1, 999999999);
+            capacidade_bateria = Consola.lerInt("Capacidade da bateria (kwh): ", 1, 999999999);
         } while (capacidade_bateria == 0);
         do {
             autonomia = Consola.lerInt("Autonomia: ", 1, 999999999);
@@ -101,7 +100,8 @@ public class Gestao implements Serializable {
             VeiculoEletrico veiculo = new VeiculoEletrico(marca, modelo, matricula, data_registo, autonomia,
                     velocidadeCarregamento, potencia, tempo_carregamento, capacidade_bateria);
             veiculos.add(veiculo);
-            System.out.println("Veiculo criado com sucesso");
+            System.out.println("Veiculo criado com sucesso!");
+            Consola.PressioneEnterParaContinuar();
         } else {
             double consumo_combustivel;
             do {
@@ -120,12 +120,13 @@ public class Gestao implements Serializable {
                     velocidadeCarregamento, potencia, cilindrada, consumo_combustivel, emissao);
             veiculos.add(veiculo);
             System.out.println("Veiculo criado com sucesso");
+            Consola.PressioneEnterParaContinuar();
         }
     }
 
-    public int procurarVeiculo(String matricula) {
+    private int procurarVeiculo(String matricula) {
         for (int i = 0; i < veiculos.size(); i++) {
-            if (veiculos.get(i).getMatricula().equals(matricula)) {
+            if (veiculos.get(i).getMatricula().equalsIgnoreCase(matricula)) {
                 return i;
             }
         }
@@ -147,9 +148,10 @@ public class Gestao implements Serializable {
             System.out.println("Veiculo não encontrado");
         } else {
             System.out.println("\t | |");
-            System.out.println("\t V V"); 
+            System.out.println("\t V V");
             System.out.println("\n" + veiculos.get(posicao).toString());
         }
+        Consola.PressioneEnterParaContinuar();
     }
 
     private String getStringMatricula() {
@@ -190,7 +192,7 @@ public class Gestao implements Serializable {
         } while (nif == 0);
         do {
             morada = Consola.lerString("Morada: ");
-        } while (morada.isEmpty());
+        } while (morada == null || morada.isEmpty());
         do {
             email = Consola.lerString("Email: ");
         } while (email.isEmpty());
@@ -203,10 +205,10 @@ public class Gestao implements Serializable {
                 error = true;
             }
         } while (error);
-        System.out.println("Cliente registado com sucesso");
-
         Cliente cliente = new Cliente(nome, nif, morada, telemovel, email, data_nascimento);
         clientes.add(cliente);
+        System.out.println("Cliente registado com sucesso");
+        Consola.PressioneEnterParaContinuar();
     }
 
     public void consultarCliente() {
@@ -225,9 +227,11 @@ public class Gestao implements Serializable {
         if (posicao == -1) {
             System.out.println("Cliente não encontrado");
         } else {
-
+            System.out.println("\t | |");
+            System.out.println("\t V V");
             System.out.println("\n" + clientes.get(posicao).toString());
         }
+        Consola.PressioneEnterParaContinuar();
     }
 
     public int procurarCliente(int nif) {
@@ -254,26 +258,37 @@ public class Gestao implements Serializable {
             System.out.println("5 - Email");
             System.out.println("6 - Data de nascimento");
             int opcao = Consola.lerInt("Opcao:", 1, 6);
+            // TODO Do while para o utilizador inserir um valor valido
             switch (opcao) {
                 case 1:
-                    String nome = Consola.lerString("Novo Nome: ");
-                    clientes.get(posicao).setNome(nome);
+                    do {
+                        String nome = Consola.lerString("Novo Nome: ");
+                        clientes.get(posicao).setNome(nome);
+                    } while (clientes.get(posicao).getNome().isEmpty());
                     break;
                 case 2:
-                    int telemovel = Consola.lerInt("Novo Telemovel: ", 100000000, 999999999);
-                    clientes.get(posicao).setTelemovel(telemovel);
+                    do {
+                        int telemovel = Consola.lerInt("Novo Telemovel: ", 100000000, 999999999);
+                        clientes.get(posicao).setTelemovel(telemovel);
+                    } while (clientes.get(posicao).getTelemovel() == 0);
                     break;
                 case 3:
-                    int nif2 = Consola.lerInt("Novo NIF: ", 100000000, 999999999);
-                    clientes.get(posicao).setNif(nif2);
+                    do {
+                        int nif2 = Consola.lerInt("Novo NIF: ", 100000000, 999999999);
+                        clientes.get(posicao).setNif(nif2);
+                    } while (clientes.get(posicao).getNif() == 0);
                     break;
                 case 4:
-                    String morada = Consola.lerString("Nova Morada: ");
-                    clientes.get(posicao).setMorada(morada);
+                    do {
+                        String morada = Consola.lerString("Nova Morada: ");
+                        clientes.get(posicao).setMorada(morada);
+                    } while (clientes.get(posicao).getMorada().isEmpty());
                     break;
                 case 5:
-                    String email = Consola.lerString("Novo Email: ");
-                    clientes.get(posicao).setEmail(email);
+                    do {
+                        String email = Consola.lerString("Novo Email: ");
+                        clientes.get(posicao).setEmail(email);
+                    } while (clientes.get(posicao).getEmail().isEmpty());
                     break;
                 case 6:
                     Date data_nascimento = null;
@@ -292,6 +307,7 @@ public class Gestao implements Serializable {
                     break;
             }
             System.out.println("Dados alterados com sucesso");
+            Consola.PressioneEnterParaContinuar();
         }
     }
 
@@ -340,11 +356,12 @@ public class Gestao implements Serializable {
             numero_veiculos = Consola.lerInt("Numero de veiculos que podem carregar em simultaneo: ", 1, 999999999);
         } while (numero_veiculos == 0);
 
-        System.out.println("Posto de carregamento criado com sucesso!");
-
         PostoCarregamento posto = new PostoCarregamento(codigo_posto, localizacao, tipo_posto, custo_kwh,
                 numero_veiculos, 0);
         postos.add(posto);
+
+        System.out.println("Posto de carregamento criado com sucesso!");
+        Consola.PressioneEnterParaContinuar();
     }
 
     public void consultarPostoCarregamento() {
@@ -366,6 +383,7 @@ public class Gestao implements Serializable {
 
             System.out.println("\n" + postos.get(posicao).toString());
         }
+        Consola.PressioneEnterParaContinuar();
     }
 
     public int procurarPosto(int codigo_posto) {
@@ -459,6 +477,8 @@ public class Gestao implements Serializable {
                 cliente, veiculo, codigo_sessao, data_inicio,
                 data_fim, energia_consumida, posto);
         registarSessaoCarregamento(sessao);
+        System.out.println("Sessao de carregamento registada com sucesso");
+        Consola.PressioneEnterParaContinuar();
     }
 
     public void menuConsultarSessaoCarregamento() {
@@ -476,7 +496,6 @@ public class Gestao implements Serializable {
 
         String codigo_sessao = Consola.lerString("Insira o codigo da sessao que deseja consultar: ");
 
-
         SessaoCarregamento sessao = consultarSessaoCarregamento(codigo_sessao);
 
         if (sessao == null) {
@@ -484,6 +503,7 @@ public class Gestao implements Serializable {
         } else {
             System.out.println(sessao.toString());
         }
+        Consola.PressioneEnterParaContinuar();
     }
 
     public void registarSessaoCarregamento(SessaoCarregamento sessao) {
@@ -494,9 +514,10 @@ public class Gestao implements Serializable {
         return sessoesCarregamento.get(codigo_sessao);
     }
 
-    //TODO Registar e consultar (por sessão) o pagamento de serviço de carregamento;
+    // TODO Registar e consultar (por sessão) o pagamento de serviço de
+    // carregamento;
     public void registarPagamento(SessaoCarregamento sessao, String metodoPagamento,
-                                  LocalDateTime dataTransacao, LocalDateTime horaTransacao, boolean pago) {
+            LocalDateTime dataTransacao, LocalDateTime horaTransacao, boolean pago) {
         Pagamento pagamento = new Pagamento(sessao, metodoPagamento, dataTransacao, horaTransacao, pago);
         pagamentos.add(pagamento);
     }

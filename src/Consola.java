@@ -201,4 +201,13 @@ public class Consola {
         } while (erroData);
         return date;
     }
+    
+/**
+ * Permite travar a execução do programa até que o utilizador pressione a tecla Enter.
+ * @return void
+ */
+    public static void PressioneEnterParaContinuar() {
+        System.out.println("Pressione Enter para continuar...");
+        sc.nextLine();
+    }
 }
