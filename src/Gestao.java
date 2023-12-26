@@ -232,7 +232,7 @@ public class Gestao implements Serializable {
         // listar todos os clientes
         System.out.println("Clientes registados: ");
         for (Cliente cliente : clientes) {
-            //formato "Nome (NIF)"
+            // formato "Nome (NIF)"
             System.out.println("-> " + cliente.getNome() + " (" + cliente.getNif() + ")");
         }
         do {
@@ -390,7 +390,7 @@ public class Gestao implements Serializable {
         // listar todos os postos de carregamento
         System.out.println("Postos de carregamento registados: ");
         for (PostoCarregamento posto : postos) {
-            System.out.println("Codigo do posto: " + posto.getCodigo_posto());
+            System.out.println("-> Codigo do posto: " + posto.getCodigo_posto());
         }
         do {
             codigo_posto = Consola.lerInt("Codigo do posto: ", 1, 999999999);
@@ -423,6 +423,12 @@ public class Gestao implements Serializable {
             System.out.println("Não existem clientes registados");
             return;
         }
+        System.out.println("Clientes registados: ");
+        for (Cliente cliente2 : clientes) {
+            // formato "Nome (NIF)"
+            System.out.println("-> " + cliente2.getNome() + " (" + cliente2.getNif() + ")");
+        }
+
         int nif = Consola.lerInt("Inisira o NIF do cliente: ", 100000000, 999999999);
         int posicao = procurarCliente(nif);
         if (posicao == -1) {
@@ -435,27 +441,51 @@ public class Gestao implements Serializable {
             System.out.println("Não existem veiculos registados");
             return;
         }
+        System.out.println("Veiculos registados: ");
+        for (Veiculo veiculo2 : veiculos) {
+            // formato "XX-XX-XX (marca / modelo)"
+            System.out.println("-> Matricula: " + veiculo2.getMatricula() + " (" + veiculo2.getMarca() + " / "
+                    + veiculo2.getModelo() + ")");
+        }
+
         String matricula = getStringMatricula();
         posicao = procurarVeiculo(matricula);
+
         if (posicao == -1) {
             System.out.println("Veiculo não encontrado");
         } else {
             veiculo = veiculos.get(posicao);
+
         }
+        double capacidade_bateria = veiculo.getCapacidade_bateria();
+
         PostoCarregamento posto = null;
         if (postos.isEmpty()) {
             System.out.println("Não existem postos de carregamento registados");
             return;
         }
+        System.out.println("Postos de carregamento registados: ");
+        for (PostoCarregamento posto2 : postos) {
+            System.out.println("-> Codigo do posto: " + posto2.getCodigo_posto());
+        }
+
         double custo_kwh = 0;
         int codigo_posto = Consola.lerInt("Inisira o codigo do posto de carregamento: ", 1, 999999999);
         posicao = procurarPosto(codigo_posto);
+
         if (posicao == -1) {
             System.out.println("Posto de carregamento não encontrado");
         } else {
             posto = postos.get(posicao);
             custo_kwh = posto.getCusto_kwh();
+            // TODO verificar se o posto tem vagas
+            if (posto.getNumero_veiculos() == 0) {
+                System.out.println("O posto de carregamento não tem vagas");
+                return;
+            }
         }
+        double velocidadeCarregamento = posto.getTipo_posto().equals("PCN") ? 2.3
+                : posto.getTipo_posto().equals("PCR") ? 7.4 : 160;
 
         String codigo_sessao = Consola.lerString("Codigo unico de sessao: ");
 
@@ -465,23 +495,32 @@ public class Gestao implements Serializable {
         System.out.println("Data de inicio: " + formattedDate);
 
         LocalDateTime data_fim = null;
-        boolean error = false;
-        do {
-            try {
-                data_fim = LocalDateTime.parse(Consola.lerString("Data de fim (dd-MM-yyyy HH:mm:ss): "), formatter);
-                if (data_fim.isBefore(data_inicio)) {
-                    System.out.println("Data de fim tem de ser superior a data de inicio");
-                    error = true;
-                } else {
-                    error = false;
-                }
-            } catch (Exception e) {
-                System.out.println("Data invalida");
-                error = true;
-            }
-        } while (error);
-        // TODO calcular energia consumida
+        /*
+         * 
+         * boolean error = false;
+         * do {
+         * try {
+         * data_fim =
+         * LocalDateTime.parse(Consola.lerString("Data de fim (dd-MM-yyyy HH:mm:ss): "),
+         * formatter);
+         * if (data_fim.isBefore(data_inicio)) {
+         * System.out.println("Data de fim tem de ser superior a data de inicio");
+         * error = true;
+         * } else {
+         * error = false;
+         * }
+         * } catch (Exception e) {
+         * System.out.println("Data invalida");
+         * error = true;
+         * }
+         * } while (error);
+         */
+
+        int tempo_carregamento = (int) (velocidadeCarregamento / capacidade_bateria);
+        System.out.println("Tempo de carregamento: " + tempo_carregamento + " horas");
+
         double energia_consumida = Consola.lerDouble("Energia consumida (KWh): ", 0, 999999999);
+
         // TODO estado de pagamento (pago ou nao pago) melhorado
         System.out.println("Estado de pagamento: ");
         System.out.println("1 - Pago");
@@ -514,12 +553,13 @@ public class Gestao implements Serializable {
             System.out.println("Não existem sessões de carregamento registadas");
             return;
         }
-
+        System.out.println("Sessoes de carregamento registadas: ");
         for (String codigo_sessao : sessoesCarregamento.keySet()) {
             System.out.println("Codigo da sessao: " + codigo_sessao);
         }
 
-        String codigo_sessao = Consola.lerString("Insira o codigo da sessao que deseja consultar: ");
+        String codigo_sessao = Consola.lerString("\nInsira o codigo da sessao que deseja consultar: ");
+        System.out.println("\n");
 
         SessaoCarregamento sessao = consultarSessaoCarregamento(codigo_sessao);
 
@@ -541,6 +581,7 @@ public class Gestao implements Serializable {
 
     // TODO Registar e consultar (por sessão) o pagamento de serviço de
     // carregamento;
+
     public void registarPagamento(SessaoCarregamento sessao, String metodoPagamento,
             LocalDateTime dataTransacao, LocalDateTime horaTransacao, boolean pago) {
         Pagamento pagamento = new Pagamento(sessao, metodoPagamento, dataTransacao, horaTransacao, pago);

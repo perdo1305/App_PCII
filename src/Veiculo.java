@@ -86,7 +86,7 @@ public class Veiculo implements Serializable {
     @Override
     public String toString() {
         return "Marca: " + marca + "\nModelo: " + modelo + "\nMatricula: " + matricula + "\nData de registo: "
-                + dateFormat.format(data_registo) + "\nPotencia (KWh): " + potencia + "\nCapacidade da bateria (Ah): "
+                + dateFormat.format(data_registo) + "\nPotencia (KWh): " + potencia + "\nCapacidade da bateria (Wh): "
                 + capacidade_bateria + "\nAutonomia (Km): " + autonomia + "\n";
     }
 

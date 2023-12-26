@@ -15,6 +15,7 @@ public class Cliente implements Serializable {
     public Cliente(String nome, int nif, String morada, int telemovel, String email, Date data_nascimento) {
         setNome(nome);
         setNif(nif);
+        setMorada(morada);
         setTelemovel(telemovel);
         setEmail(email);
         setData_nascimento(data_nascimento);
