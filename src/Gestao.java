@@ -1,4 +1,5 @@
 import java.text.DateFormat;
+import java.time.format.DateTimeFormatter;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -68,7 +69,7 @@ public class Gestao implements Serializable {
             capacidade_bateria = Consola.lerInt("Capacidade da bateria (kwh): ", 1, 999999999);
         } while (capacidade_bateria == 0);
         do {
-            autonomia = Consola.lerInt("Autonomia: ", 1, 999999999);
+            autonomia = Consola.lerInt("Autonomia (Km/carga): ", 1, 999999999);
         } while (autonomia == 0);
 
         float tempo_carregamento;
@@ -134,10 +135,18 @@ public class Gestao implements Serializable {
     }
 
     public void consultarVeiculo() {
+        System.out.println("\n***************************************\n");
+        System.out.println("\tMenu Consultar veiculo\n");
         String matricula;
         if (veiculos.isEmpty()) {
             System.out.println("Não existem veiculos registados");
             return;
+        }
+        System.out.println("Veiculos registados: ");
+        for (Veiculo veiculo : veiculos) {
+            // formato "XX-XX-XX (marca / modelo)"
+            System.out.println("-> Matricula: " + veiculo.getMatricula() + " (" + veiculo.getMarca() + " / "
+                    + veiculo.getModelo() + ")");
         }
         do {
             matricula = getStringMatricula();
@@ -215,9 +224,16 @@ public class Gestao implements Serializable {
         int nif;
         System.out.println("\n***************************************\n");
         System.out.println("\tMenu Consultar cliente\n");
+
         if (clientes.isEmpty()) {
             System.out.println("Não existem clientes registados");
             return;
+        }
+        // listar todos os clientes
+        System.out.println("Clientes registados: ");
+        for (Cliente cliente : clientes) {
+            //formato "Nome (NIF)"
+            System.out.println("-> " + cliente.getNome() + " (" + cliente.getNif() + ")");
         }
         do {
             nif = Consola.lerInt("NIF do cliente a procurar: ", 100000000, 999999999);
@@ -258,7 +274,6 @@ public class Gestao implements Serializable {
             System.out.println("5 - Email");
             System.out.println("6 - Data de nascimento");
             int opcao = Consola.lerInt("Opcao:", 1, 6);
-            // TODO Do while para o utilizador inserir um valor valido
             switch (opcao) {
                 case 1:
                     do {
@@ -334,7 +349,7 @@ public class Gestao implements Serializable {
             codigo_posto = Consola.lerInt("Codigo do posto: ", 1, 999999999);
         } while (codigo_posto == 0);
         do {
-            localizacao = Consola.lerString("Localização(morada): ");
+            localizacao = Consola.lerString("Localização (Morada): ");
         } while (localizacao.isEmpty());
         do {
             System.out.println("Tipo de posto de carregamento: ");
@@ -350,7 +365,7 @@ public class Gestao implements Serializable {
             };
         } while (tipo_posto.isEmpty());
         do {
-            custo_kwh = Consola.lerDouble("Custo por kWh(E): ", 0, 999999999);
+            custo_kwh = Consola.lerDouble("Custo por kWh (E): ", 0, 999999999);
         } while (custo_kwh == 0);
         do {
             numero_veiculos = Consola.lerInt("Numero de veiculos que podem carregar em simultaneo: ", 1, 999999999);
@@ -371,6 +386,11 @@ public class Gestao implements Serializable {
         if (postos.isEmpty()) {
             System.out.println("Não existem postos de carregamento registados");
             return;
+        }
+        // listar todos os postos de carregamento
+        System.out.println("Postos de carregamento registados: ");
+        for (PostoCarregamento posto : postos) {
+            System.out.println("Codigo do posto: " + posto.getCodigo_posto());
         }
         do {
             codigo_posto = Consola.lerInt("Codigo do posto: ", 1, 999999999);
@@ -440,13 +460,15 @@ public class Gestao implements Serializable {
         String codigo_sessao = Consola.lerString("Codigo unico de sessao: ");
 
         LocalDateTime data_inicio = LocalDateTime.now();
-        System.out.println("Data de inicio: " + data_inicio);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+        String formattedDate = data_inicio.format(formatter);
+        System.out.println("Data de inicio: " + formattedDate);
 
         LocalDateTime data_fim = null;
         boolean error = false;
         do {
             try {
-                data_fim = LocalDateTime.parse(Consola.lerString("Data de fim (yyyy-MM-dd HH:mm): "));
+                data_fim = LocalDateTime.parse(Consola.lerString("Data de fim (dd-MM-yyyy HH:mm:ss): "), formatter);
                 if (data_fim.isBefore(data_inicio)) {
                     System.out.println("Data de fim tem de ser superior a data de inicio");
                     error = true;
@@ -458,20 +480,23 @@ public class Gestao implements Serializable {
                 error = true;
             }
         } while (error);
-
+        // TODO calcular energia consumida
         double energia_consumida = Consola.lerDouble("Energia consumida (KWh): ", 0, 999999999);
+        // TODO estado de pagamento (pago ou nao pago) melhorado
         System.out.println("Estado de pagamento: ");
         System.out.println("1 - Pago");
         System.out.println("2 - Não pago");
-        int opcao = Consola.lerInt("", 1, 2);
+        int opcao = Consola.lerInt("Opcao: ", 1, 2);
         String estado_pagamento;
         if (opcao == 1) {
             estado_pagamento = "Pago";
         } else {
             estado_pagamento = "Nao pago";
         }
-
-        double custo_sessao = Consola.lerDouble("Custo da sessao: ", 0, 999999999);
+        // custo da sessao = custo_kwh * energia_consumida
+        double custo_sessao = custo_kwh * energia_consumida;
+        System.out.println("Custo da sessao (E): " + custo_sessao);
+        // double custo_sessao = Consola.lerDouble("Custo da sessao: ", 0, 999999999);
 
         SessaoCarregamento sessao = new SessaoCarregamento(matricula, custo_kwh, estado_pagamento, custo_sessao,
                 cliente, veiculo, codigo_sessao, data_inicio,

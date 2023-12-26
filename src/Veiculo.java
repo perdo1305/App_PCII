@@ -43,6 +43,7 @@ public class Veiculo implements Serializable {
     }
 
     public String getMatricula() {
+        matricula = matricula.toUpperCase();
         return matricula;
     }
 
