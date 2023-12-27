@@ -657,6 +657,7 @@ public class Gestao implements Serializable {
         System.out.println("Data de transacao: " + dataTransacao.format(formatter));
         System.out.println("Pagamento efetuado com sucesso!");
         sessao.setEstado_pagamento("Pago");
+        sessao.getPostoCarregamento().setValor_faturado(sessao.getPostoCarregamento().getValor_faturado() + sessao.getCusto_sessao());
         registarPagamento(sessao, metodoPagamento, dataTransacao, true);
     }
 
@@ -685,6 +686,26 @@ public class Gestao implements Serializable {
 
     // TODO Listagem dos 3 postos de carregamento com maior valor faturado
     // (liquidado);
+    public void listagemPostosMaiorLiquidacao(){
+        System.out.println("\n***************************************\n");
+        System.out.println("\tMenu Listagem dos 3 postos de carregamento com maior valor faturado\n");
+
+        if (postos.isEmpty()) {
+            System.out.println("Não existem postos de carregamento registados");
+            return;
+        }
+        //listar os 3 postos de carregamento com maior valor faturado
+        System.out.println("Postos de carregamento com maior valor faturado: ");
+        for (PostoCarregamento posto : postos) {
+            System.out.println("Codigo do posto: " + posto.getCodigo_posto() + " Valor faturado: " + posto.getValor_faturado());
+        }
+        
+        List<PostoCarregamento> postosOrdenados = new ArrayList<>(postos);
+        postosOrdenados.sort(Comparator.comparing(PostoCarregamento::getValor_faturado).reversed());
+        for (int i = 0; i < 3; i++) {
+            System.out.println("Codigo do posto: " + postosOrdenados.get(i).getCodigo_posto() + " Valor faturado: " + postosOrdenados.get(i).getValor_faturado());
+        }
+    }
 
     // TODO Listagem de sessões de carregamento cujo custo é superior a n
     // euros.Sendo o valor de n solicitado ao utilizador;

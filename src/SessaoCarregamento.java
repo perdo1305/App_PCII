@@ -12,7 +12,6 @@ public class SessaoCarregamento implements Serializable {
     protected LocalDateTime data_inicio;
     protected LocalDateTime data_fim;
     protected double energia_consumida;
-
     protected PostoCarregamento postoCarregamento;
 
     public SessaoCarregamento(String matricula, double custo_kwh, String estado_pagamento, double custo_sessao,

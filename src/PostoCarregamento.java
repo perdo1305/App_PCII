@@ -9,8 +9,10 @@ public class PostoCarregamento implements Serializable {
     protected int numero_veiculos; // numero de veiculos que podem carregar em simultaneo
     protected double tempo_carregamento;
 
+    private double valor_faturado;
+
     public PostoCarregamento(int codigo_posto, String localizacao, String tipo_posto, double custo_kwh,
-                             int numero_veiculos, double tempo_carregamento) {
+            int numero_veiculos, double tempo_carregamento) {
         setCodigo_posto(codigo_posto);
         setLocalizacao(localizacao);
         setTipo_posto(tipo_posto);
@@ -65,6 +67,14 @@ public class PostoCarregamento implements Serializable {
 
     public void setTempo_carregamento(double tempo_carregamento) {
         this.tempo_carregamento = tempo_carregamento;
+    }
+
+    public double getValor_faturado() {
+        return valor_faturado;
+    }
+
+    public void setValor_faturado(double valor_faturado) {
+        this.valor_faturado = valor_faturado;
     }
 
     @Override

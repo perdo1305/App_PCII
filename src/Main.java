@@ -57,8 +57,38 @@ public class Main {
                     gestao.menuConsultarPagamento();
                     break;
                 case 12:// Consultar estatisticas
-                    System.out.println("\n***************************************\n");
-                    System.out.println("\tMenu Consultar estatisticas\n");
+                    int opcaoEstatistica;
+                    do {
+                        opcaoEstatistica = menuEstatistica();
+
+                        switch (opcaoEstatistica) {
+                            case 1:// Listagem dos 3 postos com maior liquidacao
+                                gestao.listagemPostosMaiorLiquidacao();
+                                break;
+                            case 2:// Listagem de sessoes de carregamento cujo custo de carregamento foi superior a X euros
+                                //gestao.listagemSessoesCarregamentoSuperiorX();
+                                break;
+                            case 3:// Total de sessoes de carregamento realizadas (por cliente)
+                                //gestao.totalSessoesCarregamentoRealizadas();
+                                break;
+                            case 4:// Media de energia consumida por posto de carregamento e por tipo de veículo (eletrico ou hibrido)
+                                //gestao.mediaEnergiaConsumida();
+                                break;
+                            case 5:// Listafem de pagamentos por efetuar (por cliente)
+                                //gestao.listagemPagamentosPorEfetuar();
+                                break;
+                            case 6:// Historico de sessoes de carregamento (por posto de carregamento)
+                                //gestao.historicoSessoesCarregamento();
+                                break;
+                            case 0:// Sair
+                                System.out.println("############# FIM DO PROGRAMA #############\n");
+                                System.out.println("TO BE CONTINUED...");
+                                break;
+                            default:
+                                System.out.println("Opcao invalida");
+                                break;
+                        }
+                    } while (opcaoEstatistica != 0);
                     break;
                 case 0:// Sair
 
@@ -96,6 +126,24 @@ public class Main {
         do {
             opcao = Consola.lerInt("Opcao: ", 0, 12);
         } while (opcao < 0 || opcao > 12);
+        return opcao;
+    }
+
+    public static int menuEstatistica(){
+        int opcao;
+        System.out.println("\n_______________________________________");
+        System.out.println("\tMenu Estatisticas\n");
+        System.out.println("1  -> Listagem dos 3 postos com maior liquidacao");
+        System.out.println("2  -> Listagem de sessoes de carregamento cujo custo de carregamento foi superior a X euros");
+        System.out.println("3  -> Total de sessoes de carregamento realizadas (por cliente)");
+        System.out.println("4  -> Media de energia consumida por posto de carregamento e por tipo de veiculo (eletrico ou hibrido)");
+        System.out.println("5  -> Listafem de pagamentos por efetuar (por cliente)");
+        System.out.println("6  -> Historico de sessoes de carregamento (por posto de carregamento)");
+        System.out.println("\n0  -> Sair");
+
+        do {
+            opcao = Consola.lerInt("Opcao: ", 0, 6);
+        } while (opcao < 0 || opcao > 6);
         return opcao;
     }
 
