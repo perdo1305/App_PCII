@@ -94,8 +94,6 @@ public class Gestao implements Serializable {
             do {
                 // valor da valocidade e capacidade da bateria
                 tempo_carregamento = (float) (capacidade_bateria / velocidadeCarregamento);
-                // System.out.println("Tempo de carregamento (0% -> 100%): " +
-                // tempo_carregamento + " horas");
                 double minutos = tempo_carregamento * 60;
                 // transformar minutos em horas e minutos
                 System.out.println("Tempo de carregamento (0% -> 100%): " + (int) minutos / 60 + " horas e "
@@ -597,12 +595,9 @@ public class Gestao implements Serializable {
         return sessoesCarregamento.get(codigo_sessao);
     }
 
-    // TODO Registar e consultar (por sessão) o pagamento de serviço de
-    // carregamento;
-
     public void registarPagamento(SessaoCarregamento sessao, String metodoPagamento,
-            LocalDateTime dataTransacao, LocalDateTime horaTransacao, boolean pago) {
-        Pagamento pagamento = new Pagamento(sessao, metodoPagamento, dataTransacao, horaTransacao, pago);
+            LocalDateTime DataHoraTransacao, boolean pago) {
+        Pagamento pagamento = new Pagamento(sessao, metodoPagamento, DataHoraTransacao, pago);
         pagamentos.add(pagamento);
     }
 
@@ -642,9 +637,6 @@ public class Gestao implements Serializable {
         } else {
             System.out.println(sessao);
         }
-
-        Pagamento pagamento = consultarPagamentoPorSessao(codigo_sessao);
-
         // inserir metodo de pagamento
         System.out.println("Metodo de pagamento: ");
         System.out.println("1 - MBway");
@@ -657,21 +649,39 @@ public class Gestao implements Serializable {
             case 3 -> "Transferencia Bancaria";
             default -> "";
         };
-        //metodo de pagamento + data e hora de transacao
+        // metodo de pagamento + data e hora de transacao
+        assert sessao != null;
         System.out.println("Metodo de pagamento: " + metodoPagamento + "Preco a pagar: " + sessao.getCusto_sessao());
         LocalDateTime dataTransacao = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
         System.out.println("Data de transacao: " + dataTransacao.format(formatter));
-        //TODO acabar isto
-        
-
+        System.out.println("Pagamento efetuado com sucesso!");
+        sessao.setEstado_pagamento("Pago");
+        registarPagamento(sessao, metodoPagamento, dataTransacao, true);
     }
 
     public void menuConsultarPagamento() {
         System.out.println("\n***************************************\n");
         System.out.println("\tMenu Consultar pagamento de sessao\n");
-    }
 
+        if (pagamentos.isEmpty()) {
+            System.out.println("Não existem pagamentos registados");
+            return;
+        }
+        System.out.println("Pagamentos registados: ");
+        for (Pagamento pagamento : pagamentos) {
+            System.out.println("Codigo da sessao: " + pagamento.getSessao().getCodigo_sessao());
+        }
+        String codigo_sessao = Consola.lerString("\nInsira o codigo da sessao que deseja consultar: ");
+        System.out.println("\n");
+        Pagamento pagamento = consultarPagamentoPorSessao(codigo_sessao);
+        if (pagamento == null) {
+            System.out.println("Pagamento não encontrado");
+        } else {
+            System.out.println(pagamento);
+        }
+        Consola.PressioneEnterParaContinuar();
+    }
 
     // TODO Listagem dos 3 postos de carregamento com maior valor faturado
     // (liquidado);

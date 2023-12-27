@@ -1,19 +1,18 @@
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-
 public class Pagamento implements Serializable {
     protected SessaoCarregamento sessao;
     protected String metodoPagamento;
-    protected LocalDateTime dataTransacao;
-    protected LocalDateTime horaTransacao;
+    protected LocalDateTime DataHoraTransacao;
+
     protected boolean pago;
 
-    public Pagamento(SessaoCarregamento sessao, String metodoPagamento, LocalDateTime dataTransacao, LocalDateTime horaTransacao, boolean pago) {
+    public Pagamento(SessaoCarregamento sessao, String metodoPagamento, LocalDateTime DataHoraTransacao, boolean pago) {
         this.sessao = sessao;
         this.metodoPagamento = metodoPagamento;
-        this.dataTransacao = dataTransacao;
-        this.horaTransacao = horaTransacao;
+        this.DataHoraTransacao = DataHoraTransacao;
+
         this.pago = pago;
     }
 
@@ -33,20 +32,12 @@ public class Pagamento implements Serializable {
         this.metodoPagamento = metodoPagamento;
     }
 
-    public LocalDateTime getDataTransacao() {
-        return dataTransacao;
+    public LocalDateTime getDataHoraTransacao() {
+        return DataHoraTransacao;
     }
 
-    public void setDataTransacao(LocalDateTime dataTransacao) {
-        this.dataTransacao = dataTransacao;
-    }
-
-    public LocalDateTime getHoraTransacao() {
-        return horaTransacao;
-    }
-
-    public void setHoraTransacao(LocalDateTime horaTransacao) {
-        this.horaTransacao = horaTransacao;
+    public void setDataHoraTransacao(LocalDateTime dataHoraTransacao) {
+        DataHoraTransacao = dataHoraTransacao;
     }
 
     public boolean isPago() {
@@ -55,5 +46,15 @@ public class Pagamento implements Serializable {
 
     public void setPago(boolean pago) {
         this.pago = pago;
+    }
+
+    @Override
+    public String toString() {
+        return "Pagamento{" +
+                "sessao=" + sessao +
+                ", metodoPagamento='" + metodoPagamento + '\'' +
+                ", DataHoraTransacao=" + DataHoraTransacao +
+                ", pago=" + pago +
+                '}';
     }
 }
