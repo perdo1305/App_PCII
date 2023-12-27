@@ -106,9 +106,9 @@ public class Main {
             out.close();
             System.out.println("Ficheiro gravado com sucesso!");
         } catch (FileNotFoundException e) {
-            System.out.println("File not found");
+            System.out.println("Ficheiro nao encontrado!");
         } catch (IOException e) {
-            System.out.println("Error initializing stream");
+            System.out.println("Erro a gravar ficheiro!");
         }
     }
 

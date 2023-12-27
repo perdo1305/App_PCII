@@ -122,10 +122,7 @@ public class SessaoCarregamento implements Serializable {
 
     @Override
     public String toString() {
-        return "Matricula: " + matricula + "\n" + "Custo por kWh: " + custo_kwh + "\n" + "Estado de pagamento: "
-                + estado_pagamento + "\n" + "Custo da sessao: " + custo_sessao + "\n" + "Dados do Cliente: " + cliente + "\n"
-                + "Dados do Veiculo: " + veiculo + "\n" + "Codigo da sessao: " + codigo_sessao + "\n" + "Data de inicio: "
-                + data_inicio + "\n" + "Data de fim: " + data_fim + "\n" + "Energia consumida: " + energia_consumida
-                + "\n" + "Posto de Carregamento: " + postoCarregamento + "\n";
+        //matricula, nif do cliente, data de inicio, data de fim, energia consumida, custo da sessão, código de sessão, estado de pagamento
+        return "Matricula: " + matricula + "\n" + "Nif do cliente: " + cliente.getNif() + "\n" + "Data de inicio: " + data_inicio + "\n" + "Data de fim: " + data_fim + "\n" + "Energia consumida: " + energia_consumida + "\n" + "Custo da sessão: " + custo_sessao + "\n" + "Código de sessão: " + codigo_sessao + "\n" + "Estado de pagamento: " + estado_pagamento + "\n";
     }
 }
