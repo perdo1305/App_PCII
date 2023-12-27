@@ -51,12 +51,10 @@ public class Main {
                     gestao.menuConsultarSessaoCarregamento();
                     break;
                 case 10:// Registar pagamento de sessao
-                    System.out.println("\n***************************************\n");
-                    System.out.println("\tMenu Registar pagamento de sessao\n");
+                    gestao.menuRegistarPagamento();
                     break;
                 case 11:// Consultar pagamento de sessao
-                    System.out.println("\n***************************************\n");
-                    System.out.println("\tMenu Consultar pagamento de sessao\n");
+                    gestao.menuConsultarPagamento();
                     break;
                 case 12:// Consultar estatisticas
                     System.out.println("\n***************************************\n");

@@ -3,8 +3,8 @@ import java.io.Serializable;
 public class PostoCarregamento implements Serializable {
     protected int codigo_posto;
     protected String localizacao; // morada
-    protected String tipo_posto; // PCN - Posto de Carregamento Normal, PCR - Posto de Carregamento Rapido , PCUR
-                                 // - Posto de Carregamento Ultra Rapido
+    protected String tipo_posto; // PCN - Posto de Carregamento Normal, PCR - Posto de Carregamento Rapido, PCUR
+                                 // - Posto de Carregamento Ultrarrapido
     protected double custo_kwh; // custo por kWh em euros
     protected int numero_veiculos; // numero de veiculos que podem carregar em simultaneo
     protected double tempo_carregamento;

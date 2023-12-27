@@ -138,16 +138,7 @@ public class Gestao implements Serializable {
         System.out.println("\n***************************************\n");
         System.out.println("\tMenu Consultar veiculo\n");
         String matricula;
-        if (veiculos.isEmpty()) {
-            System.out.println("Não existem veiculos registados");
-            return;
-        }
-        System.out.println("Veiculos registados: ");
-        for (Veiculo veiculo : veiculos) {
-            // formato "XX-XX-XX (marca / modelo)"
-            System.out.println("-> Matricula: " + veiculo.getMatricula() + " (" + veiculo.getMarca() + " / "
-                    + veiculo.getModelo() + ")");
-        }
+        if (MostrarVeiculos()) return;
         do {
             matricula = getStringMatricula();
         } while (matricula.isEmpty());
@@ -161,6 +152,20 @@ public class Gestao implements Serializable {
             System.out.println("\n" + veiculos.get(posicao).toString());
         }
         Consola.PressioneEnterParaContinuar();
+    }
+
+    private boolean MostrarVeiculos() {
+        if (veiculos.isEmpty()) {
+            System.out.println("Não existem veiculos registados");
+            return true;
+        }
+        System.out.println("Veiculos registados: ");
+        for (Veiculo veiculo : veiculos) {
+            // formato "XX-XX-XX (marca / modelo)"
+            System.out.println("-> Matricula: " + veiculo.getMatricula() + " (" + veiculo.getMarca() + " / "
+                    + veiculo.getModelo() + ")");
+        }
+        return false;
     }
 
     private String getStringMatricula() {
@@ -225,16 +230,7 @@ public class Gestao implements Serializable {
         System.out.println("\n***************************************\n");
         System.out.println("\tMenu Consultar cliente\n");
 
-        if (clientes.isEmpty()) {
-            System.out.println("Não existem clientes registados");
-            return;
-        }
-        // listar todos os clientes
-        System.out.println("Clientes registados: ");
-        for (Cliente cliente : clientes) {
-            // formato "Nome (NIF)"
-            System.out.println("-> " + cliente.getNome() + " (" + cliente.getNif() + ")");
-        }
+        if (MostrarClientes()) return;
         do {
             nif = Consola.lerInt("NIF do cliente a procurar: ", 100000000, 999999999);
         } while (nif == 0);
@@ -263,7 +259,7 @@ public class Gestao implements Serializable {
         System.out.println("Inisira o NIF do cliente que pretende alterar os dados: ");
         int nif = Consola.lerInt("", 100000000, 999999999);
         int posicao = procurarCliente(nif);
-        if (posicao == -1) {
+        if (procurarCliente(nif) == -1) {
             System.out.println("Cliente não encontrado");
         } else {
             System.out.println("O que pretende alterar?");
@@ -419,15 +415,7 @@ public class Gestao implements Serializable {
         System.out.println("\n***************************************\n");
         System.out.println("\tMenu Registar sessao de carregamento\n");
         Cliente cliente = null;
-        if (clientes.isEmpty()) {
-            System.out.println("Não existem clientes registados");
-            return;
-        }
-        System.out.println("Clientes registados: ");
-        for (Cliente cliente2 : clientes) {
-            // formato "Nome (NIF)"
-            System.out.println("-> " + cliente2.getNome() + " (" + cliente2.getNif() + ")");
-        }
+        if (MostrarClientes()) return;
 
         int nif = Consola.lerInt("Inisira o NIF do cliente: ", 100000000, 999999999);
         int posicao = procurarCliente(nif);
@@ -437,16 +425,7 @@ public class Gestao implements Serializable {
             cliente = clientes.get(posicao);
         }
         Veiculo veiculo = null;
-        if (veiculos.isEmpty()) {
-            System.out.println("Não existem veiculos registados");
-            return;
-        }
-        System.out.println("Veiculos registados: ");
-        for (Veiculo veiculo2 : veiculos) {
-            // formato "XX-XX-XX (marca / modelo)"
-            System.out.println("-> Matricula: " + veiculo2.getMatricula() + " (" + veiculo2.getMarca() + " / "
-                    + veiculo2.getModelo() + ")");
-        }
+        if (MostrarVeiculos()) return;
 
         String matricula = getStringMatricula();
         posicao = procurarVeiculo(matricula);
@@ -457,6 +436,7 @@ public class Gestao implements Serializable {
             veiculo = veiculos.get(posicao);
 
         }
+        assert veiculo != null;
         double capacidade_bateria = veiculo.getCapacidade_bateria();
 
         PostoCarregamento posto = null;
@@ -484,6 +464,7 @@ public class Gestao implements Serializable {
                 return;
             }
         }
+        assert posto != null;
         double velocidadeCarregamento = posto.getTipo_posto().equals("PCN") ? 2.3
                 : posto.getTipo_posto().equals("PCR") ? 7.4 : 160;
 
@@ -515,34 +496,54 @@ public class Gestao implements Serializable {
          * }
          * } while (error);
          */
-
-        int tempo_carregamento = (int) (velocidadeCarregamento / capacidade_bateria);
-        System.out.println("Tempo de carregamento: " + tempo_carregamento + " horas");
-
-        double energia_consumida = Consola.lerDouble("Energia consumida (KWh): ", 0, 999999999);
-
-        // TODO estado de pagamento (pago ou nao pago) melhorado
-        System.out.println("Estado de pagamento: ");
-        System.out.println("1 - Pago");
-        System.out.println("2 - Não pago");
-        int opcao = Consola.lerInt("Opcao: ", 1, 2);
-        String estado_pagamento;
-        if (opcao == 1) {
-            estado_pagamento = "Pago";
-        } else {
-            estado_pagamento = "Nao pago";
-        }
-        // custo da sessao = custo_kwh * energia_consumida
-        double custo_sessao = custo_kwh * energia_consumida;
-        System.out.println("Custo da sessao (E): " + custo_sessao);
-        // double custo_sessao = Consola.lerDouble("Custo da sessao: ", 0, 999999999);
-
+        double energia_consumida = 0;
+        String estado_pagamento = "Nao pago";
+        double custo_sessao = 0;
+        /*
+         * int tempo_carregamento = (int) (velocidadeCarregamento / capacidade_bateria);
+         * System.out.println("Tempo de carregamento: " + tempo_carregamento +
+         * " horas");
+         * 
+         * double energia_consumida = Consola.lerDouble("Energia consumida (KWh): ", 0,
+         * 999999999);
+         * 
+         * // TODO estado de pagamento (pago ou nao pago) melhorado
+         * System.out.println("Estado de pagamento: ");
+         * System.out.println("1 - Pago");
+         * System.out.println("2 - Não pago");
+         * int opcao = Consola.lerInt("Opcao: ", 1, 2);
+         * String estado_pagamento;
+         * if (opcao == 1) {
+         * estado_pagamento = "Pago";
+         * } else {
+         * estado_pagamento = "Nao pago";
+         * }
+         * // custo da sessao = custo_kwh * energia_consumida
+         * double custo_sessao = custo_kwh * energia_consumida;
+         * System.out.println("Custo da sessao (E): " + custo_sessao);
+         * // double custo_sessao = Consola.lerDouble("Custo da sessao: ", 0,
+         * 999999999);
+         */
         SessaoCarregamento sessao = new SessaoCarregamento(matricula, custo_kwh, estado_pagamento, custo_sessao,
                 cliente, veiculo, codigo_sessao, data_inicio,
                 data_fim, energia_consumida, posto);
         registarSessaoCarregamento(sessao);
-        System.out.println("Sessao de carregamento registada com sucesso");
+        System.out.println("Sessao de carregamento registada com sucesso!");
+        System.out.println("Para terminar a sessao de carregamento va ate ao menu 'registo de pagamento'");
         Consola.PressioneEnterParaContinuar();
+    }
+
+    private boolean MostrarClientes() {
+        if (clientes.isEmpty()) {
+            System.out.println("Não existem clientes registados");
+            return true;
+        }
+        System.out.println("Clientes registados: ");
+        for (Cliente cliente2 : clientes) {
+            // formato "Nome (NIF)"
+            System.out.println("-> " + cliente2.getNome() + " (" + cliente2.getNif() + ")");
+        }
+        return false;
     }
 
     public void menuConsultarSessaoCarregamento() {
@@ -566,7 +567,7 @@ public class Gestao implements Serializable {
         if (sessao == null) {
             System.out.println("Sessao de carregamento não encontrada");
         } else {
-            System.out.println(sessao.toString());
+            System.out.println(sessao);
         }
         Consola.PressioneEnterParaContinuar();
     }
@@ -595,6 +596,61 @@ public class Gestao implements Serializable {
             }
         }
         return null;
+    }
+
+    public void menuRegistarPagamento() {
+        System.out.println("\n***************************************\n");
+        System.out.println("\tMenu Registar pagamento de sessao\n");
+        // lista de sessoes de carregamento nao pagas
+        System.out.println("Sessoes de carregamento nao pagas: ");
+        for (Pagamento pagamento : pagamentos) {
+            if (!pagamento.isPago()) {
+                System.out.println("Codigo da sessao: " + pagamento.getSessao().getCodigo_sessao());
+            }
+        }
+        // se nao existirem sessoes de carregamento nao pagas
+        if (pagamentos.isEmpty()) {
+            System.out.println("Não existem sessões de carregamento não pagas");
+            Consola.PressioneEnterParaContinuar();
+            return;
+        }
+        String codigo_sessao = Consola.lerString("\nInsira o codigo da sessao que deseja pagar: ");
+        System.out.println("\n");
+        // mostrar sessao
+        System.out.println("Sessao de carregamento: ");
+        SessaoCarregamento sessao = consultarSessaoCarregamento(codigo_sessao);
+        if (sessao == null) {
+            System.out.println("Sessao de carregamento não encontrada");
+        } else {
+            System.out.println(sessao);
+        }
+
+        Pagamento pagamento = consultarPagamentoPorSessao(codigo_sessao);
+        // inserir metodo de pagamento
+        System.out.println("Metodo de pagamento: ");
+        System.out.println("1 - MBway");
+        System.out.println("2 - Debito Direto");
+        System.out.println("3 - Transferencia Bancaria");
+        int opcao = Consola.lerInt("Opcao: ", 1, 3);
+        String metodoPagamento = switch (opcao) {
+            case 1 -> "MBway";
+            case 2 -> "Debito Direto";
+            case 3 -> "Transferencia Bancaria";
+            default -> "";
+        };
+
+        if (pagamento == null) {
+            System.out.println("Sessao de carregamento não encontrada");
+        } else {
+            pagamento.setPago(true);
+            System.out.println("Sessao de carregamento paga com sucesso");
+        }
+
+    }
+
+    public void menuConsultarPagamento() {
+        System.out.println("\n***************************************\n");
+        System.out.println("\tMenu Consultar pagamento de sessao\n");
     }
 
     // TODO Listagem dos 3 postos de carregamento com maior valor faturado
