@@ -128,6 +128,12 @@ public class Gestao implements Serializable {
         }
     }
 
+    /**
+     * Procura um veiculo na arraylist e retorna a sua posicao
+     * 
+     * @param matricula matricula do veiculo a procurar
+     * @return posicao do veiculo na arraylist
+     */
     private int procurarVeiculo(String matricula) {
         for (int i = 0; i < veiculos.size(); i++) {
             if (veiculos.get(i).getMatricula().equalsIgnoreCase(matricula)) {
@@ -137,12 +143,17 @@ public class Gestao implements Serializable {
         return -1;
     }
 
+    /**
+     * Mostra todos os veiculos registados
+     */
     public void consultarVeiculo() {
         System.out.println("\n***************************************\n");
         System.out.println("\tMenu Consultar veiculo\n");
         String matricula;
-        if (MostrarVeiculos())
+        if (MostrarVeiculos()) {
+            Consola.PressioneEnterParaContinuar();
             return;
+        }
         do {
             matricula = getStringMatricula();
         } while (matricula.isEmpty());
@@ -158,6 +169,11 @@ public class Gestao implements Serializable {
         Consola.PressioneEnterParaContinuar();
     }
 
+    /**
+     * Mostra todos os veiculos registados
+     * 
+     * @return true se nao existirem veiculos registados
+     */
     private boolean MostrarVeiculos() {
         if (veiculos.isEmpty()) {
             System.out.println("Não existem veiculos registados");
@@ -234,8 +250,10 @@ public class Gestao implements Serializable {
         System.out.println("\n***************************************\n");
         System.out.println("\tMenu Consultar cliente\n");
 
-        if (MostrarClientes())
+        if (MostrarClientes()) {
+            Consola.PressioneEnterParaContinuar();
             return;
+        }
         do {
             nif = Consola.lerInt("NIF do cliente a procurar: ", 100000000, 999999999);
         } while (nif == 0);
@@ -642,8 +660,6 @@ public class Gestao implements Serializable {
         Consola.PressioneEnterParaContinuar();
     }
 
-    // FIXME Listagem dos 3 postos de carregamento com maior valor faturado
-    // (liquidado);
     public void listagemPostosMaiorLiquidacao() {
         System.out.println("\n***************************************\n");
         System.out.println("\tMenu Listagem dos 3 postos de carregamento com maior valor faturado\n");
@@ -666,8 +682,6 @@ public class Gestao implements Serializable {
         Consola.PressioneEnterParaContinuar();
     }
 
-    // FIXME Listagem de sessões de carregamento cujo custo é superior a n
-    // euros.Sendo o valor de n solicitado ao utilizador;
     public void listarSessoesComCustoSuperiorX() {
         System.out.println("\n***************************************\n");
         System.out.println("\tMenu Listagem de sessões de carregamento cujo custo é superior a n euros\n");
@@ -680,13 +694,16 @@ public class Gestao implements Serializable {
             }
         }
         for (SessaoCarregamento sessao : sessoesComCustoSuperiorAX) {
-            //codigo de sessao, preco a pagar, estado de pagamento, cliente, veiculo, posto de carregamento
+            // codigo de sessao, preco a pagar, estado de pagamento, cliente, veiculo, posto
+            // de carregamento
             System.out.println("Codigo da sessao: " + sessao.getCodigo_sessao() + " | Preco a pagar: "
                     + sessao.getCusto_sessao() + " | Estado de pagamento: " + sessao.getEstado_pagamento()
-                    + " | Cliente: " + sessao.getCliente().getNome() + " | Veiculo: " + sessao.getVeiculo().getMatricula()
+                    + " | Cliente: " + sessao.getCliente().getNome() + " | Veiculo: "
+                    + sessao.getVeiculo().getMatricula()
                     + " | Posto de carregamento: " + sessao.getPostoCarregamento().getCodigo_posto());
         }
-        System.out.println("Total de sessoes com custo superior a " + custo + "euros: " + sessoesComCustoSuperiorAX.size() + "\n");
+        System.out.println("Total de sessoes com custo superior a " + custo + " euros: "
+                + sessoesComCustoSuperiorAX.size() + "\n");
         Consola.PressioneEnterParaContinuar();
     }
 
@@ -718,8 +735,6 @@ public class Gestao implements Serializable {
         Consola.PressioneEnterParaContinuar();
     }
 
-    // FIXME Média de energia consumida por posto de carregamento e por tipo
-    // de veículo (híbridos/elétricos);
     public void mediaEnergiaPorPostoETipoVeiculo() {
         System.out.println("\n***************************************\n");
         System.out.println(
@@ -780,44 +795,61 @@ public class Gestao implements Serializable {
         Consola.PressioneEnterParaContinuar();
     }
 
-    // FIXME Listagem de pagamentos por efetuar (por cliente);
     public void listagemPagamentosPorEfetuar() {
         System.out.println("\n***************************************\n");
         System.out.println("\tMenu Listagem de pagamentos por efetuar (por cliente)\n");
 
-        if (pagamentos.isEmpty()) {
-            System.out.println("Não existem pagamentos registados");
+        if (sessoesCarregamento.isEmpty()) {
+            System.out.println("Não existem sessões de carregamento registadas");
             return;
         }
-
-        List<Cliente> clientesComPagamentosPorEfetuar = new ArrayList<>();
+        System.out.println("Clientes com pagamentos por efetuar: ");
         for (Cliente cliente : clientes) {
-            for (Pagamento pagamento : pagamentos) {
-                if (!pagamento.isPago() && pagamento.getCliente().equals(cliente)) {
-                    clientesComPagamentosPorEfetuar.add(cliente);
-                    break; // break the loop once we found an unpaid payment for this client
+            for (SessaoCarregamento sessao : sessoesCarregamento.values()) {
+                
+                if (sessao.getCliente().getNif() == cliente.getNif()
+                        && sessao.getEstado_pagamento().equals("Nao pago")) {
+                    System.out
+                            .println("Cliente: " + cliente.getNome() + " | Valor a pagar: " + sessao.getCusto_sessao() + " | Codigo da sessao: " + sessao.getCodigo_sessao());
+                    break;
                 }
             }
-        }
-
-        System.out.println("Clientes com pagamentos por efetuar: ");
-        for (Cliente cliente : clientesComPagamentosPorEfetuar) {
-            System.out.println("Cliente: " + cliente.getNome());
         }
         System.out.println("");
         Consola.PressioneEnterParaContinuar();
     }
-    // FIXME Histórico de sessões de carregamento (por posto de carregamento).
+
     public void historicoSessoesPorPosto() {
         System.out.println("\n***************************************\n");
         System.out.println("\tMenu Histórico de sessões de carregamento (por posto de carregamento)\n");
-        List<PostoCarregamento> postos = new ArrayList<>();
 
+        //listar todos os postos de carregamento
+        System.out.println("Postos de carregamento registados: ");
         for (PostoCarregamento posto : postos) {
+            System.out.println("-> Codigo do posto: " + posto.getCodigo_posto());
+        }
+        int codigo_posto = Consola.lerInt("Codigo do posto: ", 1, 999999999);
+        int posicao = procurarPosto(codigo_posto);
+        if (posicao == -1) {
+            System.out.println("Posto de carregamento não encontrado");
+        } else {
+            PostoCarregamento posto = postos.get(posicao);
             List<SessaoCarregamento> sessoesPorPosto = new ArrayList<>();
+            for (SessaoCarregamento sessao : sessoesCarregamento.values()) {
+                if (sessao.getPostoCarregamento().getCodigo_posto() == posto.getCodigo_posto()) {
+                    sessoesPorPosto.add(sessao);
+                }
+            }
+            System.out.println("Posto: " + posto.getCodigo_posto());
             for (SessaoCarregamento sessao : sessoesPorPosto) {
-                System.out.println("Posto: " + posto.getCodigo_posto() + ", Sessão: " + sessao);
+                System.out.println("Codigo da sessao: " + sessao.getCodigo_sessao() + " | Preco a pagar: "
+                        + sessao.getCusto_sessao() + " | Estado de pagamento: " + sessao.getEstado_pagamento()
+                        + " | Cliente: " + sessao.getCliente().getNome() + " | Veiculo: "
+                        + sessao.getVeiculo().getMatricula()
+                        + " | Posto de carregamento: " + sessao.getPostoCarregamento().getCodigo_posto());
             }
         }
+        System.out.println("");
+        Consola.PressioneEnterParaContinuar();
     }
 }
