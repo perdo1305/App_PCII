@@ -50,11 +50,9 @@ public class Pagamento implements Serializable {
 
     @Override
     public String toString() {
-        return "Pagamento{" +
-                "sessao=" + sessao +
-                ", metodoPagamento='" + metodoPagamento + '\'' +
-                ", DataHoraTransacao=" + DataHoraTransacao +
-                ", pago=" + pago +
-                '}';
+        // numero posto, sessao e metodoPagamento
+        return "Numero do posto: " + sessao.getPostoCarregamento().getCodigo_posto() + "\n" +
+                "Dados da sessao: " + sessao +
+                "Metodo de pagamento: " + metodoPagamento + "\n";
     }
 }

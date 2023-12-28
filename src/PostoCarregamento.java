@@ -8,8 +8,8 @@ public class PostoCarregamento implements Serializable {
     protected double custo_kwh; // custo por kWh em euros
     protected int numero_veiculos; // numero de veiculos que podem carregar em simultaneo
     protected double tempo_carregamento;
-
     private double valor_faturado;
+
 
     public PostoCarregamento(int codigo_posto, String localizacao, String tipo_posto, double custo_kwh,
             int numero_veiculos, double tempo_carregamento) {
@@ -20,6 +20,8 @@ public class PostoCarregamento implements Serializable {
         setNumero_veiculos(numero_veiculos);
         setTempo_carregamento(tempo_carregamento);
     }
+
+
 
     public int getCodigo_posto() {
         return codigo_posto;
