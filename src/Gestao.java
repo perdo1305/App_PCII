@@ -554,7 +554,7 @@ public class Gestao implements Serializable {
 
     public void registarPagamento(SessaoCarregamento sessao, String metodoPagamento,
             LocalDateTime DataHoraTransacao, boolean pago) {
-        Pagamento pagamento = new Pagamento(sessao, metodoPagamento, DataHoraTransacao, pago);
+        Pagamento pagamento = new Pagamento(sessao, metodoPagamento, DataHoraTransacao, pago, sessao.getCliente());
         pagamentos.add(pagamento);
     }
 
@@ -642,7 +642,7 @@ public class Gestao implements Serializable {
         Consola.PressioneEnterParaContinuar();
     }
 
-    // TODO Listagem dos 3 postos de carregamento com maior valor faturado
+    // FIXME Listagem dos 3 postos de carregamento com maior valor faturado
     // (liquidado);
     public void listagemPostosMaiorLiquidacao() {
         System.out.println("\n***************************************\n");
@@ -652,24 +652,21 @@ public class Gestao implements Serializable {
             System.out.println("Não existem postos de carregamento registados");
             return;
         }
-        // listar os 3 postos de carregamento com maior valor faturado
-        System.out.println("Postos de carregamento com maior valor faturado: ");
-        for (PostoCarregamento posto : postos) {
-            System.out.println(
-                    "Codigo do posto: " + posto.getCodigo_posto() + " Valor faturado: " + posto.getValor_faturado());
-        }
 
         List<PostoCarregamento> postosOrdenados = new ArrayList<>(postos);
         postosOrdenados.sort(Comparator.comparing(PostoCarregamento::getValor_faturado).reversed());
 
         int size = Math.min(postosOrdenados.size(), 3);
+        System.out.println("Postos de carregamento com maior valor faturado: ");
         for (int i = 0; i < size; i++) {
-            System.out.println("Codigo do posto: " + postosOrdenados.get(i).getCodigo_posto() + " Valor faturado: "
+            System.out.println("Codigo do posto: " + postosOrdenados.get(i).getCodigo_posto() + " | Valor faturado: "
                     + postosOrdenados.get(i).getValor_faturado());
         }
+        System.out.println("");
+        Consola.PressioneEnterParaContinuar();
     }
 
-    // TODO Listagem de sessões de carregamento cujo custo é superior a n
+    // FIXME Listagem de sessões de carregamento cujo custo é superior a n
     // euros.Sendo o valor de n solicitado ao utilizador;
     public void listarSessoesComCustoSuperiorX() {
         System.out.println("\n***************************************\n");
@@ -683,12 +680,15 @@ public class Gestao implements Serializable {
             }
         }
         for (SessaoCarregamento sessao : sessoesComCustoSuperiorAX) {
-            System.out.println(sessao);
+            //codigo de sessao, preco a pagar, estado de pagamento, cliente, veiculo, posto de carregamento
+            System.out.println("Codigo da sessao: " + sessao.getCodigo_sessao() + " | Preco a pagar: "
+                    + sessao.getCusto_sessao() + " | Estado de pagamento: " + sessao.getEstado_pagamento()
+                    + " | Cliente: " + sessao.getCliente().getNome() + " | Veiculo: " + sessao.getVeiculo().getMatricula()
+                    + " | Posto de carregamento: " + sessao.getPostoCarregamento().getCodigo_posto());
         }
+        System.out.println("Total de sessoes com custo superior a " + custo + "euros: " + sessoesComCustoSuperiorAX.size() + "\n");
         Consola.PressioneEnterParaContinuar();
     }
-
-    // TODO Total de sessões de carregamento realizados (por cliente);
 
     public void totalSessoesPorCliente() {
         System.out.println("\n***************************************\n");
@@ -712,11 +712,13 @@ public class Gestao implements Serializable {
                 }
             }
             int totalSessoes = sessoesPorCliente.size();
-            System.out.println("Cliente: " + cliente.getNome() + ", Total de sessões: " + totalSessoes);
+            System.out.println("Cliente: " + cliente.getNome() + " -> Total de sessões: " + totalSessoes);
         }
+        System.out.println("");
+        Consola.PressioneEnterParaContinuar();
     }
 
-    // TODO Média de energia consumida por posto de carregamento e por tipo
+    // FIXME Média de energia consumida por posto de carregamento e por tipo
     // de veículo (híbridos/elétricos);
     public void mediaEnergiaPorPostoETipoVeiculo() {
         System.out.println("\n***************************************\n");
@@ -724,19 +726,9 @@ public class Gestao implements Serializable {
                 "\tMenu Média de energia consumida por posto de carregamento e por tipo de veículo (híbridos/elétricos)\n");
 
         // media de energia por posto de carregamento
-        List<PostoCarregamento> postosComSessoes = new ArrayList<>();
         for (PostoCarregamento posto : postos) {
             List<SessaoCarregamento> sessoesPorPosto = new ArrayList<>();
-            for (SessaoCarregamento sessao : sessoesPorPosto) {
-                if (sessao.getPostoCarregamento().getCodigo_posto() == posto.getCodigo_posto()) {
-                    sessoesPorPosto.add(sessao);
-                }
-            }
-            postosComSessoes.add(posto);
-        }
-        for (PostoCarregamento posto : postosComSessoes) {
-            List<SessaoCarregamento> sessoesPorPosto = new ArrayList<>();
-            for (SessaoCarregamento sessao : sessoesPorPosto) {
+            for (SessaoCarregamento sessao : sessoes) {
                 if (sessao.getPostoCarregamento().getCodigo_posto() == posto.getCodigo_posto()) {
                     sessoesPorPosto.add(sessao);
                 }
@@ -749,27 +741,16 @@ public class Gestao implements Serializable {
             if (!sessoesPorPosto.isEmpty()) {
                 mediaEnergia = totalEnergia / sessoesPorPosto.size();
             }
-            System.out.println("Posto: " + posto.getCodigo_posto() + ", Media de energia: " + mediaEnergia);
+            System.out.println("Posto: " + posto.getCodigo_posto() + " | Media de energia: " + mediaEnergia);
         }
-        //media de energia por tipo de veiculo (hibrido/eletrico)
-        // "Media de energia Veiculos eletricos: XXX KWh, Veiculos hibridos: XXX KWh"
-        List<Veiculo> veiculosComSessoes = new ArrayList<>();
-        for (Veiculo veiculo : veiculos) {
-            List<SessaoCarregamento> sessoesPorVeiculo = new ArrayList<>();
-            for (SessaoCarregamento sessao : sessoesPorVeiculo) {
-                if (sessao.getVeiculo().getMatricula().equals(veiculo.getMatricula())) {
-                    sessoesPorVeiculo.add(sessao);
-                }
-            }
-            veiculosComSessoes.add(veiculo);
-        }
+
         int totalSessoesEletricos = 0;
         int totalSessoesHibridos = 0;
         double totalEnergiaEletricos = 0;
         double totalEnergiaHibridos = 0;
-        for (Veiculo veiculo : veiculosComSessoes) {
+        for (Veiculo veiculo : veiculos) {
             List<SessaoCarregamento> sessoesPorVeiculo = new ArrayList<>();
-            for (SessaoCarregamento sessao : sessoesPorVeiculo) {
+            for (SessaoCarregamento sessao : sessoes) {
                 if (sessao.getVeiculo().getMatricula().equals(veiculo.getMatricula())) {
                     sessoesPorVeiculo.add(sessao);
                 }
@@ -786,8 +767,8 @@ public class Gestao implements Serializable {
                 }
             }
         }
-        double mediaEnergiaEletricos = 0;
-        double mediaEnergiaHibridos = 0;
+        double mediaEnergiaEletricos = 0.00;
+        double mediaEnergiaHibridos = 0.00;
         if (totalSessoesEletricos != 0) {
             mediaEnergiaEletricos = totalEnergiaEletricos / totalSessoesEletricos;
         }
@@ -795,27 +776,38 @@ public class Gestao implements Serializable {
             mediaEnergiaHibridos = totalEnergiaHibridos / totalSessoesHibridos;
         }
         System.out.println("Media de energia Veiculos eletricos: " + mediaEnergiaEletricos + " KWh, Veiculos hibridos: "
-                + mediaEnergiaHibridos + " KWh");
+                + mediaEnergiaHibridos + " KWh\n");
         Consola.PressioneEnterParaContinuar();
     }
 
-    // TODO Listagem de pagamentos por efetuar (por cliente);
+    // FIXME Listagem de pagamentos por efetuar (por cliente);
     public void listagemPagamentosPorEfetuar() {
         System.out.println("\n***************************************\n");
         System.out.println("\tMenu Listagem de pagamentos por efetuar (por cliente)\n");
-        List<Cliente> clientesComPagamentosPorEfetuar = new ArrayList<>();
 
-        for (Cliente cliente : clientesComPagamentosPorEfetuar) {
-            List<Pagamento> pagamentosPorEfetuar = new ArrayList<>();
-            for (Pagamento pagamento : pagamentosPorEfetuar) {
-                if (!pagamento.isPago()) {
-                    System.out.println("Cliente: " + cliente.getNome() + ", Pagamento: " + pagamento);
+        if (pagamentos.isEmpty()) {
+            System.out.println("Não existem pagamentos registados");
+            return;
+        }
+
+        List<Cliente> clientesComPagamentosPorEfetuar = new ArrayList<>();
+        for (Cliente cliente : clientes) {
+            for (Pagamento pagamento : pagamentos) {
+                if (!pagamento.isPago() && pagamento.getCliente().equals(cliente)) {
+                    clientesComPagamentosPorEfetuar.add(cliente);
+                    break; // break the loop once we found an unpaid payment for this client
                 }
             }
         }
-    }
 
-    // TODO Histórico de sessões de carregamento (por posto de carregamento).
+        System.out.println("Clientes com pagamentos por efetuar: ");
+        for (Cliente cliente : clientesComPagamentosPorEfetuar) {
+            System.out.println("Cliente: " + cliente.getNome());
+        }
+        System.out.println("");
+        Consola.PressioneEnterParaContinuar();
+    }
+    // FIXME Histórico de sessões de carregamento (por posto de carregamento).
     public void historicoSessoesPorPosto() {
         System.out.println("\n***************************************\n");
         System.out.println("\tMenu Histórico de sessões de carregamento (por posto de carregamento)\n");

@@ -5,15 +5,23 @@ public class Pagamento implements Serializable {
     protected SessaoCarregamento sessao;
     protected String metodoPagamento;
     protected LocalDateTime DataHoraTransacao;
-
     protected boolean pago;
+    protected Cliente cliente;
 
-    public Pagamento(SessaoCarregamento sessao, String metodoPagamento, LocalDateTime DataHoraTransacao, boolean pago) {
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public Pagamento(SessaoCarregamento sessao, String metodoPagamento, LocalDateTime DataHoraTransacao, boolean pago, Cliente cliente) {
         this.sessao = sessao;
         this.metodoPagamento = metodoPagamento;
         this.DataHoraTransacao = DataHoraTransacao;
-
         this.pago = pago;
+        this.cliente = sessao.getCliente();
     }
 
     public SessaoCarregamento getSessao() {

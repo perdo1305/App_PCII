@@ -142,7 +142,7 @@ public class Main {
         System.out.println("3  -> Total de sessoes de carregamento realizadas (por cliente)");
         System.out.println(
                 "4  -> Media de energia consumida por posto de carregamento e por tipo de veiculo (eletrico ou hibrido)");
-        System.out.println("5  -> Listafem de pagamentos por efetuar (por cliente)");
+        System.out.println("5  -> Listagem de pagamentos por efetuar (por cliente)");
         System.out.println("6  -> Historico de sessoes de carregamento (por posto de carregamento)");
         System.out.println("\n0  -> Sair");
 
