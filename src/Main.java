@@ -75,13 +75,13 @@ public class Main {
                                 break;
                             case 4:// Media de energia consumida por posto de carregamento e por tipo de veículo
                                    // (eletrico ou hibrido)
-                                   // gestao.mediaEnergiaConsumida();
+                                   gestao.mediaEnergiaPorPostoETipoVeiculo();
                                 break;
                             case 5:// Listafem de pagamentos por efetuar (por cliente)
-                                   // gestao.listagemPagamentosPorEfetuar();
+                                   gestao.listagemPagamentosPorEfetuar();
                                 break;
                             case 6:// Historico de sessoes de carregamento (por posto de carregamento)
-                                   // gestao.historicoSessoesCarregamento();
+                                   gestao.historicoSessoesPorPosto();
                                 break;
                             case 0:// Sair
                                 System.out.println("############# FIM DO PROGRAMA #############\n");

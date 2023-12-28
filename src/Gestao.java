@@ -417,6 +417,7 @@ public class Gestao implements Serializable {
     }
 
     public void menuRegistarSessaoCarregamento() {
+        // FIXME qunado o veiculo ´e hibrido o custo da 0 fix
         System.out.println("\n***************************************\n");
         System.out.println("\tMenu Registar sessao de carregamento\n");
         Cliente cliente = null;
@@ -660,7 +661,9 @@ public class Gestao implements Serializable {
 
         List<PostoCarregamento> postosOrdenados = new ArrayList<>(postos);
         postosOrdenados.sort(Comparator.comparing(PostoCarregamento::getValor_faturado).reversed());
-        for (int i = 0; i < 3; i++) {
+
+        int size = Math.min(postosOrdenados.size(), 3);
+        for (int i = 0; i < size; i++) {
             System.out.println("Codigo do posto: " + postosOrdenados.get(i).getCodigo_posto() + " Valor faturado: "
                     + postosOrdenados.get(i).getValor_faturado());
         }
@@ -690,13 +693,27 @@ public class Gestao implements Serializable {
     public void totalSessoesPorCliente() {
         System.out.println("\n***************************************\n");
         System.out.println("\tMenu Total de sessões de carregamento realizados (por cliente)\n");
-        List<Cliente> clientesComSessoes = new ArrayList<>();
-        for (Cliente cliente : clientesComSessoes) {
+        int nif;
+        if (MostrarClientes())
+            return;
+        do {
+            nif = Consola.lerInt("NIF do cliente a procurar: ", 100000000, 999999999);
+        } while (nif == 0);
+        // return posicao do cliente na arraylist
+        int posicao = procurarCliente(nif);
+        if (posicao == -1) {
+            System.out.println("Cliente não encontrado");
+        } else {
+            Cliente cliente = clientes.get(posicao);
             List<SessaoCarregamento> sessoesPorCliente = new ArrayList<>();
+            for (SessaoCarregamento sessao : sessoesCarregamento.values()) {
+                if (sessao.getCliente().getNif() == cliente.getNif()) {
+                    sessoesPorCliente.add(sessao);
+                }
+            }
             int totalSessoes = sessoesPorCliente.size();
             System.out.println("Cliente: " + cliente.getNome() + ", Total de sessões: " + totalSessoes);
         }
-        Consola.PressioneEnterParaContinuar();
     }
 
     // TODO Média de energia consumida por posto de carregamento e por tipo
@@ -705,34 +722,81 @@ public class Gestao implements Serializable {
         System.out.println("\n***************************************\n");
         System.out.println(
                 "\tMenu Média de energia consumida por posto de carregamento e por tipo de veículo (híbridos/elétricos)\n");
-        List<PostoCarregamento> postos = new ArrayList<>();
 
+        // media de energia por posto de carregamento
+        List<PostoCarregamento> postosComSessoes = new ArrayList<>();
         for (PostoCarregamento posto : postos) {
-
-            double totalEnergiaHibridos = 0.0;
-            int countHibridos = 0;
-            double totalEnergiaEletricos = 0.0;
-            int countEletricos = 0;
-
-            for (SessaoCarregamento sessao : sessoesCarregamento.values()) {
+            List<SessaoCarregamento> sessoesPorPosto = new ArrayList<>();
+            for (SessaoCarregamento sessao : sessoesPorPosto) {
                 if (sessao.getPostoCarregamento().getCodigo_posto() == posto.getCodigo_posto()) {
-                    if (sessao.getVeiculo() instanceof VeiculoHibrido) {
-                        totalEnergiaHibridos += sessao.getEnergia_consumida();
-                        countHibridos++;
-                    } else if (sessao.getVeiculo() instanceof VeiculoEletrico) {
-                        totalEnergiaEletricos += sessao.getEnergia_consumida();
-                        countEletricos++;
-                    }
+                    sessoesPorPosto.add(sessao);
                 }
             }
-
-            double mediaEnergiaHibridos = countHibridos > 0 ? totalEnergiaHibridos / countHibridos : 0;
-            double mediaEnergiaEletricos = countEletricos > 0 ? totalEnergiaEletricos / countEletricos : 0;
-
-            System.out.println("Posto: " + posto.getCodigo_posto());
-            System.out.println("Média de energia consumida por veículos híbridos: " + mediaEnergiaHibridos);
-            System.out.println("Média de energia consumida por veículos elétricos: " + mediaEnergiaEletricos);
+            postosComSessoes.add(posto);
         }
+        for (PostoCarregamento posto : postosComSessoes) {
+            List<SessaoCarregamento> sessoesPorPosto = new ArrayList<>();
+            for (SessaoCarregamento sessao : sessoesPorPosto) {
+                if (sessao.getPostoCarregamento().getCodigo_posto() == posto.getCodigo_posto()) {
+                    sessoesPorPosto.add(sessao);
+                }
+            }
+            double totalEnergia = 0;
+            for (SessaoCarregamento sessao : sessoesPorPosto) {
+                totalEnergia += sessao.getEnergia_consumida();
+            }
+            double mediaEnergia = 0;
+            if (!sessoesPorPosto.isEmpty()) {
+                mediaEnergia = totalEnergia / sessoesPorPosto.size();
+            }
+            System.out.println("Posto: " + posto.getCodigo_posto() + ", Media de energia: " + mediaEnergia);
+        }
+        //media de energia por tipo de veiculo (hibrido/eletrico)
+        // "Media de energia Veiculos eletricos: XXX KWh, Veiculos hibridos: XXX KWh"
+        List<Veiculo> veiculosComSessoes = new ArrayList<>();
+        for (Veiculo veiculo : veiculos) {
+            List<SessaoCarregamento> sessoesPorVeiculo = new ArrayList<>();
+            for (SessaoCarregamento sessao : sessoesPorVeiculo) {
+                if (sessao.getVeiculo().getMatricula().equals(veiculo.getMatricula())) {
+                    sessoesPorVeiculo.add(sessao);
+                }
+            }
+            veiculosComSessoes.add(veiculo);
+        }
+        int totalSessoesEletricos = 0;
+        int totalSessoesHibridos = 0;
+        double totalEnergiaEletricos = 0;
+        double totalEnergiaHibridos = 0;
+        for (Veiculo veiculo : veiculosComSessoes) {
+            List<SessaoCarregamento> sessoesPorVeiculo = new ArrayList<>();
+            for (SessaoCarregamento sessao : sessoesPorVeiculo) {
+                if (sessao.getVeiculo().getMatricula().equals(veiculo.getMatricula())) {
+                    sessoesPorVeiculo.add(sessao);
+                }
+            }
+            if (veiculo instanceof VeiculoEletrico) {
+                totalSessoesEletricos += sessoesPorVeiculo.size();
+                for (SessaoCarregamento sessao : sessoesPorVeiculo) {
+                    totalEnergiaEletricos += sessao.getEnergia_consumida();
+                }
+            } else {
+                totalSessoesHibridos += sessoesPorVeiculo.size();
+                for (SessaoCarregamento sessao : sessoesPorVeiculo) {
+                    totalEnergiaHibridos += sessao.getEnergia_consumida();
+                }
+            }
+        }
+        double mediaEnergiaEletricos = 0;
+        double mediaEnergiaHibridos = 0;
+        if (totalSessoesEletricos != 0) {
+            mediaEnergiaEletricos = totalEnergiaEletricos / totalSessoesEletricos;
+        }
+        if (totalSessoesHibridos != 0) {
+            mediaEnergiaHibridos = totalEnergiaHibridos / totalSessoesHibridos;
+        }
+        System.out.println("Media de energia Veiculos eletricos: " + mediaEnergiaEletricos + " KWh, Veiculos hibridos: "
+                + mediaEnergiaHibridos + " KWh");
+        Consola.PressioneEnterParaContinuar();
     }
 
     // TODO Listagem de pagamentos por efetuar (por cliente);
