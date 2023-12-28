@@ -63,10 +63,6 @@ public class PostoCarregamento implements Serializable {
         this.numero_veiculos = numero_veiculos;
     }
 
-    public double getTempo_carregamento() {
-        return tempo_carregamento;
-    }
-
     public void setTempo_carregamento(double tempo_carregamento) {
         this.tempo_carregamento = tempo_carregamento;
     }

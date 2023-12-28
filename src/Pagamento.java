@@ -8,15 +8,7 @@ public class Pagamento implements Serializable {
     protected boolean pago;
     protected Cliente cliente;
 
-    public Cliente getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
-
-    public Pagamento(SessaoCarregamento sessao, String metodoPagamento, LocalDateTime DataHoraTransacao, boolean pago, Cliente cliente) {
+    public Pagamento(SessaoCarregamento sessao, String metodoPagamento, LocalDateTime DataHoraTransacao, boolean pago) {
         this.sessao = sessao;
         this.metodoPagamento = metodoPagamento;
         this.DataHoraTransacao = DataHoraTransacao;
@@ -26,34 +18,6 @@ public class Pagamento implements Serializable {
 
     public SessaoCarregamento getSessao() {
         return sessao;
-    }
-
-    public void setSessao(SessaoCarregamento sessao) {
-        this.sessao = sessao;
-    }
-
-    public String getMetodoPagamento() {
-        return metodoPagamento;
-    }
-
-    public void setMetodoPagamento(String metodoPagamento) {
-        this.metodoPagamento = metodoPagamento;
-    }
-
-    public LocalDateTime getDataHoraTransacao() {
-        return DataHoraTransacao;
-    }
-
-    public void setDataHoraTransacao(LocalDateTime dataHoraTransacao) {
-        DataHoraTransacao = dataHoraTransacao;
-    }
-
-    public boolean isPago() {
-        return pago;
-    }
-
-    public void setPago(boolean pago) {
-        this.pago = pago;
     }
 
     @Override

@@ -31,16 +31,8 @@ public class SessaoCarregamento implements Serializable {
     }
 
 
-    public String getMatricula() {
-        return matricula;
-    }
-
     public void setMatricula(String matricula) {
         this.matricula = matricula;
-    }
-
-    public double getCusto_kwh() {
-        return custo_kwh;
     }
 
     public void setCusto_kwh(double custo_kwh) {
@@ -87,16 +79,8 @@ public class SessaoCarregamento implements Serializable {
         this.codigo_sessao = codigo_sessao;
     }
 
-    public LocalDateTime getData_inicio() {
-        return data_inicio;
-    }
-
     public void setData_inicio(LocalDateTime data_inicio) {
         this.data_inicio = data_inicio;
-    }
-
-    public LocalDateTime getData_fim() {
-        return data_fim;
     }
 
     public void setData_fim(LocalDateTime data_fim) {
@@ -121,7 +105,6 @@ public class SessaoCarregamento implements Serializable {
 
     @Override
     public String toString() {
-        //matricula, nif do cliente, data de inicio, data de fim, energia consumida, custo da sessão, código de sessão, estado de pagamento
         return "Matricula: " + matricula + "\n" + "Nif do cliente: " + cliente.getNif() + "\n" + "Data de inicio: " + data_inicio + "\n" + "Data de fim: " + data_fim + "\n" + "Energia consumida: " + energia_consumida + "\n" + "Custo da sessão: " + custo_sessao + "\n" + "Código de sessão: " + codigo_sessao + "\n" + "Estado de pagamento: " + estado_pagamento + "\n";
     }
 }

@@ -1,3 +1,4 @@
+
 import java.text.DateFormat;
 import java.time.format.DateTimeFormatter;
 import java.text.SimpleDateFormat;
@@ -18,6 +19,21 @@ public class Gestao implements Serializable {
     public Gestao() {
     }
 
+    /**
+     * Cria um novo veículo, seja ele elétrico ou híbrido.
+     * 
+     * O usuário é solicitado a fornecer detalhes como tipo de veículo, marca,
+     * modelo, matrícula, data de registro, potência, capacidade da bateria e
+     * autonomia.
+     * 
+     * Para veículos elétricos, o usuário também precisa fornecer a velocidade de
+     * carregamento e o tempo de carregamento é calculado.
+     * 
+     * Para veículos híbridos, o usuário precisa fornecer a capacidade do tanque de
+     * combustível e o consumo de combustível.
+     * 
+     * O veículo é então adicionado à lista de veículos.
+     */
     public void criarVeiculo() {
         String marca, modelo, matricula, tipo_veiculo;
         Date data_registo = null;
@@ -129,7 +145,7 @@ public class Gestao implements Serializable {
     }
 
     /**
-     * Procura um veiculo na arraylist e retorna a sua posicao
+     * Procura um veículo na arraylist e retorna a sua posicao
      * 
      * @param matricula matricula do veiculo a procurar
      * @return posicao do veiculo na arraylist
@@ -144,7 +160,19 @@ public class Gestao implements Serializable {
     }
 
     /**
-     * Mostra todos os veiculos registados
+     * Cria um novo veículo, seja ele elétrico ou híbrido.
+     * 
+     * O usuário é solicitado a fornecer detalhes como tipo de veículo, marca,
+     * modelo, matrícula, data de registro, potência, capacidade da bateria e
+     * autonomia.
+     * 
+     * Para veículos elétricos, o usuário também precisa fornecer a velocidade de
+     * carregamento e o tempo de carregamento é calculado.
+     * 
+     * Para veículos híbridos, o usuário precisa fornecer a capacidade do tanque de
+     * combustível e o consumo de combustível.
+     * 
+     * O veículo é então adicionado à lista de veículos.
      */
     public void consultarVeiculo() {
         System.out.println("\n***************************************\n");
@@ -170,7 +198,7 @@ public class Gestao implements Serializable {
     }
 
     /**
-     * Mostra todos os veiculos registados
+     * Mostra todos os veículos registados
      * 
      * @return true se nao existirem veiculos registados
      */
@@ -188,6 +216,10 @@ public class Gestao implements Serializable {
         return false;
     }
 
+    /**
+     * Recebe a matricula do veiculo e verifica se esta no formato XX-XX-XX
+     * @return matricula do veiculo em formato XX-XX-XX
+     */
     private String getStringMatricula() {
         String matricula;
         matricula = Consola.lerString("Matricula (XX-XX-XX): ");
@@ -572,7 +604,7 @@ public class Gestao implements Serializable {
 
     public void registarPagamento(SessaoCarregamento sessao, String metodoPagamento,
             LocalDateTime DataHoraTransacao, boolean pago) {
-        Pagamento pagamento = new Pagamento(sessao, metodoPagamento, DataHoraTransacao, pago, sessao.getCliente());
+        Pagamento pagamento = new Pagamento(sessao, metodoPagamento, DataHoraTransacao, pago);
         pagamentos.add(pagamento);
     }
 
@@ -678,7 +710,7 @@ public class Gestao implements Serializable {
             System.out.println("Codigo do posto: " + postosOrdenados.get(i).getCodigo_posto() + " | Valor faturado: "
                     + postosOrdenados.get(i).getValor_faturado());
         }
-        System.out.println("");
+        System.out.println();
         Consola.PressioneEnterParaContinuar();
     }
 
@@ -731,7 +763,7 @@ public class Gestao implements Serializable {
             int totalSessoes = sessoesPorCliente.size();
             System.out.println("Cliente: " + cliente.getNome() + " -> Total de sessões: " + totalSessoes);
         }
-        System.out.println("");
+        System.out.println();
         Consola.PressioneEnterParaContinuar();
     }
 
@@ -806,16 +838,17 @@ public class Gestao implements Serializable {
         System.out.println("Clientes com pagamentos por efetuar: ");
         for (Cliente cliente : clientes) {
             for (SessaoCarregamento sessao : sessoesCarregamento.values()) {
-                
+
                 if (sessao.getCliente().getNif() == cliente.getNif()
                         && sessao.getEstado_pagamento().equals("Nao pago")) {
                     System.out
-                            .println("Cliente: " + cliente.getNome() + " | Valor a pagar: " + sessao.getCusto_sessao() + " | Codigo da sessao: " + sessao.getCodigo_sessao());
+                            .println("Cliente: " + cliente.getNome() + " | Valor a pagar: " + sessao.getCusto_sessao()
+                                    + " | Codigo da sessao: " + sessao.getCodigo_sessao());
                     break;
                 }
             }
         }
-        System.out.println("");
+        System.out.println();
         Consola.PressioneEnterParaContinuar();
     }
 
@@ -823,7 +856,7 @@ public class Gestao implements Serializable {
         System.out.println("\n***************************************\n");
         System.out.println("\tMenu Histórico de sessões de carregamento (por posto de carregamento)\n");
 
-        //listar todos os postos de carregamento
+        // listar todos os postos de carregamento
         System.out.println("Postos de carregamento registados: ");
         for (PostoCarregamento posto : postos) {
             System.out.println("-> Codigo do posto: " + posto.getCodigo_posto());
@@ -849,7 +882,7 @@ public class Gestao implements Serializable {
                         + " | Posto de carregamento: " + sessao.getPostoCarregamento().getCodigo_posto());
             }
         }
-        System.out.println("");
+        System.out.println();
         Consola.PressioneEnterParaContinuar();
     }
 }

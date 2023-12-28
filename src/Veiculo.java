@@ -51,16 +51,8 @@ public class Veiculo implements Serializable {
         this.matricula = matricula;
     }
 
-    public Date getData_registo() {
-        return data_registo;
-    }
-
     public void setData_registo(Date data_registo) {
         this.data_registo = data_registo;
-    }
-
-    public int getPotencia() {
-        return potencia;
     }
 
     public void setPotencia(int potencia) {
@@ -73,10 +65,6 @@ public class Veiculo implements Serializable {
 
     public void setCapacidade_bateria(int capacidade_bateria) {
         this.capacidade_bateria = capacidade_bateria;
-    }
-
-    public int getAutonomia() {
-        return autonomia;
     }
 
     public void setAutonomia(int autonomia) {

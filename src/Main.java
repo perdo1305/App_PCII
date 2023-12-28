@@ -1,7 +1,6 @@
 
-/***
- * @Author: Pedro Ferreira - 2222035
- * @Author: Bernardo Santos -2222033
+/*
+ * @Authors: Pedro Ferreira - 2222035 | Bernardo Santos -2222033
  */
 
 import java.io.*;

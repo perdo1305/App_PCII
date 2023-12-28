@@ -14,24 +14,12 @@ public class VeiculoHibrido extends Veiculo {
         setEmissao(emissao);
     }
 
-    public int getCilindrada() {
-        return cilindrada;
-    }
-
     public void setCilindrada(int cilindrada) {
         this.cilindrada = cilindrada;
     }
 
-    public double getConsumo() {
-        return consumo;
-    }
-
     public void setConsumo(double consumo) {
         this.consumo = consumo;
-    }
-
-    public double getEmissao() {
-        return emissao;
     }
 
     public void setEmissao(double emissao) {
