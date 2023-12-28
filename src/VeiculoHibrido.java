@@ -5,10 +5,9 @@ public class VeiculoHibrido extends Veiculo {
     protected double consumo;
     protected double emissao;
 
-    public VeiculoHibrido(String marca, String modelo, String matricula, Date data_registo, int autonomia,
-                            double velocidadeCarregamento, int potencia, int cilindrada, double consumo, double emissao) {
-        super(marca, modelo, matricula, data_registo, autonomia, (int) velocidadeCarregamento, potencia);
-        //TODO velocidadeCarregamento esta mal feito, devia de ter tambem a capacidade da bateria
+    public VeiculoHibrido(String marca, String modelo, String matricula, Date data_registo, int potencia,
+    int capacidade_bateria, int autonomia, double velocidadedeCarregamento, int cilindrada, double consumo, double emissao) {
+        super(marca, modelo, matricula, data_registo, potencia, capacidade_bateria, autonomia, velocidadedeCarregamento);
         setCilindrada(cilindrada);
         setConsumo(consumo);
         setEmissao(emissao);
@@ -28,6 +27,7 @@ public class VeiculoHibrido extends Veiculo {
 
     @Override
     public String toString() {
-        return super.toString() + "Cilindrada: " + cilindrada + "\n" + "Consumo: " + consumo + "\n" + "Emissao: " + emissao + "\n";
+        return super.toString() + "Cilindrada: " + cilindrada + "\n" + "Consumo: " + consumo + "\n" + "Emissao: "
+                + emissao + "\n";
     }
 }

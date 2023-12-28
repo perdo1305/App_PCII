@@ -11,12 +11,13 @@ public class Veiculo implements Serializable {
     protected String modelo;
     protected String matricula;
     protected Date data_registo;
-    protected int potencia; // Cv
-    protected int capacidade_bateria; // kw/h
-    protected int autonomia;// km por carga
+    protected int potencia; 
+    protected int capacidade_bateria; 
+    protected int autonomia;
+    protected double velocidadedeCarregamento;
 
     public Veiculo(String marca, String modelo, String matricula, Date data_registo, int potencia,
-            int capacidade_bateria, int autonomia) {
+            int capacidade_bateria, int autonomia, double velocidadedeCarregamento) {
         setMarca(marca);
         setModelo(modelo);
         setMatricula(matricula);
@@ -24,6 +25,15 @@ public class Veiculo implements Serializable {
         setPotencia(potencia);
         setCapacidade_bateria(capacidade_bateria);
         setAutonomia(autonomia);
+        setVelocidadedeCarregamento(velocidadedeCarregamento);
+    }
+
+     public double getVelocidadedeCarregamento() {
+        return velocidadedeCarregamento;
+    }
+
+    public void setVelocidadedeCarregamento(double velocidadedeCarregamento) {
+        this.velocidadedeCarregamento = velocidadedeCarregamento;
     }
 
     public String getMarca() {

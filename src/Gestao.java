@@ -21,17 +21,17 @@ public class Gestao implements Serializable {
 
     /**
      * Cria um novo veículo, seja ele elétrico ou híbrido.
-     * 
+     * <p>
      * O usuário é solicitado a fornecer detalhes como tipo de veículo, marca,
      * modelo, matrícula, data de registro, potência, capacidade da bateria e
      * autonomia.
-     * 
+     * <p>
      * Para veículos elétricos, o usuário também precisa fornecer a velocidade de
      * carregamento e o tempo de carregamento é calculado.
-     * 
+     * <p>
      * Para veículos híbridos, o usuário precisa fornecer a capacidade do tanque de
      * combustível e o consumo de combustível.
-     * 
+     * <p>
      * O veículo é então adicionado à lista de veículos.
      */
     public void criarVeiculo() {
@@ -89,7 +89,7 @@ public class Gestao implements Serializable {
         } while (autonomia == 0);
 
         float tempo_carregamento;
-        double velocidadeCarregamento = 0;
+        double velocidadeCarregamento = 0.00;
 
         if (tipo_veiculo.equalsIgnoreCase("E")) {
             do {
@@ -117,8 +117,7 @@ public class Gestao implements Serializable {
 
             } while (tempo_carregamento == 0);
 
-            VeiculoEletrico veiculo = new VeiculoEletrico(marca, modelo, matricula, data_registo, autonomia,
-                    velocidadeCarregamento, potencia, tempo_carregamento, capacidade_bateria);
+            VeiculoEletrico veiculo = new VeiculoEletrico(marca, modelo, matricula, data_registo, autonomia,capacidade_bateria,autonomia,velocidadeCarregamento,tempo_carregamento);
             veiculos.add(veiculo);
             System.out.println("Veiculo criado com sucesso!");
             Consola.PressioneEnterParaContinuar();
@@ -137,7 +136,7 @@ public class Gestao implements Serializable {
             } while (emissao == 0);
 
             VeiculoHibrido veiculo = new VeiculoHibrido(marca, modelo, matricula, data_registo, autonomia,
-                    velocidadeCarregamento, potencia, cilindrada, consumo_combustivel, emissao);
+                    capacidade_bateria, autonomia, velocidadeCarregamento, cilindrada, consumo_combustivel, emissao);
             veiculos.add(veiculo);
             System.out.println("Veiculo criado com sucesso");
             Consola.PressioneEnterParaContinuar();
