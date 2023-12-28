@@ -35,8 +35,25 @@ public class Main {
                 case 4:// Consultar Cliente
                     gestao.consultarCliente();
                     break;
-                case 5:// Alterar Dados Cliente
-                    gestao.alterarDadosCliente();
+                case 5:// Alterar Dados /Remover Cliente
+                    int opcaoAlterarCliente;
+                    do {
+                        opcaoAlterarCliente = menuAlterarCliente();
+
+                        switch (opcaoAlterarCliente) {
+                            case 1:// Alterar dados cliente
+                                gestao.alterarDadosCliente();
+                                break;
+                            case 2:// Remover cliente
+                                gestao.removerCliente();
+                                break;
+                            case 0:// Sair
+                                break;
+                            default:
+                                System.out.println("Opcao invalida");
+                                break;
+                        }
+                    } while (opcaoAlterarCliente != 0);
                     break;
                 case 6:// Registar posto de carregamento
                     gestao.criarPostoCarregamento();
@@ -83,8 +100,6 @@ public class Main {
                                    gestao.historicoSessoesPorPosto();
                                 break;
                             case 0:// Sair
-                                System.out.println("############# FIM DO PROGRAMA #############\n");
-                                System.out.println("TO BE CONTINUED...");
                                 break;
                             default:
                                 System.out.println("Opcao invalida");
@@ -93,7 +108,6 @@ public class Main {
                     } while (opcaoEstatistica != 0);
                     break;
                 case 0:// Sair
-
                     System.out.println("############# FIM DO PROGRAMA #############\n");
                     System.out.println("TO BE CONTINUED...");
 
@@ -115,7 +129,7 @@ public class Main {
         System.out.println("2  -> Consultar Veiculo");
         System.out.println("3  -> Registar Cliente");
         System.out.println("4  -> Consultar Cliente");
-        System.out.println("5  -> Alterar Dados Cliente");
+        System.out.println("5  -> Alterar Dados / Remover Cliente");
         System.out.println("6  -> Registar posto de carregamento");
         System.out.println("7  -> Consultar posto de carregamento");
         System.out.println("8  -> Registar sessao de carregamento");
@@ -150,7 +164,19 @@ public class Main {
         } while (opcao < 0 || opcao > 6);
         return opcao;
     }
+    public static int menuAlterarCliente(){
+        int opcao;
+        System.out.println("\n_______________________________________");
+        System.out.println("\tMenu Alterar Cliente\n");
+        System.out.println("1  -> Alterar dados cliente");
+        System.out.println("2  -> Remover cliente");
+        System.out.println("\n0  -> Sair");
 
+        do {
+            opcao = Consola.lerInt("Opcao: ", 0, 2);
+        } while (opcao < 0 || opcao > 2);
+        return opcao;
+    }
     public static void gravarFicheiro(Gestao gestao) {
         try {
             ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("Gestao.dat"));

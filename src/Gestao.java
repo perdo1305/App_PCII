@@ -310,6 +310,13 @@ public class Gestao implements Serializable {
     }
 
     public void alterarDadosCliente() {
+        System.out.println("\n***************************************\n");
+        System.out.println("\tMenu Alterar dados cliente\n");
+
+        if (MostrarClientes()) {
+            Consola.PressioneEnterParaContinuar();
+            return;
+        }
         System.out.println("Inisira o NIF do cliente que pretende alterar os dados: ");
         int nif = Consola.lerInt("", 100000000, 999999999);
         int posicao = procurarCliente(nif);
@@ -377,6 +384,14 @@ public class Gestao implements Serializable {
     }
 
     public void removerCliente() {
+        System.out.println("\n***************************************\n");
+        System.out.println("\tMenu Remover cliente\n");
+
+        if (MostrarClientes()) {
+            Consola.PressioneEnterParaContinuar();
+            return;
+        }
+
         System.out.println("Inisira o NIF do cliente que pretende remover: ");
         int nif = Consola.lerInt("", 100000000, 999999999);
         int posicao = procurarCliente(nif);
@@ -386,6 +401,7 @@ public class Gestao implements Serializable {
             clientes.remove(posicao);
             System.out.println("Cliente removido com sucesso");
         }
+        Consola.PressioneEnterParaContinuar();
     }
 
     public void criarPostoCarregamento() {
@@ -504,8 +520,8 @@ public class Gestao implements Serializable {
         System.out.println("Postos de carregamento registados: ");
         // nr do posto de carregamento , localizacao e tipo de posto
         for (PostoCarregamento posto2 : postos) {
-            System.out.println("-> Codigo do posto: " + posto2.getCodigo_posto() + " Localizacao: "
-                    + posto2.getLocalizacao() + " Tipo de posto: " + posto2.getTipo_posto());
+            System.out.println("-> Codigo do posto: " + posto2.getCodigo_posto() + " | Localizacao: "
+                    + posto2.getLocalizacao() + " | Tipo de posto: " + posto2.getTipo_posto());
         }
 
         double custo_kwh = 0;
@@ -706,8 +722,13 @@ public class Gestao implements Serializable {
         int size = Math.min(postosOrdenados.size(), 3);
         System.out.println("Postos de carregamento com maior valor faturado: ");
         for (int i = 0; i < size; i++) {
-            System.out.println("Codigo do posto: " + postosOrdenados.get(i).getCodigo_posto() + " | Valor faturado: "
-                    + postosOrdenados.get(i).getValor_faturado());
+            PostoCarregamento posto = postosOrdenados.get(i);
+            double valorFaturado = posto.getValor_faturado();
+            if (valorFaturado == 0) {
+                System.out.println("Codigo do posto: " + posto.getCodigo_posto() + " | Valor faturado: Não existem pagamentos registados neste posto");
+            } else {
+                System.out.println("Codigo do posto: " + posto.getCodigo_posto() + " | Valor faturado: " + valorFaturado);
+            }
         }
         System.out.println();
         Consola.PressioneEnterParaContinuar();
