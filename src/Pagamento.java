@@ -1,6 +1,12 @@
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+/**
+ * Classe Pagamento
+ * @version 1.0
+ * @Author Pedro Ferreira nº 2222035 | Bernardo Santos nº 2222033
+ */
+
 public class Pagamento implements Serializable {
     protected SessaoCarregamento sessao;
     protected String metodoPagamento;

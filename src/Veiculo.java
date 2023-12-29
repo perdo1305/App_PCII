@@ -3,6 +3,12 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * Classe Veiculo
+ * @version 1.0
+ * @Author Pedro Ferreira nº 2222035 | Bernardo Santos nº 2222033
+ */
+
 public class Veiculo implements Serializable {
 
     static DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");

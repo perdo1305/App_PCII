@@ -3,6 +3,12 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ *  Classe Cliente
+ * @version 1.0
+ * @Author Pedro Ferreira nº 2222035 | Bernardo Santos nº 2222033
+ */
+
 public class Cliente implements Serializable {
     static DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
     protected String nome;
@@ -11,6 +17,16 @@ public class Cliente implements Serializable {
     protected int telemovel;
     protected String email;
     protected Date data_nascimento;
+
+    /**
+     * Construtor da classe Cliente
+     * @param nome nome do cliente (‘string’)
+     * @param nif nif do cliente (int)
+     * @param morada morada do cliente (‘string’)
+     * @param telemovel telemovel do cliente (int)
+     * @param email email do cliente (‘string’)
+     * @param data_nascimento data de nascimento do cliente (Date)
+     */
 
     public Cliente(String nome, int nif, String morada, int telemovel, String email, Date data_nascimento) {
         setNome(nome);
@@ -69,6 +85,10 @@ public class Cliente implements Serializable {
         this.data_nascimento = data_nascimento;
     }
 
+    /**
+     * Metodo toString da classe Cliente
+     * @return ‘string’ com os atributos da classe Cliente
+     */
     @Override
     public String toString() {
         String str = "";

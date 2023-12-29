@@ -1,30 +1,34 @@
 import java.io.Serializable;
 
+/**
+ * Classe PostoCarregamento
+ * @version 1.0
+ * @Author Pedro Ferreira nº 2222035 | Bernardo Santos nº 2222033
+ */
 public class PostoCarregamento implements Serializable {
     protected int codigo_posto;
-    protected String localizacao; // morada
-    protected String tipo_posto; // PCN - Posto de Carregamento Normal, PCR - Posto de Carregamento Rapido, PCUR
-                                 // - Posto de Carregamento Ultrarrapido
-    protected double custo_kwh; // custo por kWh em euros
-    protected int numero_veiculos; // numero de veiculos que podem carregar em simultaneo
+    protected String localizacao;
+    protected String tipo_posto;
+    protected double custo_kwh;
+    protected int numero_veiculos;
     protected double tempo_carregamento;
     private double valor_faturado;
 
     /**
      * Construtor da classe PostoCarregamento
      *
-     * @param codigo_posto      codigo do posto (int)
-     * @param localizacao       localizacao do posto (string)
-     * @param tipo_posto        tipo de posto (string)
-     * @param custo_kwh         custo por kWh em euros (double)
-     * @param numero_veiculos   numero de veículos que podem carregar em simultaneo
-     *                          (int)
+     * @param codigo_posto       codigo do posto (int)
+     * @param localizacao        localizacao do posto (‘string’)
+     * @param tipo_posto         tipo de posto ('string') - PCN - Posto de Carregamento Normal, PCR - Posto de Carregamento Rapido, PCUR - Posto de Carregamento Ultrarrapido
+     * @param custo_kwh          custo por kWh em euros (double)
+     * @param numero_veiculos    numero de veículos que podem carregar em simultaneo
+     *                           (int)
      * @param tempo_carregamento tempo de carregamento (double)
      */
 
 
     public PostoCarregamento(int codigo_posto, String localizacao, String tipo_posto, double custo_kwh,
-            int numero_veiculos, double tempo_carregamento) {
+                             int numero_veiculos, double tempo_carregamento) {
         setCodigo_posto(codigo_posto);
         setLocalizacao(localizacao);
         setTipo_posto(tipo_posto);
@@ -36,6 +40,7 @@ public class PostoCarregamento implements Serializable {
 
     /**
      * Getter do codigo do posto
+     *
      * @return codigo do posto (int)
      */
     public int getCodigo_posto() {
@@ -44,6 +49,7 @@ public class PostoCarregamento implements Serializable {
 
     /**
      * setter do codigo do posto
+     *
      * @param codigo_posto codigo do posto (int)
      */
     public void setCodigo_posto(int codigo_posto) {
@@ -52,27 +58,34 @@ public class PostoCarregamento implements Serializable {
 
     /**
      * Getter da localizacao do posto
-     * @return localizacao do posto (string)
+     *
+     * @return localizacao do posto (‘string’)
      */
     public String getLocalizacao() {
         return localizacao;
     }
+
     /**
      * Setter da localizacao do posto
-     * @param localizacao localizacao do posto (string)
+     *
+     * @param localizacao localizacao do posto (‘string’)
      */
     public void setLocalizacao(String localizacao) {
         this.localizacao = localizacao;
     }
+
     /**
      * Getter do tipo de posto
+     *
      * @return tipo de posto (string)
      */
     public String getTipo_posto() {
         return tipo_posto;
     }
+
     /**
      * Setter do tipo de posto
+     *
      * @param tipo_posto tipo de posto (string)
      */
     public void setTipo_posto(String tipo_posto) {
@@ -81,6 +94,7 @@ public class PostoCarregamento implements Serializable {
 
     /**
      * Getter do custo por kWh
+     *
      * @return custo por kWh (double)
      */
     public double getCusto_kwh() {
@@ -89,6 +103,7 @@ public class PostoCarregamento implements Serializable {
 
     /**
      * Setter do custo por kWh
+     *
      * @param custo_kwh custo por kWh (double)
      */
     public void setCusto_kwh(double custo_kwh) {
@@ -97,20 +112,25 @@ public class PostoCarregamento implements Serializable {
 
     /**
      * Getter do número de veiculos
-     * @return numero de veiculos (int)
+     *
+     * @return numero de veículos (int)
      */
     public int getNumero_veiculos() {
         return numero_veiculos;
     }
+
     /**
      * Setter do número de veiculos
-     * @param numero_veiculos numero de veiculos (int)
+     *
+     * @param numero_veiculos numero de veículos (int)
      */
     public void setNumero_veiculos(int numero_veiculos) {
         this.numero_veiculos = numero_veiculos;
     }
+
     /**
      * Setter do tempo de carregamento
+     *
      * @param tempo_carregamento tempo de carregamento (double)
      */
     public void setTempo_carregamento(double tempo_carregamento) {
@@ -119,6 +139,7 @@ public class PostoCarregamento implements Serializable {
 
     /**
      * Getter do valor faturado
+     *
      * @return valor faturado (double)
      */
     public double getValor_faturado() {
@@ -127,6 +148,7 @@ public class PostoCarregamento implements Serializable {
 
     /**
      * Setter do valor faturado
+     *
      * @param valor_faturado valor faturado pelo posto de carregamento (double)
      */
     public void setValor_faturado(double valor_faturado) {
@@ -135,6 +157,7 @@ public class PostoCarregamento implements Serializable {
 
     /**
      * ToString da classe PostoCarregamento
+     *
      * @return ‘string’ com a informação do posto de carregamento
      */
     @Override

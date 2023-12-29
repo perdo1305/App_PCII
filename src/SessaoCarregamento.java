@@ -1,6 +1,11 @@
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+/**
+ * Classe SessaoCarregamento
+ * @version 1.0
+ * @Author Pedro Ferreira nº 2222035 | Bernardo Santos nº 2222033
+ */
 public class SessaoCarregamento implements Serializable {
     protected String matricula;
     protected double custo_kwh;
@@ -17,17 +22,17 @@ public class SessaoCarregamento implements Serializable {
     /**
      * Construtor da classe SessaoCarregamento
      *
-     * @param matricula          matricula do veiculo (string)
-     * @param custo_kwh          custo por kWh em euros (double)
-     * @param estado_pagamento   estado de pagamento (string)
-     * @param custo_sessao       custo da sessao (double)
-     * @param cliente            objeto da classe Cliente
-     * @param veiculo            objeto da classe Veiculo
-     * @param codigo_sessao      codigo da sessao (string)
-     * @param data_inicio        data de inicio da sessao (LocalDateTime)
-     * @param data_fim           data de fim da sessao (LocalDateTime)
-     * @param energia_consumida  energia consumida (double)
-     * @param postoCarregamento  objeto da classe PostoCarregamento
+     * @param matricula         matricula do veiculo (string)
+     * @param custo_kwh         custo por kWh em euros (double)
+     * @param estado_pagamento  estado de pagamento (string)
+     * @param custo_sessao      custo da sessao (double)
+     * @param cliente           objeto da classe Cliente
+     * @param veiculo           objeto da classe Veiculo
+     * @param codigo_sessao     codigo da sessao (string)
+     * @param data_inicio       data de inicio da sessao (LocalDateTime)
+     * @param data_fim          data de fim da sessao (LocalDateTime)
+     * @param energia_consumida energia consumida (double)
+     * @param postoCarregamento objeto da classe PostoCarregamento
      */
 
     public SessaoCarregamento(String matricula, double custo_kwh, String estado_pagamento, double custo_sessao,
@@ -48,13 +53,16 @@ public class SessaoCarregamento implements Serializable {
 
     /**
      * Setter da matricula
+     *
      * @param matricula matricula do veiculo (string)
      */
     public void setMatricula(String matricula) {
         this.matricula = matricula;
     }
+
     /**
      * Setter do custo por kWh
+     *
      * @param custo_kwh custo por kWh em euros (double)
      */
     public void setCusto_kwh(double custo_kwh) {
@@ -63,7 +71,8 @@ public class SessaoCarregamento implements Serializable {
 
     /**
      * Getter do estado de pagamento
-     * @return
+     *
+     * @return estado de pagamento (string)
      */
     public String getEstado_pagamento() {
         return estado_pagamento;
@@ -71,6 +80,7 @@ public class SessaoCarregamento implements Serializable {
 
     /**
      * Setter do estado de pagamento
+     *
      * @param estado_pagamento estado de pagamento (string)
      */
     public void setEstado_pagamento(String estado_pagamento) {
@@ -79,7 +89,8 @@ public class SessaoCarregamento implements Serializable {
 
     /**
      * Getter do custo da sessao
-     * @return
+     *
+     * @return custo da sessao (double)
      */
     public double getCusto_sessao() {
         return custo_sessao;
@@ -87,6 +98,7 @@ public class SessaoCarregamento implements Serializable {
 
     /**
      * Setter do custo da sessao
+     *
      * @param custo_sessao custo da sessao (double)
      */
     public void setCusto_sessao(double custo_sessao) {
@@ -95,6 +107,7 @@ public class SessaoCarregamento implements Serializable {
 
     /**
      * Getter do cliente
+     *
      * @return objeto da classe Cliente
      */
     public Cliente getCliente() {
@@ -103,6 +116,7 @@ public class SessaoCarregamento implements Serializable {
 
     /**
      * Setter do cliente
+     *
      * @param cliente objeto da classe Cliente
      */
     public void setCliente(Cliente cliente) {
@@ -111,6 +125,7 @@ public class SessaoCarregamento implements Serializable {
 
     /**
      * Getter do veiculo
+     *
      * @return objeto da classe Veiculo
      */
     public Veiculo getVeiculo() {
@@ -119,6 +134,7 @@ public class SessaoCarregamento implements Serializable {
 
     /**
      * Setter do veiculo
+     *
      * @param veiculo objeto da classe Veiculo
      */
     public void setVeiculo(Veiculo veiculo) {
@@ -127,6 +143,7 @@ public class SessaoCarregamento implements Serializable {
 
     /**
      * Getter do codigo da sessao
+     *
      * @return codigo da sessao (string)
      */
     public String getCodigo_sessao() {
@@ -135,6 +152,7 @@ public class SessaoCarregamento implements Serializable {
 
     /**
      * Setter do codigo da sessao
+     *
      * @param codigo_sessao codigo da sessao (string)
      */
     public void setCodigo_sessao(String codigo_sessao) {
@@ -143,6 +161,7 @@ public class SessaoCarregamento implements Serializable {
 
     /**
      * Getter da data de inicio
+     *
      * @param data_inicio data de inicio da sessao (LocalDateTime)
      */
     public void setData_inicio(LocalDateTime data_inicio) {
@@ -151,6 +170,7 @@ public class SessaoCarregamento implements Serializable {
 
     /**
      * Setter da data de fim
+     *
      * @param data_fim data de fim da sessao (LocalDateTime)
      */
     public void setData_fim(LocalDateTime data_fim) {
@@ -159,6 +179,7 @@ public class SessaoCarregamento implements Serializable {
 
     /**
      * Getter da energia consumida
+     *
      * @return energia consumida (double)
      */
     public double getEnergia_consumida() {
@@ -167,6 +188,7 @@ public class SessaoCarregamento implements Serializable {
 
     /**
      * Setter da energia consumida
+     *
      * @param energia_consumida energia consumida (double)
      */
     public void setEnergia_consumida(double energia_consumida) {
@@ -175,6 +197,7 @@ public class SessaoCarregamento implements Serializable {
 
     /**
      * Getter do posto de carregamento
+     *
      * @return objeto da classe PostoCarregamento
      */
     public PostoCarregamento getPostoCarregamento() {
@@ -183,6 +206,7 @@ public class SessaoCarregamento implements Serializable {
 
     /**
      * Setter do posto de carregamento
+     *
      * @param postoCarregamento objeto da classe PostoCarregamento
      */
     public void setPostoCarregamento(PostoCarregamento postoCarregamento) {
@@ -191,6 +215,7 @@ public class SessaoCarregamento implements Serializable {
 
     /**
      * ToString da classe SessaoCarregamento
+     *
      * @return ‘string’ com a informação da sessao de carregamento
      */
     @Override

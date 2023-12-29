@@ -1,5 +1,10 @@
 import java.util.Date;
 
+/**
+ * Classe VeiculoEletrico
+ * @version 1.0
+ * @Author Pedro Ferreira nº 2222035 | Bernardo Santos nº 2222033
+ */
 public class VeiculoEletrico extends Veiculo {
     protected float tempo_carregamento;
 

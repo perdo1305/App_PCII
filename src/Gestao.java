@@ -6,7 +6,6 @@ import java.time.LocalDateTime;
 import java.util.*;
 import java.io.Serializable;
 
-
 /**
  * Esta classe é usada para gerir todos os dados do programa.
  * <p>
@@ -29,7 +28,6 @@ public class Gestao implements Serializable {
     private final ArrayList<Pagamento> pagamentos = new ArrayList<>();
 
     private final Map<String, SessaoCarregamento> sessoesCarregamento = new HashMap<>();
-
     public Gestao() {
     }
 
