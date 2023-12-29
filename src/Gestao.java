@@ -6,6 +6,20 @@ import java.time.LocalDateTime;
 import java.util.*;
 import java.io.Serializable;
 
+
+/**
+ * Esta classe é usada para gerir todos os dados do programa.
+ * <p>
+ * Também contém métodos para criar, consultar, alterar e remover veículos, clientes e postos de carregamento.
+ * <p>
+ * Também contém métodos para criar, consultar, alterar e remover sessões de carregamento.
+ * <p>
+ * Também contém métodos para criar, consultar, alterar e remover pagamentos.
+ * <p>
+ * Também contém métodos para gerar estatísticas.
+ * <p>
+ * Também contem metodos para proteção dos dados inseridos pelo utilizador
+ */
 public class Gestao implements Serializable {
     static DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
     private final ArrayList<Cliente> clientes = new ArrayList<>();
@@ -20,16 +34,16 @@ public class Gestao implements Serializable {
     }
 
     /**
-     * Cria um novo veículo, seja ele elétrico ou híbrido.
+     * Cria um veículo, seja ele elétrico ou híbrido.
      * <p>
-     * O usuário é solicitado a fornecer detalhes como tipo de veículo, marca,
+     * O utilizador é solicitado a fornecer detalhes como tipo de veículo, marca,
      * modelo, matrícula, data de registro, potência, capacidade da bateria e
      * autonomia.
      * <p>
-     * Para veículos elétricos, o usuário também precisa fornecer a velocidade de
+     * Para veículos elétricos, o utilizador também precisa fornecer a velocidade de
      * carregamento e o tempo de carregamento é calculado.
      * <p>
-     * Para veículos híbridos, o usuário precisa fornecer a capacidade do tanque de
+     * Para veículos híbridos, o utilizador precisa fornecer a capacidade do depósito de
      * combustível e o consumo de combustível.
      * <p>
      * O veículo é então adicionado à lista de veículos.
@@ -117,7 +131,8 @@ public class Gestao implements Serializable {
 
             } while (tempo_carregamento == 0);
 
-            VeiculoEletrico veiculo = new VeiculoEletrico(marca, modelo, matricula, data_registo, autonomia,capacidade_bateria,autonomia,velocidadeCarregamento,tempo_carregamento);
+            VeiculoEletrico veiculo = new VeiculoEletrico(marca, modelo, matricula, data_registo, autonomia,
+                    capacidade_bateria, autonomia, velocidadeCarregamento, tempo_carregamento);
             veiculos.add(veiculo);
             System.out.println("Veiculo criado com sucesso!");
             Consola.PressioneEnterParaContinuar();
@@ -145,7 +160,7 @@ public class Gestao implements Serializable {
 
     /**
      * Procura um veículo na arraylist e retorna a sua posicao
-     * 
+     *
      * @param matricula matricula do veiculo a procurar
      * @return posicao do veiculo na arraylist
      */
@@ -159,18 +174,18 @@ public class Gestao implements Serializable {
     }
 
     /**
-     * Cria um novo veículo, seja ele elétrico ou híbrido.
-     * 
-     * O usuário é solicitado a fornecer detalhes como tipo de veículo, marca,
+     * Cria um veículo, seja ele elétrico ou híbrido.
+     * <p>
+     * O utilizador é solicitado a fornecer detalhes como tipo de veículo, marca,
      * modelo, matrícula, data de registro, potência, capacidade da bateria e
      * autonomia.
-     * 
-     * Para veículos elétricos, o usuário também precisa fornecer a velocidade de
+     * <p>
+     * Para veículos elétricos, o utilizador também precisa fornecer a velocidade de
      * carregamento e o tempo de carregamento é calculado.
-     * 
-     * Para veículos híbridos, o usuário precisa fornecer a capacidade do tanque de
+     * <p>
+     * Para veículos híbridos, o utilizador precisa fornecer a capacidade do depósito de
      * combustível e o consumo de combustível.
-     * 
+     * <p>
      * O veículo é então adicionado à lista de veículos.
      */
     public void consultarVeiculo() {
@@ -198,7 +213,7 @@ public class Gestao implements Serializable {
 
     /**
      * Mostra todos os veículos registados
-     * 
+     *
      * @return true se nao existirem veiculos registados
      */
     private boolean MostrarVeiculos() {
@@ -217,6 +232,7 @@ public class Gestao implements Serializable {
 
     /**
      * Recebe a matricula do veiculo e verifica se esta no formato XX-XX-XX
+     *
      * @return matricula do veiculo em formato XX-XX-XX
      */
     private String getStringMatricula() {
@@ -234,6 +250,24 @@ public class Gestao implements Serializable {
         return matricula;
     }
 
+    /**
+     * Cria um cliente.
+     * <p>
+     * O utilizador é solicitado a fornecer detalhes como nome, telemóvel, NIF, morada,
+     * email e data de nascimento.
+     * <p>
+     * O método verifica se o NIF fornecido já existe. Se existir, o utilizador é
+     * solicitado a fornecer um NIF diferente.
+     * <p>
+     * Se a data de nascimento fornecida for inválida, o utilizador é solicitado a
+     * fornecer uma data válida.
+     * <p>
+     * Após todos os detalhes serem fornecidos corretamente, um novo objeto Cliente
+     * é criado e adicionado à lista de clientes.
+     * <p>
+     * Por fim, é exibida uma mensagem informando que o cliente foi registrado com
+     * sucesso.
+     */
     public void criarCliente() {
         String morada, email, nome;
         int nif, telemovel;
@@ -276,6 +310,17 @@ public class Gestao implements Serializable {
         Consola.PressioneEnterParaContinuar();
     }
 
+    /**
+     * Consulta um cliente na lista de clientes.
+     * <p>
+     * O utilizador é solicitado a fornecer o NIF do cliente que deseja consultar.
+     * <p>
+     * Se o NIF fornecido corresponder a um cliente na lista, os detalhes desse
+     * cliente são exibidos.
+     * <p>
+     * Se o NIF fornecido não corresponder a nenhum cliente na lista, é exibida uma
+     * mensagem informando que o cliente não foi encontrado.
+     */
     public void consultarCliente() {
         int nif;
         System.out.println("\n***************************************\n");
@@ -300,6 +345,12 @@ public class Gestao implements Serializable {
         Consola.PressioneEnterParaContinuar();
     }
 
+    /**
+     * Procura um cliente na lista de clientes pelo seu NIF.
+     *
+     * @param nif O NIF do cliente a ser procurado.
+     * @return O índice do cliente na lista se encontrado, -1 caso contrário.
+     */
     public int procurarCliente(int nif) {
         for (int i = 0; i < clientes.size(); i++) {
             if (clientes.get(i).getNif() == nif) {
@@ -309,6 +360,24 @@ public class Gestao implements Serializable {
         return -1;
     }
 
+    /**
+     * Altera os dados de um cliente existente.
+     * <p>
+     * O utilizador é solicitado a fornecer o NIF do cliente cujos dados deseja
+     * alterar.
+     * <p>
+     * Se o cliente com o NIF fornecido for encontrado, o utilizador é então solicitado
+     * a escolher o dado que deseja alterar.
+     * <p>
+     * O utilizador pode escolher alterar o nome, telemóvel, NIF, morada, email ou data
+     * de nascimento do cliente.
+     * <p>
+     * Após a alteração, é exibida uma mensagem informando que os dados foram
+     * alterados com sucesso.
+     * <p>
+     * Se o cliente com o NIF fornecido não for encontrado, é exibida uma mensagem
+     * informando que o cliente não foi encontrado.
+     */
     public void alterarDadosCliente() {
         System.out.println("\n***************************************\n");
         System.out.println("\tMenu Alterar dados cliente\n");
@@ -383,6 +452,18 @@ public class Gestao implements Serializable {
         }
     }
 
+    /**
+     * Remove um cliente da lista de clientes.
+     * <p>
+     * O utilizador é solicitado a fornecer o NIF do cliente que deseja remover.
+     * <p>
+     * Se o cliente com o NIF fornecido for encontrado, o cliente é removido da
+     * lista e é exibida uma mensagem informando que o cliente foi removido com
+     * sucesso.
+     * <p>
+     * Se o cliente com o NIF fornecido não for encontrado, é exibida uma mensagem
+     * informando que o cliente não foi encontrado.
+     */
     public void removerCliente() {
         System.out.println("\n***************************************\n");
         System.out.println("\tMenu Remover cliente\n");
@@ -404,6 +485,17 @@ public class Gestao implements Serializable {
         Consola.PressioneEnterParaContinuar();
     }
 
+    /**
+     * Este método é usado para criar um posto de carregamento.
+     * <p>
+     * O utilizador é solicitado a fornecer detalhes como o código do posto, localização, tipo de posto, custo por kWh e o número de veículos que podem carregar simultaneamente.
+     * <p>
+     * O tipo de posto pode ser um dos seguintes: Posto de Carregamento Normal (PCN), Posto de Carregamento Rápido (PCR) ou Posto de Carregamento Ultrarrápido (PCUR).
+     * <p>
+     * Após todos os detalhes serem fornecidos corretamente, um novo objeto PostoCarregamento é criado e adicionado à lista de postos.
+     * <p>
+     * Por fim, é exibida uma mensagem informando que o posto de carregamento foi criado com sucesso.
+     */
     public void criarPostoCarregamento() {
         int codigo_posto, numero_veiculos;
         String localizacao, tipo_posto;
@@ -445,6 +537,19 @@ public class Gestao implements Serializable {
         Consola.PressioneEnterParaContinuar();
     }
 
+    /**
+     * Este método é usado para consultar um posto de carregamento.
+     * <p>
+     * Primeiro, verifica se existem postos de carregamento registrados. Se não houver, exibe uma mensagem informando que não existem postos de carregamento registrados e retorna.
+     * <p>
+     * Em seguida, lista todos os postos de carregamento registrados.
+     * <p>
+     * O utilizador é então solicitado a fornecer o código do posto que deseja consultar. O código do posto é lido até que um valor válido seja fornecido.
+     * <p>
+     * O método então procura o posto com o código fornecido. Se o posto não for encontrado, exibe uma mensagem informando que o posto de carregamento não foi encontrado.
+     * <p>
+     * Se o posto for encontrado, exibe as informações do posto.
+     */
     public void consultarPostoCarregamento() {
         System.out.println("\n***************************************\n");
         System.out.println("\tMenu Consultar posto de carregamento\n");
@@ -472,6 +577,18 @@ public class Gestao implements Serializable {
         Consola.PressioneEnterParaContinuar();
     }
 
+    /**
+     * Este método é usado para procurar um posto de carregamento na lista de postos.
+     * <p>
+     * Ele percorre a lista de postos e compara o código do posto de cada objeto PostoCarregamento com o código do posto fornecido.
+     * <p>
+     * Se o código do posto do objeto PostoCarregamento corresponder ao código do posto fornecido, o método retorna o índice desse objeto na lista.
+     * <p>
+     * Se o método percorrer toda a lista e não encontrar um objeto PostoCarregamento com o código do posto fornecido, ele retorna -1.
+     *
+     * @param codigo_posto O código do posto a ser procurado.
+     * @return O índice do posto na lista se encontrado, -1 caso contrário.
+     */
     public int procurarPosto(int codigo_posto) {
         for (int i = 0; i < postos.size(); i++) {
             if (postos.get(i).getCodigo_posto() == codigo_posto) {
@@ -481,6 +598,27 @@ public class Gestao implements Serializable {
         return -1;
     }
 
+    /**
+     * Este método é usado para registrar uma nova sessão de carregamento.
+     * <p>
+     * Primeiro, verifica se existem clientes registrados. Se não houver, retorna.
+     * <p>
+     * Em seguida, solicita ao utilizador que forneça o NIF do cliente. Se o cliente for encontrado, ele é selecionado para a sessão de carregamento.
+     * <p>
+     * O mesmo processo é repetido para o veículo. Se o veículo for encontrado, ele é selecionado para a sessão de carregamento.
+     * <p>
+     * Depois, verifica se existem postos de carregamento registrados. Se não houver, retorna.
+     * <p>
+     * Solicita ao utilizador que forneça o código do posto de carregamento. Se o posto for encontrado, ele é selecionado para a sessão de carregamento.
+     * <p>
+     * O método então calcula a velocidade de carregamento com base no tipo de posto e solicita ao utilizador que forneça um código único para a sessão.
+     * <p>
+     * A data e hora de início da sessão são registradas e a data e hora de término são calculadas com base na capacidade da bateria e na velocidade de carregamento.
+     * <p>
+     * Por fim, uma nova sessão de carregamento é criada com todas as informações coletadas e registrada no sistema.
+     * <p>
+     * Uma mensagem é exibida informando que a sessão de carregamento foi registrada com sucesso.
+     */
     public void menuRegistarSessaoCarregamento() {
         // FIXME qunado o veiculo ´e hibrido o custo da 0 fix
         System.out.println("\n***************************************\n");
@@ -538,6 +676,12 @@ public class Gestao implements Serializable {
                 System.out.println("O posto de carregamento não tem vagas");
                 return;
             }
+            /*/
+            if (posto.getNumero_veiculos() >= posto.getMaximo_veiculos()) {
+                System.out.println("O posto de carregamento não tem vagas");
+                return;
+            }
+            */
         }
         assert posto != null;
         double velocidadeCarregamento = posto.getTipo_posto().equals("PCN") ? 2.3
@@ -570,6 +714,15 @@ public class Gestao implements Serializable {
         Consola.PressioneEnterParaContinuar();
     }
 
+    /**
+     * Este método é usado para exibir todos os clientes registrados.
+     * <p>
+     * Se não houver clientes registrados, ele exibe uma mensagem informando que não existem clientes registrados e retorna verdadeiro.
+     * <p>
+     * Se houver clientes registrados, ele exibe uma lista de todos os clientes registrados e retorna falso.
+     *
+     * @return Verdadeiro se não houver clientes registrados, falso caso contrário.
+     */
     private boolean MostrarClientes() {
         if (clientes.isEmpty()) {
             System.out.println("Não existem clientes registados");
@@ -583,6 +736,19 @@ public class Gestao implements Serializable {
         return false;
     }
 
+    /**
+     * Este método é usado para consultar uma sessão de carregamento.
+     * <p>
+     * Primeiro, verifica se existem sessões de carregamento registradas. Se não houver, exibe uma mensagem informando que não existem sessões de carregamento registradas e retorna.
+     * <p>
+     * Em seguida, lista todas as sessões de carregamento registradas.
+     * <p>
+     * O utilizador é então solicitado a fornecer o código da sessão que deseja consultar. O código da sessão é lido até que um valor válido seja fornecido.
+     * <p>
+     * O método então procura a sessão com o código fornecido. Se a sessão não for encontrada, exibe uma mensagem informando que a sessão de carregamento não foi encontrada.
+     * <p>
+     * Se a sessão for encontrada, exibe as informações da sessão.
+     */
     public void menuConsultarSessaoCarregamento() {
         System.out.println("\n***************************************\n");
         System.out.println("\tMenu Consultar sessao de carregamento\n");
@@ -609,20 +775,61 @@ public class Gestao implements Serializable {
         Consola.PressioneEnterParaContinuar();
     }
 
+    /**
+     * Este método é usado para registrar uma nova sessão de carregamento.
+     * <p>
+     * A sessão de carregamento é adicionada a um mapa onde a chave é o código da sessão e o valor é o objeto da sessão de carregamento.
+     *
+     * @param sessao A sessão de carregamento a ser registrada.
+     */
     public void registarSessaoCarregamento(SessaoCarregamento sessao) {
         sessoesCarregamento.put(sessao.getCodigo_sessao(), sessao);
     }
 
+    /**
+     * Este método é usado para consultar uma sessão de carregamento.
+     * <p>
+     * Ele recebe o código da sessão como parâmetro e retorna o objeto SessaoCarregamento correspondente.
+     * <p>
+     * Se a sessão de carregamento com o código fornecido não for encontrada, o método retorna null.
+     *
+     * @param codigo_sessao O código da sessão a ser consultada.
+     * @return O objeto SessaoCarregamento correspondente ao código fornecido, ou null se não for encontrado.
+     */
     public SessaoCarregamento consultarSessaoCarregamento(String codigo_sessao) {
         return sessoesCarregamento.get(codigo_sessao);
     }
 
+    /**
+     * Este método é usado para registrar um novo pagamento.
+     * <p>
+     * Ele recebe como parâmetros uma sessão de carregamento, um método de pagamento, uma data e hora de transação e um booleano indicando se o pagamento foi efetuado.
+     * <p>
+     * Um novo objeto Pagamento é criado com essas informações e adicionado à lista de pagamentos.
+     *
+     * @param sessao            A sessão de carregamento para a qual o pagamento está a ser registrado.
+     * @param metodoPagamento   O método de pagamento usado.
+     * @param DataHoraTransacao A data e hora da transação.
+     * @param pago              Um booleano indicando se o pagamento foi efetuado.
+     */
     public void registarPagamento(SessaoCarregamento sessao, String metodoPagamento,
-            LocalDateTime DataHoraTransacao, boolean pago) {
+                                  LocalDateTime DataHoraTransacao, boolean pago) {
         Pagamento pagamento = new Pagamento(sessao, metodoPagamento, DataHoraTransacao, pago);
         pagamentos.add(pagamento);
     }
 
+    /**
+     * Este método é usado para consultar um pagamento por sessão.
+     * <p>
+     * Ele percorre a lista de pagamentos e compara o código da sessão de cada objeto Pagamento com o código da sessão fornecido.
+     * <p>
+     * Se o código da sessão do objeto Pagamento corresponder ao código da sessão fornecido, o método retorna o objeto Pagamento.
+     * <p>
+     * Se o método percorrer toda a lista e não encontrar um objeto Pagamento com o código da sessão fornecido, ele retorna null.
+     *
+     * @param codigoSessao O código da sessão a ser consultada.
+     * @return O objeto Pagamento correspondente ao código da sessão fornecido, ou null se não for encontrado.
+     */
     public Pagamento consultarPagamentoPorSessao(String codigoSessao) {
         for (Pagamento pagamento : pagamentos) {
             if (pagamento.getSessao().getCodigo_sessao().equals(codigoSessao)) {
@@ -632,6 +839,25 @@ public class Gestao implements Serializable {
         return null;
     }
 
+    /**
+     * Este método é usado para registrar um pagamento para uma sessão de carregamento.
+     * <p>
+     * Primeiro, verifica se existem sessões de carregamento não pagas. Se não houver, retorna.
+     * <p>
+     * Em seguida, lista todas as sessões de carregamento não pagas.
+     * <p>
+     * O utilizador é então solicitado a fornecer o código da sessão que deseja pagar.
+     * <p>
+     * O método então procura a sessão com o código fornecido. Se a sessão não for encontrada, exibe uma mensagem informando que a sessão de carregamento não foi encontrada.
+     * <p>
+     * Se a sessão for encontrada, exibe as informações da sessão.
+     * <p>
+     * O utilizador é então solicitado a escolher o método de pagamento.
+     * <p>
+     * O método de pagamento, a data e hora da transação são registrados e o estado do pagamento da sessão é alterado para "Pago".
+     * <p>
+     * Por fim, um novo objeto Pagamento é criado com essas informações e adicionado à lista de pagamentos.
+     */
     public void menuRegistarPagamento() {
         System.out.println("\n***************************************\n");
         System.out.println("\tMenu Registar pagamento de sessao\n");
@@ -684,6 +910,19 @@ public class Gestao implements Serializable {
         registarPagamento(sessao, metodoPagamento, dataTransacao, true);
     }
 
+    /**
+     * Este método é usado para consultar um pagamento de uma sessão de carregamento.
+     * <p>
+     * Primeiro, verifica se existem pagamentos registrados. Se não houver, exibe uma mensagem informando que não existem pagamentos registrados e retorna.
+     * <p>
+     * Em seguida, lista todos os pagamentos registrados.
+     * <p>
+     * O utilizador é então solicitado a fornecer o código da sessão que deseja consultar. O código da sessão é lido até que um valor válido seja fornecido.
+     * <p>
+     * O método então procura o pagamento com o código da sessão fornecido. Se o pagamento não for encontrado, exibe uma mensagem informando que o pagamento não foi encontrado.
+     * <p>
+     * Se o pagamento for encontrado, exibe as informações do pagamento.
+     */
     public void menuConsultarPagamento() {
         System.out.println("\n***************************************\n");
         System.out.println("\tMenu Consultar pagamento de sessao\n");
@@ -707,6 +946,17 @@ public class Gestao implements Serializable {
         Consola.PressioneEnterParaContinuar();
     }
 
+    /**
+     * Este método é usado para listar os 3 postos de carregamento com maior valor faturado.
+     * <p>
+     * Primeiro, verifica se existem postos de carregamento registrados. Se não houver, exibe uma mensagem informando que não existem postos de carregamento registrados e retorna.
+     * <p>
+     * Em seguida, cria uma lista de postos de carregamento e ordena essa lista em ordem decrescente de valor faturado.
+     * <p>
+     * Depois, determina o tamanho da lista, que será o menor entre o tamanho da lista de postos ordenados e 3.
+     * <p>
+     * Exibe os postos de carregamento com maior valor faturado. Se o valor faturado for 0, informa que não existem pagamentos registrados neste posto.
+     */
     public void listagemPostosMaiorLiquidacao() {
         System.out.println("\n***************************************\n");
         System.out.println("\tMenu Listagem dos 3 postos de carregamento com maior valor faturado\n");
@@ -725,15 +975,26 @@ public class Gestao implements Serializable {
             PostoCarregamento posto = postosOrdenados.get(i);
             double valorFaturado = posto.getValor_faturado();
             if (valorFaturado == 0) {
-                System.out.println("Codigo do posto: " + posto.getCodigo_posto() + " | Valor faturado: Não existem pagamentos registados neste posto");
+                System.out.println("Codigo do posto: " + posto.getCodigo_posto()
+                        + " | Valor faturado: Não existem pagamentos registados neste posto");
             } else {
-                System.out.println("Codigo do posto: " + posto.getCodigo_posto() + " | Valor faturado: " + valorFaturado);
+                System.out
+                        .println("Codigo do posto: " + posto.getCodigo_posto() + " | Valor faturado: " + valorFaturado);
             }
         }
         System.out.println();
         Consola.PressioneEnterParaContinuar();
     }
 
+    /**
+     * Este método é usado para listar todas as sessões de carregamento cujo custo é superior a um valor especificado.
+     * <p>
+     * Primeiro, cria uma lista vazia para armazenar as sessões de carregamento que atendem ao critério.
+     * <p>
+     * Em seguida, percorre todas as sessões de carregamento registradas. Para cada sessão, verifica se o custo da sessão é superior ao valor especificado. Se for, adiciona a sessão à lista.
+     * <p>
+     * Por fim, exibe todas as sessões na lista. Para cada sessão, exibe o código da sessão e o custo da sessão.
+     */
     public void listarSessoesComCustoSuperiorX() {
         System.out.println("\n***************************************\n");
         System.out.println("\tMenu Listagem de sessões de carregamento cujo custo é superior a n euros\n");
@@ -759,6 +1020,23 @@ public class Gestao implements Serializable {
         Consola.PressioneEnterParaContinuar();
     }
 
+    /**
+     * Este método é usado para calcular o total de sessões de carregamento realizadas por um cliente específico.
+     * <p>
+     * Primeiro, verifica se existem clientes registrados. Se não houver, retorna.
+     * <p>
+     * Em seguida, solicita ao utilizador que forneça o NIF do cliente que deseja consultar. O NIF é lido até que um valor válido seja fornecido.
+     * <p>
+     * O método então procura o cliente com o NIF fornecido. Se o cliente não for encontrado, exibe uma mensagem informando que o cliente não foi encontrado.
+     * <p>
+     * Se o cliente for encontrado, cria uma lista para armazenar as sessões de carregamento desse cliente.
+     * <p>
+     * Percorre todas as sessões de carregamento registradas e, para cada sessão, verifica se o NIF do cliente da sessão corresponde ao NIF do cliente fornecido. Se corresponder, adiciona a sessão à lista de sessões do cliente.
+     * <p>
+     * Calcula o total de sessões como o tamanho da lista de sessões do cliente.
+     * <p>
+     * Por fim, exibe o nome do cliente e o total de sessões.
+     */
     public void totalSessoesPorCliente() {
         System.out.println("\n***************************************\n");
         System.out.println("\tMenu Total de sessões de carregamento realizados (por cliente)\n");
@@ -787,6 +1065,13 @@ public class Gestao implements Serializable {
         Consola.PressioneEnterParaContinuar();
     }
 
+    /**
+     * Este método é usado para calcular a média de energia consumida por posto de carregamento e por tipo de veículo (híbridos/elétricos).
+     * <p>
+     * Primeiro, para cada posto de carregamento, cria uma lista de sessões de carregamento que ocorreram nesse posto. Calcula o total de energia consumida nessas sessões e, em seguida, calcula a média dividindo o total de energia pelo número de sessões. Exibe a média de energia para o posto de carregamento.
+     * <p>
+     * Em seguida, para cada tipo de veículo (elétrico e híbrido), cria uma lista de sessões de carregamento que envolvem veículos desse tipo. Calcula o total de energia consumida nessas sessões e, em seguida, calcula a média dividindo o total de energia pelo número de sessões. Exibe a média de energia para o tipo de veículo.
+     */
     public void mediaEnergiaPorPostoETipoVeiculo() {
         System.out.println("\n***************************************\n");
         System.out.println(
@@ -847,6 +1132,13 @@ public class Gestao implements Serializable {
         Consola.PressioneEnterParaContinuar();
     }
 
+    /**
+     * Este método é usado para listar os pagamentos que ainda não foram efetuados por cada cliente.
+     * <p>
+     * Primeiro, verifica se existem sessões de carregamento registradas. Se não houver, exibe uma mensagem informando que não existem sessões de carregamento registradas e retorna.
+     * <p>
+     * Para cada cliente na lista de clientes, percorre todas as sessões de carregamento. Para cada sessão, verifica se o NIF do cliente da sessão corresponde ao NIF do cliente atual e se o estado do pagamento da sessão é "Não pago". Se ambas as condições forem verdadeiras, exibe o nome do cliente, o valor a pagar e o código da sessão.
+     */
     public void listagemPagamentosPorEfetuar() {
         System.out.println("\n***************************************\n");
         System.out.println("\tMenu Listagem de pagamentos por efetuar (por cliente)\n");
@@ -872,6 +1164,19 @@ public class Gestao implements Serializable {
         Consola.PressioneEnterParaContinuar();
     }
 
+    /**
+     * Este método é usado para exibir o histórico de sessões de carregamento para um posto de carregamento específico.
+     * <p>
+     * Primeiro, exibe todos os postos de carregamento registrados.
+     * <p>
+     * Em seguida, solicita ao utilizador que forneça o código do posto de carregamento que deseja consultar.
+     * <p>
+     * Se o posto de carregamento com o código fornecido for encontrado, cria uma lista de todas as sessões de carregamento que ocorreram nesse posto.
+     * <p>
+     * Para cada sessão de carregamento na lista, exibe o código da sessão, o custo da sessão, o estado do pagamento, o nome do cliente, a matrícula do veículo e o código do posto de carregamento.
+     * <p>
+     * Se o posto de carregamento com o código fornecido não for encontrado, exibe uma mensagem informando que o posto de carregamento não foi encontrado.
+     */
     public void historicoSessoesPorPosto() {
         System.out.println("\n***************************************\n");
         System.out.println("\tMenu Histórico de sessões de carregamento (por posto de carregamento)\n");
